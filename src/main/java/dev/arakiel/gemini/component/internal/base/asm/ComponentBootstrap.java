@@ -26,6 +26,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class ComponentBootstrap extends LazyDispatcher {
    public static final String COMPONENT_TYPE_INIT_DESC = Type.getMethodDescriptor(
       Type.VOID_TYPE, new Type[]{Type.getObjectType(ComponentAsmHelper.IDENTIFIER), Type.getType(Class.class)}

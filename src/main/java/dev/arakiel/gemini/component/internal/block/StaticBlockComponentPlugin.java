@@ -28,6 +28,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class StaticBlockComponentPlugin extends LazyDispatcher implements BlockComponentFactoryRegistry {
    public static final StaticBlockComponentPlugin INSTANCE = new StaticBlockComponentPlugin();
    private final List<StaticBlockComponentPlugin.PredicatedComponentFactory<?>> dynamicFactories = new ArrayList<>();

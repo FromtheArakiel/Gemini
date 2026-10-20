@@ -38,6 +38,7 @@ public abstract class AbstractSectionWithTitle<T extends AbstractSectionWithTitl
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void render(GuiGraphics graphics, Font font, int topLeftX, int topLeftY) {
         onRender.run();
         onRenderConsumer.accept((T) this);

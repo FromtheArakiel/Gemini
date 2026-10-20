@@ -181,7 +181,7 @@ public final class IndexPanel {
         if (row == -1) {
             return;
         }
-        int itemCount = screen.getMenu().getItems().size();
+        int itemCount = screen.getMenu().items.size();
         int rows = Mth.positiveCeilDiv(itemCount, BannerRenderer.GRID_COLS) - BannerRenderer.VISIBLE_ROWS;
         if (rows <= 0) {
             return;

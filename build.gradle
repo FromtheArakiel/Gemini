@@ -50,6 +50,7 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
 	it.options.release = 21
 	it.options.encoding = "UTF-8"
+	it.options.compilerArgs.addAll(["-Xlint:deprecation", "-Xlint:unchecked"])
 }
 
 sourceSets {
@@ -60,6 +61,15 @@ sourceSets {
 
 test {
 	useJUnitPlatform()
+	if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
+		jvmArgs("--sun-misc-unsafe-memory-access=allow", "--enable-native-access=ALL-UNNAMED")
+	}
+}
+
+if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
+	tasks.withType(JavaExec).configureEach {
+		jvmArgs("--sun-misc-unsafe-memory-access=allow", "--enable-native-access=ALL-UNNAMED")
+	}
 }
 
 java {

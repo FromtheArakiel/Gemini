@@ -73,7 +73,7 @@ public final class FancyTabSectionsInternals {
             int row = 0;
             for (Section<?> section : sections) {
                 if (section == target) {
-                    int contentRows = isCollapsed(section)
+                    int contentRows = isCollapsed(section) || section.items().getStacks().isEmpty()
                             ? 0
                             : (section.items().getStacks().size() - 1) / 9 + 1;
                     if (section instanceof dev.arakiel.gemini.api.creative.StickySection sticky
@@ -85,7 +85,7 @@ public final class FancyTabSectionsInternals {
                     return row;
                 }
                 row++;
-                if (!isCollapsed(section)) {
+                if (!isCollapsed(section) && !section.items().getStacks().isEmpty()) {
                     row += (section.items().getStacks().size() - 1) / 9 + 1;
                 }
             }

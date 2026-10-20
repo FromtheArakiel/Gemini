@@ -25,6 +25,7 @@ import java.util.function.Predicate;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class StaticEntityComponentPlugin extends LazyDispatcher implements EntityComponentFactoryRegistry {
    public static final StaticEntityComponentPlugin INSTANCE = new StaticEntityComponentPlugin();
    private final List<StaticEntityComponentPlugin.PredicatedComponentFactory<?>> dynamicFactories = new ArrayList<>();

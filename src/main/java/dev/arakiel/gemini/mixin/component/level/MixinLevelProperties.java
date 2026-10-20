@@ -32,6 +32,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({PrimaryLevelData.class})
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class MixinLevelProperties implements ServerLevelData, ComponentProvider {
    @Unique
    private ComponentContainer components;

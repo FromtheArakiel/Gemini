@@ -41,6 +41,7 @@ public abstract class CreativeModeInventoryScreenMixin {
         }
         if (BannerRenderer.CURRENT_TAB == null || !BannerRenderer.CURRENT_TAB.equals(tab)) {
             BannerRenderer.CURRENT_TAB = tab;
+            BannerRenderer.CURRENT_ROW = 0;
             FancyTabSectionsInternals.applyItems(selectedTab);
             ((CreativeModeInventoryScreenInvoker) screen).gemini$refreshCurrentTabContents(selectedTab.getDisplayItems());
         }

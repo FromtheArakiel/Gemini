@@ -14,6 +14,7 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class GeminiEntityInternals {
    public static final RespawnCopyStrategy<Component> DEFAULT_COPY_STRATEGY = GeminiEntityInternals::defaultCopyStrategy;
    private static final Map<Class<? extends Entity>, ComponentContainer.Factory<Entity>> entityContainerFactories = new HashMap<>();

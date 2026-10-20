@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class GeminiBlockInternals {
    private static final Map<Class<? extends BlockEntity>, ComponentContainer.Factory<BlockEntity>> entityContainerFactories = new HashMap<>();
 

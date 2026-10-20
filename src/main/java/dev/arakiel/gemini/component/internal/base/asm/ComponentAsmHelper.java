@@ -38,6 +38,7 @@ import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.util.CheckClassAdapter;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class ComponentAsmHelper {
    public static final boolean DEBUG_CLASSES = Boolean.getBoolean("gemini.debug.asm");
    public static final int ASM_VERSION = 589824;

@@ -19,6 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class ComponentsInternals {
    public static final Logger LOGGER = LogManager.getLogger("Gemini Components");
    private static final int DEFAULT_MAX_WARNINGS_PER_COMPONENT = 5;

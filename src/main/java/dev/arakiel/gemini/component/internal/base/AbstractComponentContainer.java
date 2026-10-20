@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class AbstractComponentContainer implements ComponentContainer {
    public static final String NBT_KEY = "gemini_components";
 

@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin({LevelStorageSource.class})
+@SuppressWarnings({"unchecked", "deprecation"})
 public class LevelStorageMixin {
    @WrapOperation(
       method = {"getLevelDataAndDimensions"},

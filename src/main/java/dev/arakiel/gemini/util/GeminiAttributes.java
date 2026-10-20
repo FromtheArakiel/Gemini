@@ -23,7 +23,9 @@ public final class GeminiAttributes {
             return;
         }
         AttributeModifier existing = instance.getModifier(id);
-        if (existing != null && Math.abs(existing.amount() - amount) < 1.0E-7D) {
+        if (existing != null
+                && existing.operation() == operation
+                && Math.abs(existing.amount() - amount) < 1.0E-7D) {
             return;
         }
         instance.removeModifier(id);

@@ -17,6 +17,9 @@ public abstract class BoneMealItemMixin {
     @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
     private void gemini$bonemeal(UseOnContext context, CallbackInfoReturnable<InteractionResult> callback) {
         Level level = context.getLevel();
+        if (level.isClientSide) {
+            return;
+        }
         BlockPos pos = context.getClickedPos();
         BonemealEvent event = new BonemealEvent(
                 level,

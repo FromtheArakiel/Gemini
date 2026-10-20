@@ -26,6 +26,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class StaticComponentPluginBase<T, I> extends LazyDispatcher {
    private final ComponentContainer.Factory.Builder<T> containerFactoryBuilder;
 

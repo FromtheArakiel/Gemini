@@ -26,7 +26,18 @@ public final class GeminiCreativeTabs {
             Supplier<ItemStack> icon,
             Consumer<CreativeModeTab.Output> entries
     ) {
-        CreativeModeTab tab = CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
+        return register(id, CreativeModeTab.Row.TOP, 0, title, icon, entries);
+    }
+
+    public static ResourceKey<CreativeModeTab> register(
+            ResourceLocation id,
+            CreativeModeTab.Row row,
+            int column,
+            Component title,
+            Supplier<ItemStack> icon,
+            Consumer<CreativeModeTab.Output> entries
+    ) {
+        CreativeModeTab tab = CreativeModeTab.builder(row, column)
                 .title(title)
                 .icon(icon)
                 .displayItems((parameters, output) -> entries.accept(output))
@@ -42,6 +53,17 @@ public final class GeminiCreativeTabs {
             Consumer<CreativeModeTab.Output> entries
     ) {
         return register(Gemini.id(path), title, icon, entries);
+    }
+
+    public static ResourceKey<CreativeModeTab> register(
+            String path,
+            CreativeModeTab.Row row,
+            int column,
+            Component title,
+            Supplier<ItemStack> icon,
+            Consumer<CreativeModeTab.Output> entries
+    ) {
+        return register(Gemini.id(path), row, column, title, icon, entries);
     }
 
     public static void add(ResourceKey<CreativeModeTab> tab, ItemLike... items) {

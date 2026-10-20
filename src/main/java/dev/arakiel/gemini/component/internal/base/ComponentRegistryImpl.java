@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class ComponentRegistryImpl {
    public static final ComponentRegistryImpl INSTANCE = new ComponentRegistryImpl();
    private final Map<ResourceLocation, ComponentKey<?>> keys = new HashMap<>();

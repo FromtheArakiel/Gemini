@@ -8,5 +8,6 @@ public final class GeminiApi {
 
     public static void init() {
         GeminiCombat.init();
+        GeminiNetwork.init();
     }
 }

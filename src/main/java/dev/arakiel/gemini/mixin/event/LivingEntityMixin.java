@@ -27,9 +27,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+    @Unique
+    private MobEffectInstance gemini$previousEffect;
+
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void gemini$livingAttack(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callback) {
         LivingEntity entity = (LivingEntity) (Object) this;
@@ -78,6 +82,10 @@ public abstract class LivingEntityMixin {
         LivingDeathEvent event = new LivingDeathEvent((LivingEntity) (Object) this, source);
         GeminiEvents.post(event);
         if (event.isCanceled()) {
+            LivingEntity entity = (LivingEntity) (Object) this;
+            if (entity.getHealth() <= 0.0F) {
+                entity.setHealth(1.0F);
+            }
             callback.cancel();
         }
     }
@@ -123,10 +131,17 @@ public abstract class LivingEntityMixin {
     }
 
     @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("HEAD"))
-    private void gemini$effectAdded(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> callback) {
+    private void gemini$captureEffect(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> callback) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        MobEffectInstance previous = entity.getEffect(effect.getEffect());
-        GeminiEvents.post(new MobEffectAddedEvent(entity, effect, previous, source));
+        gemini$previousEffect = entity.getEffect(effect.getEffect());
+    }
+
+    @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("RETURN"))
+    private void gemini$effectAdded(MobEffectInstance effect, Entity source, CallbackInfoReturnable<Boolean> callback) {
+        if (callback.getReturnValue()) {
+            GeminiEvents.post(new MobEffectAddedEvent((LivingEntity) (Object) this, effect, gemini$previousEffect, source));
+        }
+        gemini$previousEffect = null;
     }
 
     @Inject(method = "canBeAffected", at = @At("HEAD"), cancellable = true)

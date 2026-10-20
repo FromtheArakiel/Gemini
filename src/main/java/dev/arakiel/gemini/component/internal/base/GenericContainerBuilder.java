@@ -17,6 +17,7 @@ import java.util.function.Function;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.ApiStatus.Experimental;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public class GenericContainerBuilder<I, R> {
    private boolean built;
    private String factoryNameSuffix;

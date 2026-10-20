@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({BlockEntity.class})
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class MixinBlockEntity implements ComponentProvider {
    @Unique
    private ComponentContainer components;

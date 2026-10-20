@@ -111,9 +111,10 @@ public final class GeminiEventBus {
         Objects.requireNonNull(priority, "priority");
         Objects.requireNonNull(consumer, "consumer");
 
+        Object owner = new Object();
         EventListener listener = event -> consumer.accept(eventType.cast(event));
-        add(new Registration(consumer, eventType, priority, receiveCanceled, listener));
-        return new Subscription(this, consumer);
+        add(new Registration(owner, eventType, priority, receiveCanceled, listener));
+        return new Subscription(this, owner);
     }
 
     public void unregister(Object owner) {

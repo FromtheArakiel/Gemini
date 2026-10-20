@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({LevelChunk.class})
+@SuppressWarnings({"unchecked", "deprecation"})
 public abstract class MixinWorldChunk extends ChunkAccess implements ComponentProvider {
    public MixinWorldChunk(
       ChunkPos pos,

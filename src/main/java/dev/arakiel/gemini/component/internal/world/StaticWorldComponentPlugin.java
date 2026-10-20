@@ -22,6 +22,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings({"unchecked", "deprecation"})
 public final class StaticWorldComponentPlugin extends StaticComponentPluginBase<Level, WorldComponentInitializer> implements WorldComponentFactoryRegistry {
    public static final StaticWorldComponentPlugin INSTANCE = new StaticWorldComponentPlugin();
    private final Map<ResourceKey<Level>, Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<Level, ?>>>> worldComponentFactories = new Reference2ObjectOpenHashMap();
