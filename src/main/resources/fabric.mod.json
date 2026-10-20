@@ -3,23 +3,33 @@
 	"id": "gemini",
 	"version": "${version}",
 	"name": "Gemini",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Shared registration, event, and component APIs for Gemini-based mods.",
 	"authors": [
-		"Me!"
+		"FromtheArakiel"
 	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
-	},
-	"license": "CC0-1.0",
+	"license": "ARR",
 	"icon": "assets/gemini/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"dev.arakiel.gemini.Gemini"
+			"dev.arakiel.gemini.Gemini",
+			"dev.arakiel.gemini.component.internal.base.ComponentsInternals::init",
+			"dev.arakiel.gemini.component.internal.block.GeminiBlockComponents::init",
+			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkComponents::init",
+			"dev.arakiel.gemini.component.internal.entity.GeminiEntityComponents::init",
+			"dev.arakiel.gemini.component.internal.item.StaticItemComponentPlugin::INSTANCE",
+			"dev.arakiel.gemini.component.internal.level.GeminiLevelComponents::init",
+			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents::init",
+			"dev.arakiel.gemini.component.internal.world.GeminiWorldComponents::init"
 		],
 		"client": [
-			"dev.arakiel.gemini.client.GeminiClient"
+			"dev.arakiel.gemini.client.GeminiClient",
+			"dev.arakiel.gemini.component.internal.block.GeminiBlockClient::initClient",
+			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkClient::initClient",
+			"dev.arakiel.gemini.component.internal.entity.GeminiEntityClient::initClient",
+			"dev.arakiel.gemini.component.internal.level.GeminiLevelClient::initClient",
+			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardClient::initClient",
+			"dev.arakiel.gemini.component.internal.world.GeminiWorldClient::initClient"
 		]
 	},
 	"mixins": [
@@ -29,6 +39,32 @@
 			"environment": "client"
 		}
 	],
+	"accessWidener": "gemini.accesswidener",
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1297": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_2586": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_2791": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_5217": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_269": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_268": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_1937": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			]
+		}
+	},
 	"depends": {
 		"fabricloader": ">=0.19.5",
 		"minecraft": "~1.21.1",
