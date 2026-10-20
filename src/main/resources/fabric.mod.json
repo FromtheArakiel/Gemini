@@ -30,6 +30,9 @@
 			"dev.arakiel.gemini.component.internal.level.GeminiLevelClient::initClient",
 			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardClient::initClient",
 			"dev.arakiel.gemini.component.internal.world.GeminiWorldClient::initClient"
+		],
+		"modmenu": [
+			"dev.arakiel.gemini.client.GeminiModMenu::create"
 		]
 	},
 	"mixins": [
@@ -70,5 +73,8 @@
 		"minecraft": "~1.21.1",
 		"java": ">=21",
 		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
 	}
 }

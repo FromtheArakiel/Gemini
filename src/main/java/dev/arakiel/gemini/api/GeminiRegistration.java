@@ -42,6 +42,7 @@ public final class GeminiRegistration {
     }
 
     public static void items(Class<? extends ItemRegistryContainer> container) {
+        // 便捷方法默认使用 Gemini 命名空间；依赖模组应传 namespace 或标注 @RegistryNamespace。
         register(container, Gemini.MOD_ID, true);
     }
 

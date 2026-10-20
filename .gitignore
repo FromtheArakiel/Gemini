@@ -32,8 +32,8 @@ bin/
 
 run/
 logs/
-test/
 testmod/
+example/
 
 # java
 
