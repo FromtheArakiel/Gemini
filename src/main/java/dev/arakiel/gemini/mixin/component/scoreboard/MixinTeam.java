@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.mixin.component.scoreboard;
 
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents;
 import dev.arakiel.gemini.component.internal.scoreboard.StaticScoreboardComponentPlugin;
@@ -52,7 +52,7 @@ public abstract class MixinTeam implements ComponentProvider {
       return this.scoreboard.asComponentProvider().getRecipientsForComponentSync();
    }
 
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiScoreboardComponents.TEAM_PACKET_ID, this.getName(), required, key.getId(), data);

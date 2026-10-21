@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.chunk.StaticChunkComponentPlugin;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.ChunkPos;

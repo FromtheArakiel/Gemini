@@ -1,12 +1,12 @@
 package dev.arakiel.gemini.component.internal.chunk;
 
 import com.google.common.base.Suppliers;
-import dev.arakiel.gemini.component.chunk.ChunkComponentFactoryRegistry;
-import dev.arakiel.gemini.component.chunk.ChunkComponentInitializer;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentFactory;
-import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentFactory;
+import dev.arakiel.gemini.component.api.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
 import java.util.Collection;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
-public final class StaticChunkComponentPlugin extends StaticComponentPluginBase<ChunkAccess, ChunkComponentInitializer> implements ChunkComponentFactoryRegistry {
+public final class StaticChunkComponentPlugin extends StaticComponentPluginBase<ChunkAccess, ComponentInitializers.Chunk> implements ComponentFactoryRegistries.Chunk {
    public static final StaticChunkComponentPlugin INSTANCE = new StaticChunkComponentPlugin();
    private static final Supplier<ComponentContainer.Factory<ChunkAccess>> componentsContainerFactory;
 
@@ -27,11 +27,11 @@ public final class StaticChunkComponentPlugin extends StaticComponentPluginBase<
    }
 
    @Override
-   protected Collection<EntrypointContainer<ChunkComponentInitializer>> getEntrypoints() {
-      return getComponentEntrypoints("gemini:components-chunk", ChunkComponentInitializer.class);
+   protected Collection<EntrypointContainer<ComponentInitializers.Chunk>> getEntrypoints() {
+      return getComponentEntrypoints("gemini:components-chunk", ComponentInitializers.Chunk.class);
    }
 
-   protected void dispatchRegistration(ChunkComponentInitializer entrypoint) {
+   protected void dispatchRegistration(ComponentInitializers.Chunk entrypoint) {
       entrypoint.registerChunkComponentFactories(this);
    }
 
@@ -42,7 +42,7 @@ public final class StaticChunkComponentPlugin extends StaticComponentPluginBase<
 
    @Override
    public <C extends Component> void register(ComponentKey<? super C> type, Class<C> impl, ComponentFactory<ChunkAccess, ? extends C> factory) {
-      this.checkLoading(ChunkComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.Chunk.class, "register");
       super.register(type, factory);
    }
 

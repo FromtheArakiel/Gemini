@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.world;
 
-import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.api.Component;
 import dev.arakiel.gemini.component.internal.network.ComponentClientInternals;
 import java.util.Optional;
 import net.fabricmc.loader.api.FabricLoader;

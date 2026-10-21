@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.base.asm;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.AbstractComponentContainer;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
 import it.unimi.dsi.fastutil.objects.ReferenceArraySet;
@@ -159,21 +159,6 @@ public final class ComponentAsmHelper {
       return new IllegalArgumentException(callbackClass + " is not a functional interface!");
    }
 
-   @Deprecated(
-      forRemoval = true
-   )
-   public static <I> Class<? extends ComponentContainer> spinComponentContainer(
-      Class<? super I> componentFactoryType, Map<ComponentKey<?>, I> componentFactories, Map<ComponentKey<?>, Class<? extends Component>> componentImpls
-   ) throws IOException {
-      Map<ComponentKey<?>, QualifiedComponentFactory<I>> merged = new LinkedHashMap<>();
-
-      for (Entry<ComponentKey<?>, I> entry : componentFactories.entrySet()) {
-         merged.put(entry.getKey(), new QualifiedComponentFactory<>(entry.getValue(), componentImpls.get(entry.getKey()), Set.of()));
-      }
-
-      return spinComponentContainer(componentFactoryType, merged);
-   }
-
    public static <I> Class<? extends ComponentContainer> spinComponentContainer(
       Class<? super I> componentFactoryType, Map<ComponentKey<?>, QualifiedComponentFactory<I>> componentFactories
    ) throws IOException {
@@ -195,9 +180,9 @@ public final class ComponentAsmHelper {
       ClassNode classNode = new ClassNode(589824);
       classNode.visit(61, 17, containerImplName, null, STATIC_COMPONENT_CONTAINER, null);
       String factoryFieldDescriptor = Type.getDescriptor(componentFactoryType);
-      classNode.visitField(26, "componentKeys", "Ljava/util/Set;", "Ljava/util/Set<Ldev/arakiel/gemini/component/api/v3/component/ComponentKey<*>;>;", null);
+      classNode.visitField(26, "componentKeys", "Ljava/util/Set;", "Ljava/util/Set<Ldev/arakiel/gemini/component/api/ComponentKey<*>;>;", null);
       MethodVisitor keys = classNode.visitMethod(
-         1, "keys", "()Ljava/util/Set;", "()Ljava/util/Set<Ldev/arakiel/gemini/component/api/v3/component/ComponentKey<*>;>;", null
+         1, "keys", "()Ljava/util/Set;", "()Ljava/util/Set<Ldev/arakiel/gemini/component/api/ComponentKey<*>;>;", null
       );
       keys.visitFieldInsn(178, containerImplName, "componentKeys", "Ljava/util/Set;");
       keys.visitInsn(176);

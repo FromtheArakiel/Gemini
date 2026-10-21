@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.entity;
 
-import dev.arakiel.gemini.component.entity.TrackingStartCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -22,6 +22,6 @@ public abstract class MixinEntityTrackerEntry {
       at = {@At("RETURN")}
    )
    private void onStartedTracking(ServerPlayer player, CallbackInfo ci) {
-      ((TrackingStartCallback)TrackingStartCallback.EVENT.invoker()).onPlayerStartTracking(player, this.entity);
+      ((ComponentCallbacks.TrackingStart)ComponentCallbacks.TrackingStart.EVENT.invoker()).onPlayerStartTracking(player, this.entity);
    }
 }

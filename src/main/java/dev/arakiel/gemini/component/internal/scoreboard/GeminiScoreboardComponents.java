@@ -1,10 +1,9 @@
 package dev.arakiel.gemini.component.internal.scoreboard;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.scoreboard.ScoreboardSyncCallback;
-import dev.arakiel.gemini.component.scoreboard.TeamAddCallback;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.network.MorePacketCodecs;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -23,7 +22,7 @@ public final class GeminiScoreboardComponents {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(SCOREBOARD_PACKET_ID, MorePacketCodecs.EMPTY);
          ComponentUpdatePayload.register(TEAM_PACKET_ID, ByteBufCodecs.STRING_UTF8);
-         ScoreboardSyncCallback.EVENT.register((ScoreboardSyncCallback)(player, tracked) -> {
+         ComponentCallbacks.ScoreboardSync.EVENT.register((ComponentCallbacks.ScoreboardSync)(player, tracked) -> {
             for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
                key.syncWith(player, tracked.asComponentProvider());
             }
@@ -34,7 +33,7 @@ public final class GeminiScoreboardComponents {
                }
             }
          });
-         TeamAddCallback.EVENT.register((TeamAddCallback)tracked -> {
+         ComponentCallbacks.TeamAdd.EVENT.register((ComponentCallbacks.TeamAdd)tracked -> {
             for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
                tracked.syncComponent(key);
             }

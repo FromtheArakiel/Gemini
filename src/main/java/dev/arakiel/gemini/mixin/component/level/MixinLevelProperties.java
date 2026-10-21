@@ -2,10 +2,10 @@ package dev.arakiel.gemini.mixin.component.level;
 
 import com.mojang.datafixers.util.Unit;
 import com.mojang.serialization.Lifecycle;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.level.GeminiLevelComponents;
 import dev.arakiel.gemini.component.internal.level.StaticLevelComponentPlugin;
@@ -93,7 +93,7 @@ public abstract class MixinLevelProperties implements ServerLevelData, Component
       throw new UnsupportedOperationException("Please call LevelComponents#sync(MinecraftServer) instead of ComponentKey#sync");
    }
 
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiLevelComponents.PACKET_ID, Unit.INSTANCE, required, key.getId(), data);

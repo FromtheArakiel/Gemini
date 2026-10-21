@@ -1,13 +1,11 @@
 package dev.arakiel.gemini.component.internal.scoreboard;
 
 import com.google.common.base.Suppliers;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.scoreboard.ScoreboardComponentFactoryRegistry;
-import dev.arakiel.gemini.component.scoreboard.ScoreboardComponentFactoryV2;
-import dev.arakiel.gemini.component.scoreboard.ScoreboardComponentInitializer;
-import dev.arakiel.gemini.component.scoreboard.TeamComponentFactoryV2;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
 import dev.arakiel.gemini.component.internal.base.GenericContainerBuilder;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
@@ -18,20 +16,20 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;
 
-public final class StaticScoreboardComponentPlugin extends LazyDispatcher implements ScoreboardComponentFactoryRegistry {
+public final class StaticScoreboardComponentPlugin extends LazyDispatcher implements ComponentFactoryRegistries.Scoreboard {
    public static final StaticScoreboardComponentPlugin INSTANCE = new StaticScoreboardComponentPlugin();
    public static final Supplier<ScoreboardComponentContainerFactory> scoreboardComponentsContainerFactory = Suppliers.memoize(
       INSTANCE::buildScoreboardContainerFactory
    );
    public static final Supplier<TeamComponentContainerFactory> teamComponentsContainerFactory = Suppliers.memoize(INSTANCE::buildTeamContainerFactory);
-   private final GenericContainerBuilder<ScoreboardComponentFactoryV2<?>, ScoreboardComponentContainerFactory> scoreboardFactories = new GenericContainerBuilder<>(
-      ScoreboardComponentFactoryV2.class,
+   private final GenericContainerBuilder<ComponentFactoryRegistries.ScoreboardFactory<?>, ScoreboardComponentContainerFactory> scoreboardFactories = new GenericContainerBuilder<>(
+      ComponentFactoryRegistries.ScoreboardFactory.class,
       ScoreboardComponentContainerFactory.class,
       List.of(Scoreboard.class, MinecraftServer.class),
       (scoreboard, server) -> ComponentContainer.EMPTY
    );
-   private final GenericContainerBuilder<TeamComponentFactoryV2<?>, TeamComponentContainerFactory> teamFactories = new GenericContainerBuilder<>(
-      TeamComponentFactoryV2.class,
+   private final GenericContainerBuilder<ComponentFactoryRegistries.TeamFactory<?>, TeamComponentContainerFactory> teamFactories = new GenericContainerBuilder<>(
+      ComponentFactoryRegistries.TeamFactory.class,
       TeamComponentContainerFactory.class,
       List.of(PlayerTeam.class, Scoreboard.class, MinecraftServer.class),
       (team, scoreboard, server) -> ComponentContainer.EMPTY
@@ -54,30 +52,30 @@ public final class StaticScoreboardComponentPlugin extends LazyDispatcher implem
    @Override
    protected void init() {
       StaticComponentPluginBase.processInitializers(
-         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-scoreboard", ScoreboardComponentInitializer.class),
+         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-scoreboard", ComponentInitializers.Scoreboard.class),
          initializer -> initializer.registerScoreboardComponentFactories(this)
       );
    }
 
    @Override
-   public <C extends Component> void registerScoreboardComponent(ComponentKey<C> type, ScoreboardComponentFactoryV2<? extends C> factory) {
+   public <C extends Component> void registerScoreboardComponent(ComponentKey<C> type, ComponentFactoryRegistries.ScoreboardFactory<? extends C> factory) {
       this.registerScoreboardComponent(type, type.getComponentClass(), factory);
    }
 
    @Override
-   public <C extends Component> void registerScoreboardComponent(ComponentKey<? super C> type, Class<C> impl, ScoreboardComponentFactoryV2<? extends C> factory) {
-      this.checkLoading(ScoreboardComponentFactoryRegistry.class, "registerForScoreboards");
+   public <C extends Component> void registerScoreboardComponent(ComponentKey<? super C> type, Class<C> impl, ComponentFactoryRegistries.ScoreboardFactory<? extends C> factory) {
+      this.checkLoading(ComponentFactoryRegistries.Scoreboard.class, "registerForScoreboards");
       this.scoreboardFactories.component(type, impl, factory, Set.of());
    }
 
    @Override
-   public <C extends Component> void registerTeamComponent(ComponentKey<C> type, TeamComponentFactoryV2<? extends C> factory) {
+   public <C extends Component> void registerTeamComponent(ComponentKey<C> type, ComponentFactoryRegistries.TeamFactory<? extends C> factory) {
       this.registerTeamComponent(type, type.getComponentClass(), factory);
    }
 
    @Override
-   public <C extends Component> void registerTeamComponent(ComponentKey<? super C> type, Class<C> impl, TeamComponentFactoryV2<? extends C> factory) {
-      this.checkLoading(ScoreboardComponentFactoryRegistry.class, "register");
+   public <C extends Component> void registerTeamComponent(ComponentKey<? super C> type, Class<C> impl, ComponentFactoryRegistries.TeamFactory<? extends C> factory) {
+      this.checkLoading(ComponentFactoryRegistries.Scoreboard.class, "register");
       this.teamFactories.component(type, impl, factory, Set.of());
    }
 }

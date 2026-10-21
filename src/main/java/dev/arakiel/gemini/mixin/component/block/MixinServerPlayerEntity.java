@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.block;
 
-import dev.arakiel.gemini.component.block.BlockEntitySyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.CommandBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,6 +18,6 @@ public abstract class MixinServerPlayerEntity {
       )}
    )
    private void syncBlockEntity(CommandBlockEntity commandBlock, CallbackInfo ci) {
-      ((BlockEntitySyncCallback)BlockEntitySyncCallback.EVENT.invoker()).onBlockEntitySync((ServerPlayer)(Object)this, commandBlock);
+      ((ComponentCallbacks.BlockEntitySync)ComponentCallbacks.BlockEntitySync.EVENT.invoker()).onBlockEntitySync((ServerPlayer)(Object)this, commandBlock);
    }
 }

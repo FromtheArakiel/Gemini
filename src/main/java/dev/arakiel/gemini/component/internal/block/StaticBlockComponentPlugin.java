@@ -1,21 +1,19 @@
 package dev.arakiel.gemini.component.internal.block;
 
-import dev.arakiel.gemini.component.block.BlockComponentFactoryRegistry;
-import dev.arakiel.gemini.component.block.BlockComponentInitializer;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentFactory;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.tick.ClientTickingComponent;
-import dev.arakiel.gemini.component.tick.ServerTickingComponent;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentFactory;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentLifecycle;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
-import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
+import dev.arakiel.gemini.component.internal.base.ComponentPluginSupport;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -29,7 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class StaticBlockComponentPlugin extends LazyDispatcher implements BlockComponentFactoryRegistry {
+public final class StaticBlockComponentPlugin extends LazyDispatcher implements ComponentFactoryRegistries.Block {
    public static final StaticBlockComponentPlugin INSTANCE = new StaticBlockComponentPlugin();
    private final List<StaticBlockComponentPlugin.PredicatedComponentFactory<?>> dynamicFactories = new ArrayList<>();
    private final Map<Class<? extends BlockEntity>, Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>>> beComponentFactories = new Reference2ObjectOpenHashMap();
@@ -77,30 +75,21 @@ public final class StaticBlockComponentPlugin extends LazyDispatcher implements 
 
    public ComponentContainer.Factory<BlockEntity> buildDedicatedFactory(Class<? extends BlockEntity> entityClass) {
       this.ensureInitialized();
-      LinkedHashMap<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>> compiled = new LinkedHashMap<>(
-         this.beComponentFactories.getOrDefault(entityClass, Collections.emptyMap())
+      var compiled = ComponentPluginSupport.collectClassHierarchy(
+              this.beComponentFactories,
+              entityClass,
+              BlockEntity.class
       );
-      Class<? extends BlockEntity> type = entityClass;
-
-      while (type != BlockEntity.class) {
-         type = type.getSuperclass().asSubclass(BlockEntity.class);
-
-         for (Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>> e : this.beComponentFactories
-            .getOrDefault(type, Collections.emptyMap())
-            .entrySet()) {
-            compiled.putIfAbsent(e.getKey(), e.getValue());
-         }
-      }
 
       ComponentContainer.Factory.Builder<BlockEntity> builder = ComponentContainer.Factory.builder(BlockEntity.class).factoryNameSuffix(getSuffix(entityClass));
 
       for (Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>> entry : compiled.entrySet()) {
-         this.addToBuilder(builder, entry);
-         if (ClientTickingComponent.class.isAssignableFrom(entry.getValue().impl())) {
+         ComponentPluginSupport.addToBuilder(builder, entry);
+         if (ComponentLifecycle.ClientTicking.class.isAssignableFrom(entry.getValue().impl())) {
             this.clientTicking.add(entityClass);
          }
 
-         if (ServerTickingComponent.class.isAssignableFrom(entry.getValue().impl())) {
+         if (ComponentLifecycle.ServerTicking.class.isAssignableFrom(entry.getValue().impl())) {
             this.serverTicking.add(entityClass);
          }
       }
@@ -108,46 +97,27 @@ public final class StaticBlockComponentPlugin extends LazyDispatcher implements 
       return builder.build();
    }
 
-   private <C extends Component> void addToBuilder(
-      ComponentContainer.Factory.Builder<BlockEntity> builder,
-      Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>> entry
-   ) {
-      ComponentKey<C> key = (ComponentKey<C>)entry.getKey();
-      ComponentFactory<BlockEntity, C> factory = (ComponentFactory<BlockEntity, C>)entry.getValue().factory();
-      Class<C> impl = (Class<C>)entry.getValue().impl();
-      builder.component(key, impl, factory, entry.getValue().dependencies());
-   }
-
    @Override
    public <C extends Component, E extends BlockEntity> void registerFor(Class<E> target, ComponentKey<C> type, ComponentFactory<E, C> factory) {
-      this.checkLoading(BlockComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.Block.class, "register");
       this.register0(target, type, new QualifiedComponentFactory<>(factory, type.getComponentClass(), Set.of()));
    }
 
    private <C extends Component, F extends C, E extends BlockEntity> void register0(
       Class<? extends E> target, ComponentKey<? super C> type, QualifiedComponentFactory<ComponentFactory<E, F>> factory
    ) {
-      Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>>> specializedMap = this.beComponentFactories
-         .computeIfAbsent(target, t -> new LinkedHashMap<>());
-      QualifiedComponentFactory<ComponentFactory<? extends BlockEntity, ?>> previousFactory = specializedMap.get(type);
-      if (previousFactory != null) {
-         throw new StaticComponentLoadingException(
-            "Duplicate factory declarations for %s on %s: %s and %s".formatted(type.getId(), target, factory, previousFactory)
-         );
-      } else {
-         specializedMap.put(type, (QualifiedComponentFactory) factory);
-      }
+      ComponentPluginSupport.putFactory(this.beComponentFactories, target, type, factory);
    }
 
    @Override
-   public <C extends Component, B extends BlockEntity> BlockComponentFactoryRegistry.Registration<C, B> beginRegistration(Class<B> target, ComponentKey<C> key) {
+   public <C extends Component, B extends BlockEntity> ComponentFactoryRegistries.Block.Registration<C, B> beginRegistration(Class<B> target, ComponentKey<C> key) {
       return new StaticBlockComponentPlugin.RegistrationImpl<>(target, key);
    }
 
    @Override
    protected void init() {
       StaticComponentPluginBase.processInitializers(
-         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-block", BlockComponentInitializer.class),
+         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-block", ComponentInitializers.Block.class),
          initializer -> initializer.registerBlockComponentFactories(this)
       );
    }
@@ -172,7 +142,7 @@ public final class StaticBlockComponentPlugin extends LazyDispatcher implements 
       }
    }
 
-   private final class RegistrationImpl<C extends Component, E extends BlockEntity> implements BlockComponentFactoryRegistry.Registration<C, E> {
+   private final class RegistrationImpl<C extends Component, E extends BlockEntity> implements ComponentFactoryRegistries.Block.Registration<C, E> {
       private final Class<E> target;
       private final ComponentKey<? super C> key;
       private final Set<ComponentKey<?>> dependencies;
@@ -188,26 +158,26 @@ public final class StaticBlockComponentPlugin extends LazyDispatcher implements 
       }
 
       @Override
-      public BlockComponentFactoryRegistry.Registration<C, E> filter(Predicate<Class<? extends E>> test) {
+      public ComponentFactoryRegistries.Block.Registration<C, E> filter(Predicate<Class<? extends E>> test) {
          this.test = this.test == null ? test : this.test.and(test);
          return this;
       }
 
       @Override
-      public BlockComponentFactoryRegistry.Registration<C, E> after(ComponentKey<?> dependency) {
+      public ComponentFactoryRegistries.Block.Registration<C, E> after(ComponentKey<?> dependency) {
          this.dependencies.add(dependency);
          return this;
       }
 
       @Override
-      public <I extends C> BlockComponentFactoryRegistry.Registration<I, E> impl(Class<I> impl) {
+      public <I extends C> ComponentFactoryRegistries.Block.Registration<I, E> impl(Class<I> impl) {
          this.componentClass = (Class<C>) impl;
-         return (BlockComponentFactoryRegistry.Registration<I, E>) this;
+         return (ComponentFactoryRegistries.Block.Registration<I, E>) this;
       }
 
       @Override
       public void end(ComponentFactory<E, C> factory) {
-         StaticBlockComponentPlugin.this.checkLoading(BlockComponentFactoryRegistry.Registration.class, "end");
+         StaticBlockComponentPlugin.this.checkLoading(ComponentFactoryRegistries.Block.Registration.class, "end");
          if (this.test == null) {
             StaticBlockComponentPlugin.this.register0(this.target, this.key, new QualifiedComponentFactory<>(factory, this.componentClass, this.dependencies));
          } else {

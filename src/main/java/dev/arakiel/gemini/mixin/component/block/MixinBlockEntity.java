@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.mixin.component.block;
 
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.block.BlockEntityAddress;
 import dev.arakiel.gemini.component.internal.block.GeminiBlockComponents;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
@@ -81,7 +81,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       return (Iterable<ServerPlayer>)(world != null && !world.isClientSide ? PlayerLookup.tracking((BlockEntity)(Object)this) : List.of());
    }
 
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(

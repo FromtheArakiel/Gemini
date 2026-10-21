@@ -1,14 +1,14 @@
 package dev.arakiel.gemini.component.internal.world;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentFactory;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.world.WorldComponentFactoryRegistry;
-import dev.arakiel.gemini.component.world.WorldComponentInitializer;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentFactory;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
+import dev.arakiel.gemini.component.internal.base.ComponentPluginSupport;
 import dev.arakiel.gemini.component.internal.base.asm.ComponentAsmHelper;
-import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import java.util.Collection;
@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class StaticWorldComponentPlugin extends StaticComponentPluginBase<Level, WorldComponentInitializer> implements WorldComponentFactoryRegistry {
+public final class StaticWorldComponentPlugin extends StaticComponentPluginBase<Level, ComponentInitializers.World> implements ComponentFactoryRegistries.World {
    public static final StaticWorldComponentPlugin INSTANCE = new StaticWorldComponentPlugin();
    private final Map<ResourceKey<Level>, Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<Level, ?>>>> worldComponentFactories = new Reference2ObjectOpenHashMap();
 
@@ -49,45 +49,36 @@ public final class StaticWorldComponentPlugin extends StaticComponentPluginBase<
       ComponentContainer.Factory.Builder<Level> builder = ComponentContainer.Factory.builder(Level.class).factoryNameSuffix(getSuffix(dimensionId));
 
       for (Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<Level, ?>>> entry : compiled.entrySet()) {
-         this.addToBuilder(builder, entry);
+         ComponentPluginSupport.addToBuilder(builder, entry);
       }
 
       return builder.build();
    }
 
-   private <C extends Component> void addToBuilder(
-      ComponentContainer.Factory.Builder<Level> builder, Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<Level, ?>>> entry
-   ) {
-      ComponentKey<C> key = (ComponentKey<C>)entry.getKey();
-      ComponentFactory<Level, C> factory = (ComponentFactory<Level, C>)entry.getValue().factory();
-      Class<C> impl = (Class<C>)entry.getValue().impl();
-      builder.component(key, impl, factory, entry.getValue().dependencies());
-   }
-
    @Override
-   protected Collection<EntrypointContainer<WorldComponentInitializer>> getEntrypoints() {
-      return getComponentEntrypoints("gemini:components-world", WorldComponentInitializer.class);
+   protected Collection<EntrypointContainer<ComponentInitializers.World>> getEntrypoints() {
+      return getComponentEntrypoints("gemini:components-world", ComponentInitializers.World.class);
    }
 
-   protected void dispatchRegistration(WorldComponentInitializer entrypoint) {
+   protected void dispatchRegistration(ComponentInitializers.World entrypoint) {
       entrypoint.registerWorldComponentFactories(this);
    }
 
    @Override
    public <C extends Component> void register(ComponentKey<C> type, ComponentFactory<Level, ? extends C> factory) {
-      this.checkLoading(WorldComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.World.class, "register");
       this.register0(null, type, new QualifiedComponentFactory<>(factory, type.getComponentClass(), Set.of()));
    }
 
    @Override
    public <C extends Component> void register(ComponentKey<? super C> type, Class<C> impl, ComponentFactory<Level, ? extends C> factory) {
-      this.checkLoading(WorldComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.World.class, "register");
       this.register0(null, type, new QualifiedComponentFactory<>(factory, (Class<? extends Component>)type.getComponentClass(), Set.of()));
    }
 
    @Override
    public <C extends Component> void registerFor(ResourceKey<Level> dimensionId, ComponentKey<C> type, ComponentFactory<Level, ? extends C> factory) {
-      this.checkLoading(WorldComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.World.class, "register");
       this.register0(dimensionId, type, new QualifiedComponentFactory<>(factory, type.getComponentClass(), Set.of()));
    }
 
@@ -95,22 +86,13 @@ public final class StaticWorldComponentPlugin extends StaticComponentPluginBase<
    public <C extends Component> void registerFor(
       ResourceKey<Level> dimensionId, ComponentKey<? super C> type, Class<C> impl, ComponentFactory<Level, ? extends C> factory
    ) {
-      this.checkLoading(WorldComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.World.class, "register");
       this.register0(dimensionId, type, new QualifiedComponentFactory<>(factory, impl, Set.of()));
    }
 
    private <C extends Component> void register0(
       @Nullable ResourceKey<Level> dimensionId, ComponentKey<? super C> type, QualifiedComponentFactory<ComponentFactory<Level, ? extends C>> factory
    ) {
-      Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<Level, ?>>> specializedMap = this.worldComponentFactories
-         .computeIfAbsent(dimensionId, t -> new LinkedHashMap<>());
-      QualifiedComponentFactory<ComponentFactory<Level, ?>> previousFactory = specializedMap.get(type);
-      if (previousFactory != null) {
-         throw new StaticComponentLoadingException(
-            "Duplicate factory declarations for %s on %s: %s and %s".formatted(type.getId(), dimensionId, factory, previousFactory)
-         );
-      } else {
-         specializedMap.put(type, (QualifiedComponentFactory) factory);
-      }
+      ComponentPluginSupport.putFactory(this.worldComponentFactories, dimensionId, type, factory);
    }
 }

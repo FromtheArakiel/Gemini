@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.mixin.component.world;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.world.GeminiWorldComponents;
 import dev.arakiel.gemini.component.internal.world.ComponentPersistentState;
@@ -35,12 +35,7 @@ public abstract class MixinServerWorld extends MixinWorld {
       method = {"<init>*"}
    )
    private void constructor(CallbackInfo ci) {
-      try {
-         ComponentPersistentState.LOADING.set(true);
-         this.getDataStorage().computeIfAbsent(ComponentPersistentState.getType(this.components), "gemini_world_components");
-      } finally {
-         ComponentPersistentState.LOADING.set(false);
-      }
+      this.getDataStorage().computeIfAbsent(ComponentPersistentState.getType(this.components), "gemini_world_components");
    }
 
    @Inject(
@@ -56,7 +51,7 @@ public abstract class MixinServerWorld extends MixinWorld {
       return List.copyOf(this.players());
    }
 
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiWorldComponents.PACKET_ID, Unit.INSTANCE, required, key.getId(), data);

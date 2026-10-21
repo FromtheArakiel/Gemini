@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.mixin.component.world;
 
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.world.GeminiWorldComponents;
 import javax.annotation.Nonnull;
 import net.minecraft.world.level.Level;

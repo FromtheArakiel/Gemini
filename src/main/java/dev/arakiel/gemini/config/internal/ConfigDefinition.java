@@ -124,6 +124,7 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
 
     @Override
     public synchronized void reload() {
+        file.clear();
         if (Files.exists(path)) {
             file.load();
         }

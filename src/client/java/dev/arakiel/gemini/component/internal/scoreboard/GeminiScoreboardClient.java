@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.scoreboard;
 
-import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.api.Component;
 import dev.arakiel.gemini.component.internal.network.ComponentClientInternals;
 import java.util.Objects;
 import java.util.Optional;

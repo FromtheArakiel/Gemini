@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.chunk.GeminiChunkComponents;
 import java.util.List;
@@ -53,7 +53,7 @@ public abstract class MixinWorldChunk extends ChunkAccess implements ComponentPr
    }
 
    @Nullable
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiChunkComponents.PACKET_ID, this.getPos(), required, key.getId(), data);

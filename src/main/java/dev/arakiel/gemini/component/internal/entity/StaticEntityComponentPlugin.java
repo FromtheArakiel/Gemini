@@ -1,19 +1,18 @@
 package dev.arakiel.gemini.component.internal.entity;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentFactory;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.entity.EntityComponentFactoryRegistry;
-import dev.arakiel.gemini.component.entity.EntityComponentInitializer;
-import dev.arakiel.gemini.component.entity.RespawnCopyStrategy;
-import dev.arakiel.gemini.component.entity.RespawnableComponent;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentFactory;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
+import dev.arakiel.gemini.component.api.RespawnCopyStrategy;
+import dev.arakiel.gemini.component.api.RespawnableComponent;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
-import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
+import dev.arakiel.gemini.component.internal.base.ComponentPluginSupport;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -26,7 +25,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 @SuppressWarnings({"unchecked", "deprecation"})
-public final class StaticEntityComponentPlugin extends LazyDispatcher implements EntityComponentFactoryRegistry {
+public final class StaticEntityComponentPlugin extends LazyDispatcher implements ComponentFactoryRegistries.Entity {
    public static final StaticEntityComponentPlugin INSTANCE = new StaticEntityComponentPlugin();
    private final List<StaticEntityComponentPlugin.PredicatedComponentFactory<?>> dynamicFactories = new ArrayList<>();
    private final Map<Class<? extends Entity>, Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>>>> componentFactories = new HashMap<>();
@@ -52,60 +51,37 @@ public final class StaticEntityComponentPlugin extends LazyDispatcher implements
 
    public ComponentContainer.Factory<Entity> buildDedicatedFactory(Class<? extends Entity> entityClass) {
       this.ensureInitialized();
-      LinkedHashMap<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>>> compiled = new LinkedHashMap<>(
-         this.componentFactories.getOrDefault(entityClass, Collections.emptyMap())
+      var compiled = ComponentPluginSupport.collectClassHierarchy(
+              this.componentFactories,
+              entityClass,
+              Entity.class
       );
-      Class<?> type = entityClass;
-
-      while (type != Entity.class) {
-         type = type.getSuperclass();
-         this.componentFactories.getOrDefault(type, Collections.emptyMap()).forEach(compiled::putIfAbsent);
-      }
 
       ComponentContainer.Factory.Builder<Entity> builder = ComponentContainer.Factory.builder(Entity.class).factoryNameSuffix(getSuffix(entityClass));
 
       for (Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>>> entry : compiled.entrySet()) {
-         this.addToBuilder(builder, entry);
+         ComponentPluginSupport.addToBuilder(builder, entry);
       }
 
       return builder.build();
    }
 
-   private <C extends Component> void addToBuilder(
-      ComponentContainer.Factory.Builder<Entity> builder, Entry<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>>> entry
-   ) {
-      ComponentKey<C> key = (ComponentKey<C>)entry.getKey();
-      ComponentFactory<Entity, C> factory = (ComponentFactory<Entity, C>)entry.getValue().factory();
-      Class<C> impl = (Class<C>)entry.getValue().impl();
-      builder.component(key, impl, factory, entry.getValue().dependencies());
-   }
-
    @Override
    protected void init() {
       StaticComponentPluginBase.processInitializers(
-         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-entity", EntityComponentInitializer.class),
+         StaticComponentPluginBase.getComponentEntrypoints("gemini:components-entity", ComponentInitializers.Entity.class),
          initializer -> initializer.registerEntityComponentFactories(this)
       );
    }
 
    @Override
    public <C extends Component, E extends Entity> void registerFor(Class<E> target, ComponentKey<C> type, ComponentFactory<E, ? extends C> factory) {
-      this.checkLoading(EntityComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.Entity.class, "register");
       this.register0(target, type, new QualifiedComponentFactory<>(factory, type.getComponentClass(), Set.of()));
    }
 
    @Override
-   public <C extends Component> void registerFor(Predicate<Class<? extends Entity>> test, ComponentKey<C> type, ComponentFactory<Entity, C> factory) {
-      this.dynamicFactories
-         .add(
-            new StaticEntityComponentPlugin.PredicatedComponentFactory<>(
-               test, type, new QualifiedComponentFactory<>(factory, type.getComponentClass(), Set.of())
-            )
-         );
-   }
-
-   @Override
-   public <C extends Component, E extends Entity> EntityComponentFactoryRegistry.Registration<C, E> beginRegistration(Class<E> target, ComponentKey<C> key) {
+   public <C extends Component, E extends Entity> ComponentFactoryRegistries.Entity.Registration<C, E> beginRegistration(Class<E> target, ComponentKey<C> key) {
       return new StaticEntityComponentPlugin.RegistrationImpl<>(target, key);
    }
 
@@ -125,17 +101,8 @@ public final class StaticEntityComponentPlugin extends LazyDispatcher implements
    private <C extends Component, F extends C, E extends Entity> void register0(
       Class<? extends E> target, ComponentKey<? super C> key, QualifiedComponentFactory<ComponentFactory<E, F>> factory
    ) {
-      Map<ComponentKey<?>, QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>>> specializedMap = this.componentFactories
-         .computeIfAbsent(target, t -> new LinkedHashMap<>());
-      QualifiedComponentFactory<ComponentFactory<? extends Entity, ?>> previousFactory = specializedMap.get(key);
-      if (previousFactory != null) {
-         throw new StaticComponentLoadingException(
-            "Duplicate factory declarations for " + key.getId() + " on " + target + ": " + factory + " and " + previousFactory
-         );
-      } else {
-         specializedMap.put(key, (QualifiedComponentFactory) factory);
-         QualifiedComponentFactory.checkNoDependencyCycles(specializedMap);
-      }
+      ComponentPluginSupport.putFactory(this.componentFactories, target, key, factory);
+      QualifiedComponentFactory.checkNoDependencyCycles(this.componentFactories.get(target));
    }
 
    private final class PredicatedComponentFactory<C extends Component> {
@@ -158,7 +125,7 @@ public final class StaticEntityComponentPlugin extends LazyDispatcher implements
       }
    }
 
-   private final class RegistrationImpl<C extends Component, E extends Entity> implements EntityComponentFactoryRegistry.Registration<C, E> {
+   private final class RegistrationImpl<C extends Component, E extends Entity> implements ComponentFactoryRegistries.Entity.Registration<C, E> {
       private final Class<E> target;
       private final ComponentKey<? super C> key;
       private final Set<ComponentKey<?>> dependencies;
@@ -174,32 +141,32 @@ public final class StaticEntityComponentPlugin extends LazyDispatcher implements
       }
 
       @Override
-      public EntityComponentFactoryRegistry.Registration<C, E> filter(Predicate<Class<? extends E>> test) {
+      public ComponentFactoryRegistries.Entity.Registration<C, E> filter(Predicate<Class<? extends E>> test) {
          this.test = this.test == null ? test : this.test.and(test);
          return this;
       }
 
       @Override
-      public EntityComponentFactoryRegistry.Registration<C, E> after(ComponentKey<?> dependency) {
+      public ComponentFactoryRegistries.Entity.Registration<C, E> after(ComponentKey<?> dependency) {
          this.dependencies.add(dependency);
          return this;
       }
 
       @Override
-      public <I extends C> EntityComponentFactoryRegistry.Registration<I, E> impl(Class<I> impl) {
+      public <I extends C> ComponentFactoryRegistries.Entity.Registration<I, E> impl(Class<I> impl) {
          this.componentClass = (Class<C>) impl;
-         return (EntityComponentFactoryRegistry.Registration<I, E>) this;
+         return (ComponentFactoryRegistries.Entity.Registration<I, E>) this;
       }
 
       @Override
-      public EntityComponentFactoryRegistry.Registration<C, E> respawnStrategy(RespawnCopyStrategy<? super C> strategy) {
+      public ComponentFactoryRegistries.Entity.Registration<C, E> respawnStrategy(RespawnCopyStrategy<? super C> strategy) {
          GeminiEntityInternals.registerRespawnCopyStrat(this.key, this.target, strategy);
          return this;
       }
 
       @Override
       public void end(ComponentFactory<E, C> factory) {
-         StaticEntityComponentPlugin.this.checkLoading(EntityComponentFactoryRegistry.Registration.class, "end");
+         StaticEntityComponentPlugin.this.checkLoading(ComponentFactoryRegistries.Entity.Registration.class, "end");
          if (this.test == null) {
             StaticEntityComponentPlugin.this.register0(this.target, this.key, new QualifiedComponentFactory<>(factory, this.componentClass, this.dependencies));
          } else {

@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.scoreboard;
 
-import dev.arakiel.gemini.component.scoreboard.ScoreboardSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.ServerScoreboard;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
@@ -16,6 +16,6 @@ public abstract class MixinPlayerManager {
       at = {@At("RETURN")}
    )
    private void syncTeamComponents(ServerScoreboard scoreboard, ServerPlayer player, CallbackInfo ci) {
-      ((ScoreboardSyncCallback)ScoreboardSyncCallback.EVENT.invoker()).onScoreboardSync(player, scoreboard);
+      ((ComponentCallbacks.ScoreboardSync)ComponentCallbacks.ScoreboardSync.EVENT.invoker()).onScoreboardSync(player, scoreboard);
    }
 }

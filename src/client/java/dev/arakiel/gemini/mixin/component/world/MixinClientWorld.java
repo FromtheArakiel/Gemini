@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.world;
 
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import java.util.function.BooleanSupplier;
 import net.minecraft.client.multiplayer.ClientLevel;
 import org.spongepowered.asm.mixin.Mixin;

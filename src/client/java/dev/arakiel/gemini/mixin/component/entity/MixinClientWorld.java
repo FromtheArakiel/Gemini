@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.entity;
 
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;

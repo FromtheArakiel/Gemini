@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.chunk.ChunkSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
@@ -26,7 +26,7 @@ public abstract class MixinChunkHolder {
    )
    private void onPlayerLogIn(LevelChunk chunk, CallbackInfo ci) {
       for (ServerPlayer p : PlayerLookup.tracking((ServerLevel)chunk.getLevel(), chunk.getPos())) {
-         ((ChunkSyncCallback)ChunkSyncCallback.EVENT.invoker()).onChunkSync(p, chunk);
+         ((ComponentCallbacks.ChunkSync)ComponentCallbacks.ChunkSync.EVENT.invoker()).onChunkSync(p, chunk);
       }
    }
 }

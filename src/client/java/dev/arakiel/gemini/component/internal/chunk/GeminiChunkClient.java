@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.component.internal.chunk;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.network.ComponentClientInternals;
 import java.util.Objects;
 import java.util.Optional;

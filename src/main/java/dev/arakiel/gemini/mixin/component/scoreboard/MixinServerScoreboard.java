@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.mixin.component.scoreboard;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
-import dev.arakiel.gemini.component.scoreboard.TeamAddCallback;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentSync;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents;
 import dev.arakiel.gemini.component.internal.scoreboard.ScoreboardComponentContainerFactory;
@@ -38,7 +38,7 @@ public abstract class MixinServerScoreboard extends MixinScoreboard {
       return server.getPlayerList() != null ? server.getPlayerList().getPlayers() : List.of();
    }
 
-   public <C extends AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiScoreboardComponents.SCOREBOARD_PACKET_ID, Unit.INSTANCE, required, key.getId(), data);
@@ -57,6 +57,6 @@ public abstract class MixinServerScoreboard extends MixinScoreboard {
       at = {@At("RETURN")}
    )
    private void syncTeamComponents(PlayerTeam team, CallbackInfo ci) {
-      ((TeamAddCallback)TeamAddCallback.EVENT.invoker()).onTeamAdded(team);
+      ((ComponentCallbacks.TeamAdd)ComponentCallbacks.TeamAdd.EVENT.invoker()).onTeamAdded(team);
    }
 }

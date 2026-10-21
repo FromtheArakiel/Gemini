@@ -6,6 +6,7 @@
 		"component.entity.MixinClientWorld",
 		"component.level.MixinClientWorldProperties",
 		"component.world.MixinClientWorld",
+		"content.LocalPlayerMixin",
 		"fancy.CreativeModeInventoryScreenMixin",
 		"fancy.CreativeModeInventoryScreenInvoker",
 		"fancy.CreativeModeTabAccessor",

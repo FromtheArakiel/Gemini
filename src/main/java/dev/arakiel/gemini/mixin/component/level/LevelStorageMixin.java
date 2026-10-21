@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.serialization.Dynamic;
 import com.mojang.serialization.Lifecycle;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import net.minecraft.core.RegistryAccess.Frozen;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.levelgen.WorldOptions;

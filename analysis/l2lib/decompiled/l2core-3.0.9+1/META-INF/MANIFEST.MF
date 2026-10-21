@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: l2core
+Specification-Vendor: xkmc
+Specification-Version: 1
+Implementation-Title: L2Core
+Implementation-Version: 3.0.9+1
+Implementation-Vendor: xkmc
+Implementation-Timestamp: 2026-10-12T13:35:08+0800
+MixinConfigs: l2core.mixins.json
+

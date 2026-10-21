@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.component.internal.base;
 
 import com.google.common.base.Preconditions;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.asm.ComponentAsmHelper;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;

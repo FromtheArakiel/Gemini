@@ -1,15 +1,12 @@
 package dev.arakiel.gemini.component.internal.base;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentRegistry;
-import dev.arakiel.gemini.component.CopyableComponent;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.CopyableComponent;
 import java.util.Iterator;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings({"unchecked", "deprecation"})
 public abstract class AbstractComponentContainer implements ComponentContainer {
@@ -37,30 +34,16 @@ public abstract class AbstractComponentContainer implements ComponentContainer {
 
    @Override
    public void fromTag(CompoundTag tag, Provider registryLookup) {
-      if (tag.contains("gemini_components", 9)) {
-         ListTag componentList = tag.getList("gemini_components", 10);
-
-         for (int i = 0; i < componentList.size(); i++) {
-            CompoundTag nbt = componentList.getCompound(i);
-            ComponentKey<?> type = ComponentRegistry.get(ResourceLocation.parse(nbt.getString("componentId")));
-            if (type != null) {
-               Component component = type.getInternal(this);
-               if (component != null) {
-                  component.readFromNbt(nbt, registryLookup);
-               }
-            }
-         }
-      } else if (tag.contains("gemini_components", 10)) {
+      if (tag.contains("gemini_components", 10)) {
          CompoundTag componentMap = tag.getCompound("gemini_components");
 
          for (ComponentKey<?> key : this.keys()) {
             String keyId = key.getId().toString();
             if (componentMap.contains(keyId, 10)) {
                Component component = key.getInternal(this);
-
-               assert component != null;
-
-               component.readFromNbt(componentMap.getCompound(keyId), registryLookup);
+               if (component != null) {
+                  component.readFromNbt(componentMap.getCompound(keyId), registryLookup);
+               }
                componentMap.remove(keyId);
             }
          }
@@ -72,21 +55,18 @@ public abstract class AbstractComponentContainer implements ComponentContainer {
    @Override
    public CompoundTag toTag(CompoundTag tag, Provider registryLookup) {
       if (this.hasComponents()) {
-         CompoundTag componentMap = null;
-         CompoundTag componentTag = new CompoundTag();
+         CompoundTag componentMap = new CompoundTag();
 
          for (ComponentKey<?> type : this.keys()) {
             Component component = type.getFromContainer(this);
+            CompoundTag componentTag = new CompoundTag();
             component.writeToNbt(componentTag, registryLookup);
             if (!componentTag.isEmpty()) {
-               if (componentMap == null) {
-                  componentMap = new CompoundTag();
-                  tag.put("gemini_components", componentMap);
-               }
-
                componentMap.put(type.getId().toString(), componentTag);
-               componentTag = new CompoundTag();
             }
+         }
+         if (!componentMap.isEmpty()) {
+            tag.put("gemini_components", componentMap);
          }
       }
 

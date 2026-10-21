@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.block;
 
-import dev.arakiel.gemini.component.block.BlockEntitySyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.PlayerChunkSender;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -19,7 +19,7 @@ public abstract class MixinChunkDataSender {
    )
    private static void sendChunkDataPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
       for (BlockEntity be : chunk.getBlockEntities().values()) {
-         ((BlockEntitySyncCallback)BlockEntitySyncCallback.EVENT.invoker()).onBlockEntitySync(handler.player, be);
+         ((ComponentCallbacks.BlockEntitySync)ComponentCallbacks.BlockEntitySync.EVENT.invoker()).onBlockEntitySync(handler.player, be);
       }
    }
 }

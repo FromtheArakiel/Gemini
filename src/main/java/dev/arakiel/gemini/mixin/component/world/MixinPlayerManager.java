@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.world;
 
-import dev.arakiel.gemini.component.world.WorldSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
@@ -16,6 +16,6 @@ public abstract class MixinPlayerManager {
       at = {@At("RETURN")}
    )
    private void sendWorldInfo(ServerPlayer player, ServerLevel world, CallbackInfo ci) {
-      ((WorldSyncCallback)WorldSyncCallback.EVENT.invoker()).onPlayerStartTracking(player, world);
+      ((ComponentCallbacks.WorldSync)ComponentCallbacks.WorldSync.EVENT.invoker()).onPlayerStartTracking(player, world);
    }
 }

@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.base.asm;
 
 import com.google.common.annotations.VisibleForTesting;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.StaticComponentInitializer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.StaticComponentInitializer;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import java.io.IOException;
 import java.io.UncheckedIOException;

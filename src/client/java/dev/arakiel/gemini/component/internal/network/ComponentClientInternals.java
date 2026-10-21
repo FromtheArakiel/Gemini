@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.component.internal.network;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.sync.AutoSyncedComponent;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentSync;
 import dev.arakiel.gemini.component.internal.base.ComponentsInternals;
 import dev.arakiel.gemini.component.internal.base.UnknownComponentException;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public final class ComponentClientInternals {
          (payload, ctx) -> {
             try {
                getter.apply((T)payload, ctx).ifPresent(c -> {
-                  if (c instanceof AutoSyncedComponent synced) {
+                  if (c instanceof ComponentSync.AutoSyncedComponent synced) {
                      synced.applySyncPacket(payload.buf());
                   }
                });

@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.block;
 
-import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentContainer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Specification-Title: l2itemselector
+Specification-Vendor: xkmc
+Specification-Version: 1
+Implementation-Title: L2ItemSelector
+Implementation-Version: 3.0.9
+Implementation-Vendor: xkmc
+Implementation-Timestamp: 2025-06-04T08:58:43+0800
+MixinConfigs: l2itemselector.mixins.json
+

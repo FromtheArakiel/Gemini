@@ -1,11 +1,11 @@
 package dev.arakiel.gemini.component.internal.entity;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.CopyableComponent;
-import dev.arakiel.gemini.component.entity.RespawnCopyStrategy;
-import dev.arakiel.gemini.component.entity.RespawnableComponent;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.CopyableComponent;
+import dev.arakiel.gemini.component.api.RespawnCopyStrategy;
+import dev.arakiel.gemini.component.api.RespawnableComponent;
 import dev.arakiel.gemini.component.internal.base.ComponentsInternals;
 import java.util.HashMap;
 import java.util.Map;

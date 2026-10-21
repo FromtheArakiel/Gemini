@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.entity;
 
-import dev.arakiel.gemini.component.entity.PlayerSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.CommonListenerCookie;
@@ -22,7 +22,7 @@ public abstract class MixinPlayerManager {
       )}
    )
    private void onPlayerLogIn(Connection connection, ServerPlayer player, CommonListenerCookie clientData, CallbackInfo ci) {
-      ((PlayerSyncCallback)PlayerSyncCallback.EVENT.invoker()).onPlayerSync(player);
+      ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync(player);
    }
 
    @Inject(
@@ -30,7 +30,7 @@ public abstract class MixinPlayerManager {
       at = {@At("RETURN")}
    )
    private void sendPlayerStatus(ServerPlayer player, CallbackInfo info) {
-      ((PlayerSyncCallback)PlayerSyncCallback.EVENT.invoker()).onPlayerSync(player);
+      ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync(player);
    }
 
    @Inject(
@@ -38,6 +38,6 @@ public abstract class MixinPlayerManager {
       at = {@At("RETURN")}
    )
    private void respawnPlayer(ServerPlayer player, boolean alive, RemovalReason removalReason, CallbackInfoReturnable<ServerPlayer> cir) {
-      ((PlayerSyncCallback)PlayerSyncCallback.EVENT.invoker()).onPlayerSync((ServerPlayer)cir.getReturnValue());
+      ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync((ServerPlayer)cir.getReturnValue());
    }
 }

@@ -30,10 +30,10 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	implementation name: "core", version: "3.6.6"
-	implementation name: "toml", version: "3.6.6"
-	include name: "core", version: "3.6.6"
-	include name: "toml", version: "3.6.6"
+	implementation ":core:3.6.6"
+	implementation ":toml:3.6.6"
+	include ":core:3.6.6"
+	include ":toml:3.6.6"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "org.jetbrains:annotations:24.0.1"
 

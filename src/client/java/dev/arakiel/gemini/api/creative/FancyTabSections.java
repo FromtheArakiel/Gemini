@@ -1,6 +1,7 @@
 package dev.arakiel.gemini.api.creative;
 
 import dev.arakiel.gemini.Gemini;
+import dev.arakiel.gemini.api.GeminiApi;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -59,7 +60,7 @@ public final class FancyTabSections {
     }
 
     public static ResourceKey<CreativeModeTab> registerCreativeModeTab(ResourceLocation id, Supplier<ItemStack> icon) {
-        return GeminiCreativeTabs.register(
+        return GeminiApi.registerCreativeTab(
                 id,
                 Component.translatable("itemGroup." + id.getNamespace() + "." + id.getPath()),
                 icon,

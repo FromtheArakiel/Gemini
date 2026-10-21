@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.chunk;
 
-import dev.arakiel.gemini.component.chunk.ChunkSyncCallback;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.network.MorePacketCodecs;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
@@ -18,7 +18,7 @@ public final class GeminiChunkComponents {
    public static void init() {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(PACKET_ID, MorePacketCodecs.CHUNKPOS);
-         ChunkSyncCallback.EVENT.register((ChunkSyncCallback)(player, tracked) -> {
+         ComponentCallbacks.ChunkSync.EVENT.register((ComponentCallbacks.ChunkSync)(player, tracked) -> {
             for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
                key.syncWith(player, (ComponentProvider)tracked);
             }

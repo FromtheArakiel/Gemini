@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.chunk.ChunkSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.PlayerChunkSender;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -17,6 +17,6 @@ public abstract class MixinChunkDataSender {
       at = {@At("RETURN")}
    )
    private static void sendChunkComponentsPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
-      ((ChunkSyncCallback)ChunkSyncCallback.EVENT.invoker()).onChunkSync(handler.player, chunk);
+      ((ComponentCallbacks.ChunkSync)ComponentCallbacks.ChunkSync.EVENT.invoker()).onChunkSync(handler.player, chunk);
    }
 }

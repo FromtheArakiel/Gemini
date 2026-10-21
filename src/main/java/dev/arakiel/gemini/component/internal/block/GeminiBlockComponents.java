@@ -1,9 +1,8 @@
 package dev.arakiel.gemini.component.internal.block;
 
-import dev.arakiel.gemini.component.block.BlockEntitySyncAroundCallback;
-import dev.arakiel.gemini.component.block.BlockEntitySyncCallback;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.block.StaticBlockComponentPlugin;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerBlockEntityEvents;
@@ -18,14 +17,14 @@ public class GeminiBlockComponents {
    public static void init() {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(PACKET_ID, BlockEntityAddress.CODEC);
-         BlockEntitySyncCallback.EVENT.register((BlockEntitySyncCallback)(player, tracked) -> {
+         ComponentCallbacks.BlockEntitySync.EVENT.register((ComponentCallbacks.BlockEntitySync)(player, tracked) -> {
             ComponentProvider provider = (ComponentProvider)tracked;
 
             for (ComponentKey<?> key : provider.getComponentContainer().keys()) {
                key.syncWith(player, provider);
             }
          });
-         BlockEntitySyncAroundCallback.EVENT.register((BlockEntitySyncAroundCallback)tracked -> {
+         ComponentCallbacks.BlockEntitySyncAround.EVENT.register((ComponentCallbacks.BlockEntitySyncAround)tracked -> {
             for (ComponentKey<?> key : ((ComponentProvider)tracked).getComponentContainer().keys()) {
                tracked.syncComponent(key);
             }

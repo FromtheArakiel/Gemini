@@ -17,10 +17,15 @@
 			"dev.arakiel.gemini.component.internal.block.GeminiBlockComponents::init",
 			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkComponents::init",
 			"dev.arakiel.gemini.component.internal.entity.GeminiEntityComponents::init",
-			"dev.arakiel.gemini.component.internal.item.StaticItemComponentPlugin::INSTANCE",
 			"dev.arakiel.gemini.component.internal.level.GeminiLevelComponents::init",
 			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents::init",
 			"dev.arakiel.gemini.component.internal.world.GeminiWorldComponents::init"
+		],
+		"gemini:static-components": [
+			"dev.arakiel.gemini.component.internal.token.ConditionalTokenRegistration"
+		],
+		"gemini:components": [
+			"dev.arakiel.gemini.component.internal.token.ConditionalTokenRegistration"
 		],
 		"client": [
 			"dev.arakiel.gemini.client.GeminiClient",
@@ -46,25 +51,25 @@
 	"custom": {
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1297": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_2586": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_2791": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_5217": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_269": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_268": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			],
 			"net/minecraft/class_1937": [
-				"dev/arakiel/gemini/component/ComponentAccess"
+				"dev/arakiel/gemini/component/api/ComponentAccess"
 			]
 		}
 	},

@@ -1,12 +1,12 @@
 package dev.arakiel.gemini.component.internal.level;
 
 import com.google.common.base.Suppliers;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentFactory;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.level.LevelComponentFactoryRegistry;
-import dev.arakiel.gemini.component.level.LevelComponentInitializer;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentFactory;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.api.ComponentInitializers;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentPluginBase;
 import java.util.Collection;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
 import net.minecraft.world.level.storage.LevelData;
 
-public final class StaticLevelComponentPlugin extends StaticComponentPluginBase<LevelData, LevelComponentInitializer> implements LevelComponentFactoryRegistry {
+public final class StaticLevelComponentPlugin extends StaticComponentPluginBase<LevelData, ComponentInitializers.Level> implements ComponentFactoryRegistries.Level {
    public static final StaticLevelComponentPlugin INSTANCE = new StaticLevelComponentPlugin();
    public static final Supplier<ComponentContainer.Factory<LevelData>> componentContainerFactory;
 
@@ -27,23 +27,23 @@ public final class StaticLevelComponentPlugin extends StaticComponentPluginBase<
    }
 
    @Override
-   protected Collection<EntrypointContainer<LevelComponentInitializer>> getEntrypoints() {
-      return getComponentEntrypoints("gemini:components-level", LevelComponentInitializer.class);
+   protected Collection<EntrypointContainer<ComponentInitializers.Level>> getEntrypoints() {
+      return getComponentEntrypoints("gemini:components-level", ComponentInitializers.Level.class);
    }
 
-   protected void dispatchRegistration(LevelComponentInitializer entrypoint) {
+   protected void dispatchRegistration(ComponentInitializers.Level entrypoint) {
       entrypoint.registerLevelComponentFactories(this);
    }
 
    @Override
    public <C extends Component> void register(ComponentKey<C> type, ComponentFactory<LevelData, ? extends C> factory) {
-      this.checkLoading(LevelComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.Level.class, "register");
       super.register(type, factory);
    }
 
    @Override
    public <C extends Component> void register(ComponentKey<? super C> type, Class<C> impl, ComponentFactory<LevelData, ? extends C> factory) {
-      this.checkLoading(LevelComponentFactoryRegistry.class, "register");
+      this.checkLoading(ComponentFactoryRegistries.Level.class, "register");
       super.register(type, impl, factory);
    }
 

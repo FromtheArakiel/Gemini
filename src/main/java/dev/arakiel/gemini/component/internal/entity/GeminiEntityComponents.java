@@ -1,13 +1,12 @@
 package dev.arakiel.gemini.component.internal.entity;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.entity.C2SSelfMessagingComponent;
-import dev.arakiel.gemini.component.entity.PlayerSyncCallback;
-import dev.arakiel.gemini.component.entity.RespawnCopyStrategy;
-import dev.arakiel.gemini.component.entity.TrackingStartCallback;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentSync;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.api.RespawnCopyStrategy;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.base.ComponentsInternals;
 import dev.arakiel.gemini.component.internal.network.MorePacketCodecs;
@@ -40,15 +39,15 @@ public final class GeminiEntityComponents {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(PACKET_ID, ByteBufCodecs.VAR_INT);
          PayloadTypeRegistry.playC2S().register(C2S_SELF_PACKET_ID, ComponentUpdatePayload.codec(C2S_SELF_PACKET_ID, MorePacketCodecs.EMPTY));
-         PlayerSyncCallback.EVENT.register((PlayerSyncCallback)player -> syncEntityComponents(player, player));
-         TrackingStartCallback.EVENT.register(GeminiEntityComponents::syncEntityComponents);
+         ComponentCallbacks.PlayerSync.EVENT.register((ComponentCallbacks.PlayerSync)player -> syncEntityComponents(player, player));
+         ComponentCallbacks.TrackingStart.EVENT.register(GeminiEntityComponents::syncEntityComponents);
          ServerPlayNetworking.registerGlobalReceiver(
             C2S_SELF_PACKET_ID,
             (payload, ctx) -> {
                try {
                   Optional<ComponentKey<?>> componentKey = payload.componentKey();
                   if (componentKey.isPresent()) {
-                     if (componentKey.get().getNullable(ctx.player()) instanceof C2SSelfMessagingComponent synced) {
+                     if (componentKey.get().getNullable(ctx.player()) instanceof ComponentSync.SelfMessaging synced) {
                         synced.handleC2SMessage(payload.buf());
                      } else if (payload.required()
                         && (unknownC2SPlayerComponents.add(payload.componentKeyId()) || FabricLoader.getInstance().isDevelopmentEnvironment())) {

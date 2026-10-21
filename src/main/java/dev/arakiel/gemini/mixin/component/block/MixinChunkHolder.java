@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.block;
 
-import dev.arakiel.gemini.component.block.BlockEntitySyncAroundCallback;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,7 +17,7 @@ public abstract class MixinChunkHolder {
       )}
    )
    private BlockEntity sendBlockEntityUpdate(BlockEntity be) {
-      ((BlockEntitySyncAroundCallback)BlockEntitySyncAroundCallback.EVENT.invoker()).onBlockEntitySync(be);
+      ((ComponentCallbacks.BlockEntitySyncAround)ComponentCallbacks.BlockEntitySyncAround.EVENT.invoker()).onBlockEntitySync(be);
       return be;
    }
 }

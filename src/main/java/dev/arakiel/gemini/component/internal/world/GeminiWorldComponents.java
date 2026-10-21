@@ -1,10 +1,10 @@
 package dev.arakiel.gemini.component.internal.world;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.ComponentContainer;
-import dev.arakiel.gemini.component.ComponentKey;
-import dev.arakiel.gemini.component.ComponentProvider;
-import dev.arakiel.gemini.component.world.WorldSyncCallback;
+import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.api.ComponentCallbacks;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.network.MorePacketCodecs;
 import java.util.IdentityHashMap;
@@ -24,7 +24,7 @@ public final class GeminiWorldComponents {
    public static void init() {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(PACKET_ID, MorePacketCodecs.EMPTY);
-         WorldSyncCallback.EVENT.register((WorldSyncCallback)(player, world) -> {
+         ComponentCallbacks.WorldSync.EVENT.register((ComponentCallbacks.WorldSync)(player, world) -> {
             ComponentProvider provider = (ComponentProvider)world;
 
             for (ComponentKey<?> key : provider.getComponentContainer().keys()) {

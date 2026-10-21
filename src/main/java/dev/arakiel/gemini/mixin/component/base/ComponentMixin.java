@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.base;
 
-import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.api.Component;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;

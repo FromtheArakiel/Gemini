@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.component.internal.block;
 
-import dev.arakiel.gemini.component.Component;
-import dev.arakiel.gemini.component.ComponentProvider;
+import dev.arakiel.gemini.component.api.Component;
+import dev.arakiel.gemini.component.api.ComponentProvider;
 import dev.arakiel.gemini.component.internal.network.ComponentClientInternals;
 import java.util.Optional;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientBlockEntityEvents;

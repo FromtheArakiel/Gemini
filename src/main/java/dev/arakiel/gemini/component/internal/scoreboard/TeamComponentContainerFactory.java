@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.scoreboard;
 
-import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentContainer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Scoreboard;

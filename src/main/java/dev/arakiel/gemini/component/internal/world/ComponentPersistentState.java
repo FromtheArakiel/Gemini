@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.world;
 
-import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.api.ComponentContainer;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -8,7 +8,6 @@ import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedData.Factory;
 
 public class ComponentPersistentState extends SavedData {
-   public static final ThreadLocal<Boolean> LOADING = ThreadLocal.withInitial(() -> false);
    private final ComponentContainer components;
 
    public static Factory<ComponentPersistentState> getType(ComponentContainer components) {
