@@ -1,9 +1,0 @@
-{
-  "l2menustacker.configuration.section.l2configs.l2menustacker.server.toml": "莱特兰窗口堆叠 - 服务端配置",
-  "l2menustacker.configuration.section.l2configs.l2menustacker.server.toml.title": "莱特兰窗口堆叠 - 服务端配置",
-  "l2menustacker.configuration.tabSafeMode": "UI堆叠-安全模式",
-  "l2menustacker.configuration.tabSafeMode.tooltip": "开启时，部分模组的UI在返回时会被跳过",
-  "l2menustacker.configuration.title": "莱特兰窗口堆叠 - 配置",
-  "l2menustacker.title": "莱特兰·窗口堆叠",
-  "l2menustacker.tooltip.quick_access": "在GUI中右键打开"
-}

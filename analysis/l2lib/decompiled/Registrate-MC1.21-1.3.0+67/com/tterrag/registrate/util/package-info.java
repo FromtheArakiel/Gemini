@@ -1,8 +1,0 @@
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-@FieldsAreNonnullByDefault
-package com.tterrag.registrate.util;
-
-import com.tterrag.registrate.util.nullness.FieldsAreNonnullByDefault;
-import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.MethodsReturnNonnullByDefault;
