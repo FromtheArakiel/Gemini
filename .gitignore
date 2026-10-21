@@ -4,7 +4,6 @@
 build/
 out/
 classes/
-analysis/
 
 # eclipse
 
@@ -44,4 +43,6 @@ replay_*.log
 *.jfr
 
 reference/
+analysis/
+analysis/l2lib/
 guide.md
