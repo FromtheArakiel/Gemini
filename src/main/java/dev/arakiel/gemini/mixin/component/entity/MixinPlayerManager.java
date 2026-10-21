@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.entity;
 
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.CommonListenerCookie;

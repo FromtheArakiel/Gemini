@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.item;
 
-import dev.arakiel.gemini.event.api.Cancelable;
+import dev.arakiel.gemini.event.Cancelable;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

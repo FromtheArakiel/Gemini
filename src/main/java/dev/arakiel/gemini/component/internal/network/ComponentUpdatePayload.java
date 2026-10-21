@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.component.internal.network;
 
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.ComponentRegistry;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.ComponentRegistry;
 import dev.arakiel.gemini.component.internal.base.UnknownComponentException;
 import java.util.Optional;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;

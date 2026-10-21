@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.entity.player;
 
-import dev.arakiel.gemini.event.api.Cancelable;
+import dev.arakiel.gemini.event.Cancelable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;

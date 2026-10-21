@@ -1,11 +1,11 @@
 package dev.arakiel.gemini.component.internal.token;
 
-import dev.arakiel.gemini.component.api.Component;
-import dev.arakiel.gemini.component.api.ConditionalToken;
-import dev.arakiel.gemini.component.api.TokenKey;
-import dev.arakiel.gemini.component.api.RespawnableComponent;
-import dev.arakiel.gemini.component.api.ComponentSync;
-import dev.arakiel.gemini.component.api.ComponentLifecycle;
+import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.ConditionalToken;
+import dev.arakiel.gemini.component.TokenKey;
+import dev.arakiel.gemini.component.RespawnableComponent;
+import dev.arakiel.gemini.component.ComponentSync;
+import dev.arakiel.gemini.component.ComponentLifecycle;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

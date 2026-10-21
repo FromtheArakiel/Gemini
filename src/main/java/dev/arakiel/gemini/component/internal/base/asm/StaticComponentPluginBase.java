@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.component.internal.base.asm;
 
-import dev.arakiel.gemini.component.api.Component;
-import dev.arakiel.gemini.component.api.ComponentContainer;
-import dev.arakiel.gemini.component.api.ComponentFactory;
-import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.ComponentFactory;
+import dev.arakiel.gemini.component.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.ComponentRegistrationInitializer;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.EntrypointContainer;
@@ -159,5 +160,14 @@ public abstract class StaticComponentPluginBase<T, I> extends LazyDispatcher {
 
    protected <C extends Component> void register(ComponentKey<? super C> key, Class<C> impl, ComponentFactory<T, ? extends C> factory) {
       this.containerFactoryBuilder.component(key, impl, factory);
+   }
+
+   protected <C extends Component> void register(
+      ComponentKey<? super C> key,
+      Class<C> impl,
+      ComponentFactory<T, ? extends C> factory,
+      Set<ComponentKey<?>> dependencies
+   ) {
+      this.containerFactoryBuilder.component(key, impl, factory, dependencies);
    }
 }

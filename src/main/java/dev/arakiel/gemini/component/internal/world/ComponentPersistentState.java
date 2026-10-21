@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.world;
 
-import dev.arakiel.gemini.component.api.ComponentContainer;
+import dev.arakiel.gemini.component.ComponentContainer;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.datafix.DataFixTypes;

@@ -1,0 +1,21 @@
+{
+	"attribute.gemini.crit_rate": "Crit Rate",
+	"attribute.gemini.crit_damage": "Crit Damage",
+	"attribute.gemini.projectile_damage": "Projectile Damage",
+	"attribute.gemini.explosion_damage": "Explosion Damage",
+	"attribute.gemini.fire_damage": "Fire Damage",
+	"attribute.gemini.freezing_damage": "Freezing Damage",
+	"attribute.gemini.lightning_damage": "Lightning Damage",
+	"attribute.gemini.magic_damage": "Magic Damage",
+	"attribute.gemini.regeneration_rate": "Regeneration Rate",
+	"attribute.gemini.damage_absorption": "Damage Absorption",
+	"attribute.gemini.damage_reduction": "Damage after Reduction",
+	"gemini.attribute.add_value": "+%s",
+	"gemini.attribute.multiply": "%s%%",
+	"death.attack.bleed": "%s bled to death",
+	"death.attack.soul_flame": "%s's soul burned out",
+	"death.attack.freeze": "%s froze to death",
+	"death.attack.life_sync": "%s was drained",
+	"death.attack.void_eye": "%s was cursed by the Void Eye",
+	"death.attack.emerald": "%s was killed by Emerald Splash"
+}

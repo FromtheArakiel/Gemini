@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.level;
 
-import dev.arakiel.gemini.event.api.GeminiEvent;
+import dev.arakiel.gemini.event.GeminiEvent;
 import net.minecraft.world.level.Level;
 
 import java.util.Objects;

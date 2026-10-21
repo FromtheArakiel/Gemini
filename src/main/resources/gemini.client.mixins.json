@@ -1,0 +1,24 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"component.entity.MixinClientWorld",
+		"component.level.MixinClientWorldProperties",
+		"component.world.MixinClientWorld",
+		"tweak.LocalPlayerMixin",
+		"creative.CreativeModeInventoryScreenMixin",
+		"creative.CreativeModeInventoryScreenInvoker",
+		"creative.CreativeModeTabAccessor",
+		"creative.CreativeModeTabMixin",
+		"creative.ContainerScreenAccessor",
+		"creative.CustomCreativeSlotMixin",
+		"creative.ItemPickerMenuMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.block;
 
-import dev.arakiel.gemini.event.api.GeminiEvent;
+import dev.arakiel.gemini.event.GeminiEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 

@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.mixin.component.scoreboard;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.arakiel.gemini.component.api.ComponentProvider;
+import dev.arakiel.gemini.component.ComponentProvider;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

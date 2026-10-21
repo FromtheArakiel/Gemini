@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.entity.living;
 
-import dev.arakiel.gemini.event.api.Cancelable;
+import dev.arakiel.gemini.event.Cancelable;
 import dev.arakiel.gemini.event.entity.LivingEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

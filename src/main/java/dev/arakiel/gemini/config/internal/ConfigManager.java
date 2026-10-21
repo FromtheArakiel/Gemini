@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.config.internal;
 
-import dev.arakiel.gemini.config.api.ConfigHandle;
+import dev.arakiel.gemini.config.ConfigHandle;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 

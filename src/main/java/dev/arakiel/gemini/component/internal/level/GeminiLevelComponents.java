@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.level;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.network.MorePacketCodecs;
 import net.fabricmc.loader.api.FabricLoader;

@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.event;
 
-import dev.arakiel.gemini.api.GeminiEvents;
+import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.block.FurnaceBurnTimeEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;

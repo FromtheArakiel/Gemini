@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.component.internal.base;
 
-import dev.arakiel.gemini.component.api.ComponentRegistry;
+import dev.arakiel.gemini.component.ComponentRegistry;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;

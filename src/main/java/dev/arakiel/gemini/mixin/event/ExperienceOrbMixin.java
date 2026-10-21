@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.event;
 
-import dev.arakiel.gemini.api.GeminiEvents;
+import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.entity.player.PlayerXpPickupEvent;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Player;

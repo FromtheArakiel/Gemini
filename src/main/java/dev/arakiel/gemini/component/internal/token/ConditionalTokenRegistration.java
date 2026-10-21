@@ -1,11 +1,11 @@
 package dev.arakiel.gemini.component.internal.token;
 
 import dev.arakiel.gemini.Gemini;
-import dev.arakiel.gemini.api.GeminiComponents;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.StaticComponentInitializer;
-import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
-import dev.arakiel.gemini.component.api.ComponentInitializers;
+import dev.arakiel.gemini.component.GeminiComponents;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.StaticComponentInitializer;
+import dev.arakiel.gemini.component.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.ComponentInitializers;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;

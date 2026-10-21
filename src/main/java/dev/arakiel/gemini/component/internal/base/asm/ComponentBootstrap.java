@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.base.asm;
 
 import com.google.common.annotations.VisibleForTesting;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.StaticComponentInitializer;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.StaticComponentInitializer;
 import dev.arakiel.gemini.component.internal.base.LazyDispatcher;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -55,6 +55,14 @@ public final class ComponentBootstrap extends LazyDispatcher {
       assert this.generatedComponentTypes != null;
 
       return this.generatedComponentTypes.get(componentId);
+   }
+
+   @VisibleForTesting
+   public void addComponentIdForTesting(ResourceLocation componentId) {
+      if (!this.requiresInitialization()) {
+         throw new IllegalStateException("Component bootstrap has already been initialized");
+      }
+      this.additionalComponentIds.add(componentId);
    }
 
    @Override

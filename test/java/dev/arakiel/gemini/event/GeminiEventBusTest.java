@@ -1,10 +1,10 @@
 package dev.arakiel.gemini.event;
 
-import dev.arakiel.gemini.event.api.Cancelable;
-import dev.arakiel.gemini.event.api.EventPriority;
-import dev.arakiel.gemini.event.api.GeminiEvent;
-import dev.arakiel.gemini.event.api.GeminiEventBus;
-import dev.arakiel.gemini.event.api.SubscribeEvent;
+import dev.arakiel.gemini.event.Cancelable;
+import dev.arakiel.gemini.event.EventPriority;
+import dev.arakiel.gemini.event.GeminiEvent;
+import dev.arakiel.gemini.event.GeminiEventBus;
+import dev.arakiel.gemini.event.SubscribeEvent;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

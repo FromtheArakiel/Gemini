@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.base.asm;
 
-import dev.arakiel.gemini.component.api.Component;
-import dev.arakiel.gemini.component.api.ComponentContainer;
-import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.AbstractComponentContainer;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
 import it.unimi.dsi.fastutil.objects.ReferenceArraySet;
@@ -46,10 +46,7 @@ public final class ComponentAsmHelper {
    public static final String COMPONENT_CONTAINER = Type.getInternalName(ComponentContainer.class);
    public static final String COMPONENT_TYPE = Type.getInternalName(ComponentKey.class);
    public static final String DYNAMIC_COMPONENT_CONTAINER_IMPL = Type.getInternalName(AbstractComponentContainer.class);
-   public static final String IDENTIFIER = FabricLoader.getInstance()
-      .getMappingResolver()
-      .mapClassName("intermediary", "net.minecraft.class_2960")
-      .replace('.', '/');
+   public static final String IDENTIFIER = resolveResourceLocationName();
    public static final String EVENT = Type.getInternalName(Event.class);
    public static final String STATIC_COMPONENT_CONTAINER = createClassName("GeneratedComponentContainer");
    public static final String STATIC_CONTAINER_GETTER_DESC = "()L" + COMPONENT + ";";
@@ -86,6 +83,17 @@ public final class ComponentAsmHelper {
 
    public static String createClassName(String name) {
       return ComponentAsmHelper.class.getPackageName().replace('.', '/') + "/_generated_$" + name;
+   }
+
+   private static String resolveResourceLocationName() {
+      try {
+         return FabricLoader.getInstance()
+            .getMappingResolver()
+            .mapClassName("intermediary", "net.minecraft.class_2960")
+            .replace('.', '/');
+      } catch (RuntimeException | LinkageError ignored) {
+         return "net/minecraft/resources/ResourceLocation";
+      }
    }
 
    public static Class<?> generateClass(ClassNode classNode, boolean hidden, @Nullable Object classData) throws IOException {

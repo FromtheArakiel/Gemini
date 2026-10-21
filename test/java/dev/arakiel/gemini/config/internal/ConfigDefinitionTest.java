@@ -1,10 +1,10 @@
 package dev.arakiel.gemini.config.internal;
 
-import dev.arakiel.gemini.config.api.ConfigEntry;
-import dev.arakiel.gemini.config.api.ConfigHandle;
-import dev.arakiel.gemini.config.api.ConfigOption;
-import dev.arakiel.gemini.config.api.Range;
-import dev.arakiel.gemini.config.api.RestartRequired;
+import dev.arakiel.gemini.config.ConfigEntry;
+import dev.arakiel.gemini.config.ConfigHandle;
+import dev.arakiel.gemini.config.ConfigOption;
+import dev.arakiel.gemini.config.Range;
+import dev.arakiel.gemini.config.RestartRequired;
 import net.minecraft.resources.ResourceLocation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

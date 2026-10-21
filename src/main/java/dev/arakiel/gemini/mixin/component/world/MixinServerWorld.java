@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.mixin.component.world;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.ComponentSync;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.ComponentSync;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.world.GeminiWorldComponents;
 import dev.arakiel.gemini.component.internal.world.ComponentPersistentState;

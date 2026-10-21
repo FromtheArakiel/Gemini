@@ -5,9 +5,9 @@ import com.electronwill.nightconfig.core.ConfigSpec;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.toml.TomlFormat;
 import dev.arakiel.gemini.Gemini;
-import dev.arakiel.gemini.config.api.ConfigEntry;
-import dev.arakiel.gemini.config.api.ConfigHandle;
-import dev.arakiel.gemini.config.api.ConfigOption;
+import dev.arakiel.gemini.config.ConfigEntry;
+import dev.arakiel.gemini.config.ConfigHandle;
+import dev.arakiel.gemini.config.ConfigOption;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;

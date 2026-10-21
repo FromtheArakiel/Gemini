@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.mixin.event;
 
-import dev.arakiel.gemini.api.GeminiEvents;
-import dev.arakiel.gemini.event.api.EventResult;
+import dev.arakiel.gemini.event.GeminiEvents;
+import dev.arakiel.gemini.event.EventResult;
 import dev.arakiel.gemini.event.effect.MobEffectAddedEvent;
 import dev.arakiel.gemini.event.effect.MobEffectApplicableEvent;
 import dev.arakiel.gemini.event.effect.MobEffectRemovedEvent;

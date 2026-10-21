@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.token;
 
 import dev.arakiel.gemini.Gemini;
-import dev.arakiel.gemini.component.api.ConditionalToken;
-import dev.arakiel.gemini.component.api.TokenKey;
+import dev.arakiel.gemini.component.ConditionalToken;
+import dev.arakiel.gemini.component.TokenKey;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;

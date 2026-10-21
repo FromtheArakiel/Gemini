@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.item;
 
-import dev.arakiel.gemini.event.api.GeminiEvent;
+import dev.arakiel.gemini.event.GeminiEvent;
 import net.minecraft.world.item.Item;
 
 import java.util.Objects;

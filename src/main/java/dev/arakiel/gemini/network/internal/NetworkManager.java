@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.network.internal;
 
 import dev.arakiel.gemini.Gemini;
-import dev.arakiel.gemini.network.api.NetworkChannel;
+import dev.arakiel.gemini.network.NetworkChannel;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

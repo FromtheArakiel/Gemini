@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.registration.container;
 
-import dev.arakiel.gemini.registration.api.AutoRegistryContainer;
-import dev.arakiel.gemini.registration.api.RegistrySink;
+import dev.arakiel.gemini.registration.AutoRegistryContainer;
+import dev.arakiel.gemini.registration.RegistrySink;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;

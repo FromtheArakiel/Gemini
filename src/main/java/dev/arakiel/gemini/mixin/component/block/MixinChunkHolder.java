@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.block;
 
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;

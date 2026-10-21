@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.PlayerChunkSender;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;

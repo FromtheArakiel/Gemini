@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.component.internal.base;
 
 import com.google.common.collect.Lists;
-import dev.arakiel.gemini.component.api.Component;
-import dev.arakiel.gemini.component.api.ComponentKey;
+import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.ComponentKey;
 import dev.arakiel.gemini.component.internal.base.asm.StaticComponentLoadingException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;

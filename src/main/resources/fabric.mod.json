@@ -7,7 +7,7 @@
 	"authors": [
 		"FromtheArakiel"
 	],
-	"license": "ARR",
+	"license": "GPL-3.0-only",
 	"icon": "assets/gemini/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -17,6 +17,7 @@
 			"dev.arakiel.gemini.component.internal.block.GeminiBlockComponents::init",
 			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkComponents::init",
 			"dev.arakiel.gemini.component.internal.entity.GeminiEntityComponents::init",
+			"dev.arakiel.gemini.component.internal.itemstack.GeminiItemStackComponents::init",
 			"dev.arakiel.gemini.component.internal.level.GeminiLevelComponents::init",
 			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents::init",
 			"dev.arakiel.gemini.component.internal.world.GeminiWorldComponents::init"
@@ -29,12 +30,12 @@
 		],
 		"client": [
 			"dev.arakiel.gemini.client.GeminiClient",
-			"dev.arakiel.gemini.component.internal.block.GeminiBlockClient::initClient",
-			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkClient::initClient",
-			"dev.arakiel.gemini.component.internal.entity.GeminiEntityClient::initClient",
-			"dev.arakiel.gemini.component.internal.level.GeminiLevelClient::initClient",
-			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardClient::initClient",
-			"dev.arakiel.gemini.component.internal.world.GeminiWorldClient::initClient"
+			"dev.arakiel.gemini.component.client.internal.block.GeminiBlockClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.chunk.GeminiChunkClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.entity.GeminiEntityClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.level.GeminiLevelClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.scoreboard.GeminiScoreboardClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.world.GeminiWorldClient::initClient"
 		],
 		"modmenu": [
 			"dev.arakiel.gemini.client.GeminiModMenu::create"
@@ -51,25 +52,28 @@
 	"custom": {
 		"loom:injected_interfaces": {
 			"net/minecraft/class_1297": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_1799": [
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_2586": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_2791": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_5217": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_269": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_268": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			],
 			"net/minecraft/class_1937": [
-				"dev/arakiel/gemini/component/api/ComponentAccess"
+				"dev/arakiel/gemini/component/ComponentAccess"
 			]
 		}
 	},

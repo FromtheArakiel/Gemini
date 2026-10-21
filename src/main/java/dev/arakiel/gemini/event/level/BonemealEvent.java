@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.level;
 
-import dev.arakiel.gemini.event.api.Cancelable;
+import dev.arakiel.gemini.event.Cancelable;
 import dev.arakiel.gemini.event.block.BlockEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;

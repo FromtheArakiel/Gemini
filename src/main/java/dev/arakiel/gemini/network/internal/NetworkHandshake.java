@@ -1,8 +1,8 @@
 package dev.arakiel.gemini.network.internal;
 
 import dev.arakiel.gemini.Gemini;
-import dev.arakiel.gemini.network.api.NetworkChannel;
-import dev.arakiel.gemini.network.api.RecordCodecs;
+import dev.arakiel.gemini.network.NetworkChannel;
+import dev.arakiel.gemini.network.RecordCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

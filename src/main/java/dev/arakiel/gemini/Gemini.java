@@ -1,8 +1,13 @@
 package dev.arakiel.gemini;
 
-import dev.arakiel.gemini.api.GeminiApi;
-import dev.arakiel.gemini.api.GeminiEvents;
-import dev.arakiel.gemini.api.GeminiRegistration;
+import dev.arakiel.gemini.attribute.GeminiAttributes;
+import dev.arakiel.gemini.combat.internal.GeminiCombatImpl;
+import dev.arakiel.gemini.config.GeminiConfig;
+import dev.arakiel.gemini.event.GeminiEvents;
+import dev.arakiel.gemini.integration.GeminiIntegrations;
+import dev.arakiel.gemini.locate.GeminiLocate;
+import dev.arakiel.gemini.network.GeminiNetwork;
+import dev.arakiel.gemini.registration.GeminiRegistration;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +24,12 @@ public class Gemini implements ModInitializer {
 	public void onInitialize() {
 		GeminiEvents.init();
 		GeminiRegistration.init();
-		GeminiApi.init();
+		GeminiNetwork.init();
+		GeminiConfig.init();
+		GeminiAttributes.init();
+		GeminiLocate.init();
+		GeminiIntegrations.initCommon();
+		GeminiCombatImpl.init();
 	}
 
 	public static ResourceLocation id(String path) {

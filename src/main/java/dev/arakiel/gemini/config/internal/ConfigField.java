@@ -1,11 +1,11 @@
 package dev.arakiel.gemini.config.internal;
 
-import dev.arakiel.gemini.config.api.ConfigEntry;
-import dev.arakiel.gemini.config.api.ConfigOption;
-import dev.arakiel.gemini.config.api.ConfigValueType;
-import dev.arakiel.gemini.config.api.Hidden;
-import dev.arakiel.gemini.config.api.Range;
-import dev.arakiel.gemini.config.api.RestartRequired;
+import dev.arakiel.gemini.config.ConfigEntry;
+import dev.arakiel.gemini.config.ConfigOption;
+import dev.arakiel.gemini.config.ConfigValueType;
+import dev.arakiel.gemini.config.Hidden;
+import dev.arakiel.gemini.config.Range;
+import dev.arakiel.gemini.config.RestartRequired;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

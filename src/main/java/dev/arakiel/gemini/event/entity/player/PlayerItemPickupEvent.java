@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.entity.player;
 
-import dev.arakiel.gemini.event.api.Cancelable;
+import dev.arakiel.gemini.event.Cancelable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

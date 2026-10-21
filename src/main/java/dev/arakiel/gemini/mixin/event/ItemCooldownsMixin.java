@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.event;
 
-import dev.arakiel.gemini.api.GeminiEvents;
+import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.item.ItemCooldownEndEvent;
 import dev.arakiel.gemini.event.item.ItemCooldownStartEvent;
 import net.minecraft.world.item.Item;

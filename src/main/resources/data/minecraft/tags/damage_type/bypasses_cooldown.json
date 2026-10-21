@@ -1,0 +1,15 @@
+{
+	"replace": false,
+	"values": [
+		"gemini:life_sync",
+		"gemini:freeze",
+		"gemini:player_attack-bypass_cooldown",
+		"gemini:player_attack-bypass_armor-bypass_cooldown",
+		"gemini:player_attack-bypass_cooldown-bypass_magic",
+		"gemini:player_attack-bypass_armor-bypass_cooldown-bypass_magic",
+		"gemini:mob_attack-bypass_cooldown",
+		"gemini:mob_attack-bypass_armor-bypass_cooldown",
+		"gemini:mob_attack-bypass_cooldown-bypass_magic",
+		"gemini:mob_attack-bypass_armor-bypass_cooldown-bypass_magic"
+	]
+}

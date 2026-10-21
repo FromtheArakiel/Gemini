@@ -1,0 +1,21 @@
+{
+	"attribute.gemini.crit_rate": "暴击率",
+	"attribute.gemini.crit_damage": "暴击伤害",
+	"attribute.gemini.projectile_damage": "投射物伤害",
+	"attribute.gemini.explosion_damage": "爆炸伤害",
+	"attribute.gemini.fire_damage": "火焰伤害",
+	"attribute.gemini.freezing_damage": "冻结伤害",
+	"attribute.gemini.lightning_damage": "雷电伤害",
+	"attribute.gemini.magic_damage": "魔法伤害",
+	"attribute.gemini.regeneration_rate": "再生效率",
+	"attribute.gemini.damage_absorption": "伤害吸收",
+	"attribute.gemini.damage_reduction": "受到的伤害",
+	"gemini.attribute.add_value": "+%s",
+	"gemini.attribute.multiply": "%s%%",
+	"death.attack.bleed": "%s流血致死",
+	"death.attack.soul_flame": "%s的灵魂燃尽了",
+	"death.attack.freeze": "%s冻死了",
+	"death.attack.life_sync": "%s被榨干了",
+	"death.attack.void_eye": "%s死于虚空之眼的诅咒",
+	"death.attack.emerald": "%s被绿宝石水花杀死了"
+}

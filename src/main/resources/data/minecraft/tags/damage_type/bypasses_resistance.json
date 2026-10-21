@@ -1,0 +1,16 @@
+{
+	"replace": false,
+	"values": [
+		"gemini:bleed",
+		"gemini:life_sync",
+		"gemini:void_eye",
+		"gemini:player_attack-bypass_magic",
+		"gemini:player_attack-bypass_armor-bypass_magic",
+		"gemini:player_attack-bypass_cooldown-bypass_magic",
+		"gemini:player_attack-bypass_armor-bypass_cooldown-bypass_magic",
+		"gemini:mob_attack-bypass_magic",
+		"gemini:mob_attack-bypass_armor-bypass_magic",
+		"gemini:mob_attack-bypass_cooldown-bypass_magic",
+		"gemini:mob_attack-bypass_armor-bypass_cooldown-bypass_magic"
+	]
+}

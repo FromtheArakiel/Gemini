@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.bridge;
 
-import dev.arakiel.gemini.api.GeminiEvents;
+import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.entity.living.LivingEquipmentChangeEvent;
 import dev.arakiel.gemini.event.entity.player.PlayerInteractEntityEvent;
 import dev.arakiel.gemini.event.level.EntityJoinLevelEvent;

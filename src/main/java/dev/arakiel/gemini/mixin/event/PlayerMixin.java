@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.event;
 
-import dev.arakiel.gemini.api.GeminiEvents;
+import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.entity.living.LivingAttackEvent;
 import dev.arakiel.gemini.event.entity.living.LivingDamageEvent;
 import dev.arakiel.gemini.event.entity.living.LivingHurtEvent;

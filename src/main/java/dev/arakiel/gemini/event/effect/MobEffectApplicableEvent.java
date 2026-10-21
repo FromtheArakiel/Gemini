@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.event.effect;
 
-import dev.arakiel.gemini.event.api.HasResult;
+import dev.arakiel.gemini.event.HasResult;
 import dev.arakiel.gemini.event.entity.LivingEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;

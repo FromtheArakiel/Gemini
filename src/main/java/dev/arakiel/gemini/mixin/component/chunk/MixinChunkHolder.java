@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.mixin.component.chunk;
 
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;

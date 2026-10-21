@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.registration.internal;
 
-import dev.arakiel.gemini.registration.api.AutoRegistryContainer;
-import dev.arakiel.gemini.registration.api.FieldProcessingSubject;
-import dev.arakiel.gemini.registration.api.RegistrySink;
-import dev.arakiel.gemini.registration.api.SimpleFieldProcessingSubject;
+import dev.arakiel.gemini.registration.AutoRegistryContainer;
+import dev.arakiel.gemini.registration.FieldProcessingSubject;
+import dev.arakiel.gemini.registration.RegistrySink;
+import dev.arakiel.gemini.registration.SimpleFieldProcessingSubject;
 import dev.arakiel.gemini.registration.annotations.AssignedName;
 import dev.arakiel.gemini.registration.annotations.IterationIgnored;
 import dev.arakiel.gemini.registration.annotations.RegistryNamespace;

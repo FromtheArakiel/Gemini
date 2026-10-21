@@ -1,11 +1,11 @@
 package dev.arakiel.gemini.component.internal.world;
 
-import dev.arakiel.gemini.component.api.Component;
-import dev.arakiel.gemini.component.api.ComponentContainer;
-import dev.arakiel.gemini.component.api.ComponentFactory;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.ComponentFactoryRegistries;
-import dev.arakiel.gemini.component.api.ComponentInitializers;
+import dev.arakiel.gemini.component.Component;
+import dev.arakiel.gemini.component.ComponentContainer;
+import dev.arakiel.gemini.component.ComponentFactory;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.ComponentFactoryRegistries;
+import dev.arakiel.gemini.component.ComponentInitializers;
 import dev.arakiel.gemini.component.internal.base.QualifiedComponentFactory;
 import dev.arakiel.gemini.component.internal.base.ComponentPluginSupport;
 import dev.arakiel.gemini.component.internal.base.asm.ComponentAsmHelper;

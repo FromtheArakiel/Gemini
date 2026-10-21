@@ -1,6 +1,6 @@
 package dev.arakiel.gemini.registration.container;
 
-import dev.arakiel.gemini.registration.api.AutoRegistryContainer;
+import dev.arakiel.gemini.registration.AutoRegistryContainer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;

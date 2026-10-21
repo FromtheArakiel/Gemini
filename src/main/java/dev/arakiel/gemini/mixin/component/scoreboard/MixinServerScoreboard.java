@@ -1,9 +1,9 @@
 package dev.arakiel.gemini.mixin.component.scoreboard;
 
 import com.mojang.datafixers.util.Unit;
-import dev.arakiel.gemini.component.api.ComponentKey;
-import dev.arakiel.gemini.component.api.ComponentSync;
-import dev.arakiel.gemini.component.api.ComponentCallbacks;
+import dev.arakiel.gemini.component.ComponentKey;
+import dev.arakiel.gemini.component.ComponentSync;
+import dev.arakiel.gemini.component.ComponentCallbacks;
 import dev.arakiel.gemini.component.internal.network.ComponentUpdatePayload;
 import dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents;
 import dev.arakiel.gemini.component.internal.scoreboard.ScoreboardComponentContainerFactory;
