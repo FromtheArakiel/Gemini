@@ -2,8 +2,10 @@ package dev.arakiel.gemini.config.internal;
 
 import com.electronwill.nightconfig.core.CommentedConfig;
 import com.electronwill.nightconfig.core.ConfigSpec;
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.toml.TomlFormat;
+import com.electronwill.nightconfig.core.io.ParsingMode;
+import com.electronwill.nightconfig.core.io.WritingMode;
+import com.electronwill.nightconfig.toml.TomlParser;
+import com.electronwill.nightconfig.toml.TomlWriter;
 import dev.arakiel.gemini.Gemini;
 import dev.arakiel.gemini.config.ConfigEntry;
 import dev.arakiel.gemini.config.ConfigHandle;
@@ -11,6 +13,7 @@ import dev.arakiel.gemini.config.ConfigOption;
 import net.minecraft.resources.ResourceLocation;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
@@ -28,7 +31,7 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
     private final Path path;
     private final Class<T> type;
     private final T instance;
-    private final CommentedFileConfig file;
+    private final CommentedConfig file;
     private final ConfigSpec spec;
     private final List<ConfigField> fields;
     private final Map<String, ConfigField> fieldsByPath;
@@ -47,9 +50,9 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
             if (parent != null) {
                 Files.createDirectories(parent);
             }
-            this.file = CommentedFileConfig.of(this.path, TomlFormat.instance());
+            this.file = CommentedConfig.inMemory();
             if (Files.exists(this.path)) {
-                file.load();
+                load();
             }
             this.spec = createSpec(fields);
             int corrections = spec.correct(file);
@@ -58,7 +61,7 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
             resetRestartBaseline();
             if (corrections > 0 || !Files.exists(this.path)) {
                 writeFieldsToConfig();
-                file.save();
+                saveFile();
             }
         } catch (RuntimeException exception) {
             throw new IllegalStateException("Failed to load config " + id + " from " + this.path, exception);
@@ -119,21 +122,21 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
     @Override
     public synchronized void save() {
         writeFieldsToConfig();
-        file.save();
+        saveFile();
     }
 
     @Override
     public synchronized void reload() {
         file.clear();
         if (Files.exists(path)) {
-            file.load();
+            load();
         }
         spec.correct(file);
         applyComments(file, fields);
         readIntoInstance();
         resetRestartBaseline();
         writeFieldsToConfig();
-        file.save();
+        saveFile();
         notifyListeners();
     }
 
@@ -235,12 +238,24 @@ public final class ConfigDefinition<T> implements ConfigHandle<T> {
         return spec;
     }
 
-    private static void applyComments(CommentedFileConfig file, List<ConfigField> fields) {
+    private static void applyComments(CommentedConfig file, List<ConfigField> fields) {
         for (ConfigField field : fields) {
             if (!field.comment().isBlank()) {
                 file.setComment(field.path(), field.comment());
             }
         }
+    }
+
+    private void load() {
+        try (Reader reader = Files.newBufferedReader(this.path)) {
+            new TomlParser().parse(reader, this.file, ParsingMode.REPLACE);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Failed to read config " + this.id, exception);
+        }
+    }
+
+    private void saveFile() {
+        new TomlWriter().write(this.file, this.path, WritingMode.REPLACE_ATOMIC);
     }
 
     private static List<ConfigField> discoverFields(

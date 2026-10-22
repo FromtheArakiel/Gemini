@@ -9,6 +9,7 @@ import dev.arakiel.gemini.registration.container.ItemRegistryContainer;
 import dev.arakiel.gemini.registration.container.MobEffectRegistryContainer;
 import dev.arakiel.gemini.registration.container.SoundEventRegistryContainer;
 import dev.arakiel.gemini.registration.internal.FieldRegistrationHandler;
+import dev.arakiel.gemini.registration.annotations.RegistryNamespace;
 
 public final class GeminiRegistration {
     private GeminiRegistration() {
@@ -88,6 +89,15 @@ public final class GeminiRegistration {
             String namespace,
             boolean recurseIntoInnerClasses
     ) {
-        FieldRegistrationHandler.register((Class) container, namespace, recurseIntoInnerClasses);
+        FieldRegistrationHandler.register(
+                (Class) container,
+                resolveNamespace(container, namespace),
+                recurseIntoInnerClasses
+        );
+    }
+
+    private static String resolveNamespace(Class<?> container, String fallback) {
+        RegistryNamespace annotation = container.getAnnotation(RegistryNamespace.class);
+        return annotation == null ? fallback : annotation.value();
     }
 }
