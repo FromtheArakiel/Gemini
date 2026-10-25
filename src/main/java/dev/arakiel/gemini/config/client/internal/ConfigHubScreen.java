@@ -17,9 +17,13 @@ public final class ConfigHubScreen extends Screen {
     private int page;
 
     public ConfigHubScreen(Screen parent) {
+        this(parent, List.copyOf(GeminiConfig.all()));
+    }
+
+    public ConfigHubScreen(Screen parent, List<? extends ConfigHandle<?>> configs) {
         super(Component.translatableWithFallback("gemini.config.title", "Gemini Configs"));
         this.parent = parent;
-        this.configs = List.copyOf(GeminiConfig.all());
+        this.configs = List.copyOf(configs);
     }
 
     @Override

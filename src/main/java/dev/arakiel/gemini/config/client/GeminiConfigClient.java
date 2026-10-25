@@ -28,16 +28,28 @@ public final class GeminiConfigClient {
         return new ConfigHubScreen(parent);
     }
 
+    public static Screen createHubScreen(Screen parent, java.util.List<? extends ConfigHandle<?>> configs) {
+        return new ConfigHubScreen(parent, configs);
+    }
+
     public static void open(Screen parent, ConfigHandle<?> handle) {
-        Minecraft.getInstance().setScreen(createScreen(parent, handle));
+        Screen screen = createScreen(parent, handle);
+        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
     }
 
     public static void open(Screen parent, ResourceLocation id) {
-        Minecraft.getInstance().setScreen(createScreen(parent, id));
+        Screen screen = createScreen(parent, id);
+        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
     }
 
     public static void openHub(Screen parent) {
-        Minecraft.getInstance().setScreen(createHubScreen(parent));
+        Screen screen = createHubScreen(parent);
+        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
+    }
+
+    public static void openHub(Screen parent, java.util.List<? extends ConfigHandle<?>> configs) {
+        Screen screen = createHubScreen(parent, configs);
+        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
     }
 
     public static boolean hasConfigs() {
