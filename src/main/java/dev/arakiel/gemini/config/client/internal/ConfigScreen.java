@@ -8,6 +8,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -46,6 +47,7 @@ public final class ConfigScreen extends Screen {
         contentLeft = (width - contentWidth) / 2;
         int controlWidth = Math.min(150, contentWidth / 2);
         int controlX = contentLeft + contentWidth - controlWidth;
+        addRenderableOnly(new ContentLayer(this));
 
         for (ConfigOption option : handle.options()) {
             if (option.hidden()) {
@@ -77,10 +79,7 @@ public final class ConfigScreen extends Screen {
         updatePositions();
     }
 
-    @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        renderBackground(graphics, mouseX, mouseY, delta);
-        graphics.flush();
+    private void renderContent(GuiGraphics graphics) {
         graphics.drawCenteredString(font, title, width / 2, 12, 0xFFFFFF);
         int top = TOP;
         int bottom = height - FOOTER;
@@ -121,7 +120,6 @@ public final class ConfigScreen extends Screen {
                     0xFFAA55
             );
         }
-        super.render(graphics, mouseX, mouseY, delta);
     }
 
     @Override
@@ -232,5 +230,17 @@ public final class ConfigScreen extends Screen {
     }
 
     private record OptionRow(ConfigOption option, AbstractWidget control) {
+    }
+
+    private record ContentLayer(ConfigScreen screen) implements Renderable {
+        @Override
+        public void render(
+                GuiGraphics graphics,
+                int mouseX,
+                int mouseY,
+                float delta
+        ) {
+            screen.renderContent(graphics);
+        }
     }
 }

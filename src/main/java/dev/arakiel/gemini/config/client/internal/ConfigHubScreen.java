@@ -59,7 +59,7 @@ public final class ConfigHubScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
-        renderBackground(graphics, mouseX, mouseY, delta);
+        super.render(graphics, mouseX, mouseY, delta);
         graphics.drawCenteredString(font, title, width / 2, 16, 0xFFFFFF);
         if (configs.isEmpty()) {
             graphics.drawCenteredString(
@@ -79,7 +79,6 @@ public final class ConfigHubScreen extends Screen {
                     0xA0A0A0
             );
         }
-        super.render(graphics, mouseX, mouseY, delta);
     }
 
     @Override
