@@ -17,7 +17,15 @@ public final class GeminiConfigCommand {
     public static void init() {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registries) ->
                 dispatcher.register(ClientCommandManager.literal("geminiconfig")
-                        .executes(context -> openHub())
+                        .executes(context -> {
+                            context.getSource().sendError(
+                                    Component.translatableWithFallback(
+                                            "gemini.config.usage",
+                                            "Usage: /geminiconfig <modid>"
+                                    )
+                            );
+                            return 0;
+                        })
                         .then(ClientCommandManager.argument("modid", StringArgumentType.word())
                                 .suggests((context, builder) -> {
                                     SharedSuggestionProvider.suggest(
@@ -34,11 +42,6 @@ public final class GeminiConfigCommand {
                                     return openNamespace(context.getSource(), namespace);
                                 })))
         );
-    }
-
-    private static int openHub() {
-        GeminiConfigClient.openHub(null);
-        return 1;
     }
 
     private static int openNamespace(

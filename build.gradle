@@ -34,6 +34,7 @@ dependencies {
 	include ":toml:3.8.0"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
 	compileOnly "org.jetbrains:annotations:24.0.1"
+	modCompileOnly files("libs/modmenu-11.0.5.jar")
 
 	testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
 	testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"

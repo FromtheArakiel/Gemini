@@ -38,7 +38,7 @@
 			"dev.arakiel.gemini.component.client.internal.world.GeminiWorldClient::initClient"
 		],
 		"modmenu": [
-			"dev.arakiel.gemini.client.GeminiModMenu::create"
+			"dev.arakiel.gemini.client.GeminiModMenu"
 		]
 	},
 	"mixins": [
