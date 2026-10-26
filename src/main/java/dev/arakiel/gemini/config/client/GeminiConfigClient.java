@@ -4,12 +4,30 @@ import dev.arakiel.gemini.config.GeminiConfig;
 import dev.arakiel.gemini.config.ConfigHandle;
 import dev.arakiel.gemini.config.client.internal.ConfigHubScreen;
 import dev.arakiel.gemini.config.client.internal.ConfigScreen;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
 public final class GeminiConfigClient {
+    private static Screen pendingScreen;
+    private static boolean initialized;
+
     private GeminiConfigClient() {
+    }
+
+    public static void init() {
+        if (initialized) {
+            return;
+        }
+        initialized = true;
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            Screen screen = pendingScreen;
+            if (screen != null) {
+                pendingScreen = null;
+                client.setScreen(screen);
+            }
+        });
     }
 
     public static Screen createScreen(Screen parent, ConfigHandle<?> handle) {
@@ -33,23 +51,19 @@ public final class GeminiConfigClient {
     }
 
     public static void open(Screen parent, ConfigHandle<?> handle) {
-        Screen screen = createScreen(parent, handle);
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
+        pendingScreen = createScreen(parent, handle);
     }
 
     public static void open(Screen parent, ResourceLocation id) {
-        Screen screen = createScreen(parent, id);
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
+        pendingScreen = createScreen(parent, id);
     }
 
     public static void openHub(Screen parent) {
-        Screen screen = createHubScreen(parent);
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
+        pendingScreen = createHubScreen(parent);
     }
 
     public static void openHub(Screen parent, java.util.List<? extends ConfigHandle<?>> configs) {
-        Screen screen = createHubScreen(parent, configs);
-        Minecraft.getInstance().execute(() -> Minecraft.getInstance().setScreen(screen));
+        pendingScreen = createHubScreen(parent, configs);
     }
 
     public static boolean hasConfigs() {
