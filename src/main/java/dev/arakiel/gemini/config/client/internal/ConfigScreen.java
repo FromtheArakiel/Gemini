@@ -158,6 +158,7 @@ public final class ConfigScreen extends Screen {
     private AbstractWidget createControl(ConfigOption option, int x, int width) {
         if (option.type() == ConfigValueType.BOOLEAN) {
             return CycleButton.onOffBuilder((Boolean) option.value())
+                    .displayOnlyValue()
                     .create(x, 0, width, 20, Component.empty(), (button, value) ->
                             handle.stage(option.path(), value));
         }
@@ -166,6 +167,7 @@ public final class ConfigScreen extends Screen {
             return CycleButton.builder(value -> Component.literal(value.toString()))
                     .withValues(option.choices())
                     .withInitialValue(current)
+                    .displayOnlyValue()
                     .create(x, 0, width, 20, Component.empty(), (button, value) ->
                             handle.stage(option.path(), value));
         }
