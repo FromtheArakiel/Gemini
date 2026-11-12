@@ -27,18 +27,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({ServerScoreboard.class})
 public abstract class MixinServerScoreboard extends MixinScoreboard {
    @Unique
-   private static final Supplier<ScoreboardComponentContainerFactory> componentsContainerFactory = StaticScoreboardComponentPlugin.scoreboardComponentsContainerFactory;
+   private static final Supplier<ScoreboardComponentContainerFactory> gemini$componentsContainerFactory = StaticScoreboardComponentPlugin.scoreboardComponentsContainerFactory;
    @Shadow
    @Final
    private MinecraftServer server;
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       MinecraftServer server = this.server;
       return server.getPlayerList() != null ? server.getPlayerList().getPlayers() : List.of();
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiScoreboardComponents.SCOREBOARD_PACKET_ID, Unit.INSTANCE, required, key.getId(), data);
@@ -49,7 +49,7 @@ public abstract class MixinServerScoreboard extends MixinScoreboard {
       at = {@At("RETURN")}
    )
    private void initComponents(CallbackInfo ci) {
-      this.components = componentsContainerFactory.get().create((Scoreboard)(Object)this, this.server);
+      this.gemini$components = gemini$componentsContainerFactory.get().create((Scoreboard)(Object)this, this.server);
    }
 
    @Inject(

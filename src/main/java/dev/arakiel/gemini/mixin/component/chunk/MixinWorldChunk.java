@@ -48,12 +48,12 @@ public abstract class MixinWorldChunk extends ChunkAccess implements ComponentPr
    public abstract Level getLevel();
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       return (Iterable<ServerPlayer>)(!this.getLevel().isClientSide() ? PlayerLookup.tracking((ServerLevel)(Object)this.getLevel(), this.getPos()) : List.of());
    }
 
    @Nullable
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiChunkComponents.PACKET_ID, this.getPos(), required, key.getId(), data);
@@ -64,6 +64,6 @@ public abstract class MixinWorldChunk extends ChunkAccess implements ComponentPr
       at = {@At("RETURN")}
    )
    private void copyFromProto(ServerLevel world, ProtoChunk proto, PostLoadProcessor entityLoader, CallbackInfo ci) {
-      this.getComponentContainer().copyFrom(proto.asComponentProvider().getComponentContainer(), world.registryAccess());
+      this.gemini$getComponentContainer().copyFrom(proto.asComponentProvider().gemini$getComponentContainer(), world.registryAccess());
    }
 }

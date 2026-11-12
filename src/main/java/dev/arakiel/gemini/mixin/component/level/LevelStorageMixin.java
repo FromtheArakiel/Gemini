@@ -35,7 +35,7 @@ public class LevelStorageMixin {
       @Local(argsOnly = true) Frozen registryManager
    ) {
       PrimaryLevelData props = (PrimaryLevelData)original.call(new Object[]{dynamic, info, specialProperty, generatorOptions, lifecycle});
-      ((ComponentProvider)props).getComponentContainer().fromDynamic(dynamic, registryManager);
+      ((ComponentProvider)props).gemini$getComponentContainer().fromDynamic(dynamic, registryManager);
       return props;
    }
 }

@@ -23,18 +23,18 @@ public final class GeminiScoreboardComponents {
          ComponentUpdatePayload.register(SCOREBOARD_PACKET_ID, MorePacketCodecs.EMPTY);
          ComponentUpdatePayload.register(TEAM_PACKET_ID, ByteBufCodecs.STRING_UTF8);
          ComponentCallbacks.ScoreboardSync.EVENT.register((ComponentCallbacks.ScoreboardSync)(player, tracked) -> {
-            for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
+            for (ComponentKey<?> key : tracked.asComponentProvider().gemini$getComponentContainer().keys()) {
                key.syncWith(player, tracked.asComponentProvider());
             }
 
             for (PlayerTeam team : tracked.getPlayerTeams()) {
-               for (ComponentKey<?> key : team.asComponentProvider().getComponentContainer().keys()) {
+               for (ComponentKey<?> key : team.asComponentProvider().gemini$getComponentContainer().keys()) {
                   key.syncWith(player, team.asComponentProvider());
                }
             }
          });
          ComponentCallbacks.TeamAdd.EVENT.register((ComponentCallbacks.TeamAdd)tracked -> {
-            for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
+            for (ComponentKey<?> key : tracked.asComponentProvider().gemini$getComponentContainer().keys()) {
                tracked.syncComponent(key);
             }
          });
@@ -42,9 +42,9 @@ public final class GeminiScoreboardComponents {
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
          ServerLifecycleEvents.SERVER_STARTED
-            .register((ServerStarted)server -> ((ComponentProvider)server.getScoreboard()).getComponentContainer().onServerLoad());
+            .register((ServerStarted)server -> ((ComponentProvider)server.getScoreboard()).gemini$getComponentContainer().onServerLoad());
          ServerLifecycleEvents.SERVER_STOPPED
-            .register((ServerStopped)server -> ((ComponentProvider)server.getScoreboard()).getComponentContainer().onServerUnload());
+            .register((ServerStopped)server -> ((ComponentProvider)server.getScoreboard()).gemini$getComponentContainer().onServerUnload());
       }
 
       StaticScoreboardComponentPlugin.INSTANCE.ensureInitialized();

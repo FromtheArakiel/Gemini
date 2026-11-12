@@ -7,14 +7,14 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 
 public interface ComponentProvider extends ComponentAccess {
-   ComponentContainer getComponentContainer();
+   ComponentContainer gemini$getComponentContainer();
 
-   default Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   default Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       return List.of();
    }
 
    @Nullable
-   default <C extends ComponentSync.AutoSyncedComponent> CustomPacketPayload toComponentPacket(ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data) {
+   default <C extends ComponentSync.AutoSyncedComponent> CustomPacketPayload gemini$toComponentPacket(ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data) {
       return null;
    }
 }

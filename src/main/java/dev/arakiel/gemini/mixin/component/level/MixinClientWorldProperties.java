@@ -16,19 +16,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({ClientLevelData.class})
 public abstract class MixinClientWorldProperties implements WritableLevelData, ComponentProvider {
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
 
    @Inject(
       method = {"<init>"},
       at = {@At("RETURN")}
    )
    private void initComponents(Difficulty difficulty, boolean hardcore, boolean flatWorld, CallbackInfo ci) {
-      this.components = StaticLevelComponentPlugin.createContainer(this);
+      this.gemini$components = StaticLevelComponentPlugin.createContainer(this);
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 }

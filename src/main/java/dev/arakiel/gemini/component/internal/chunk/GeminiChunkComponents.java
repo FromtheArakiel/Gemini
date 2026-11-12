@@ -19,15 +19,15 @@ public final class GeminiChunkComponents {
       if (FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")) {
          ComponentUpdatePayload.register(PACKET_ID, MorePacketCodecs.CHUNKPOS);
          ComponentCallbacks.ChunkSync.EVENT.register((ComponentCallbacks.ChunkSync)(player, tracked) -> {
-            for (ComponentKey<?> key : tracked.asComponentProvider().getComponentContainer().keys()) {
+            for (ComponentKey<?> key : tracked.asComponentProvider().gemini$getComponentContainer().keys()) {
                key.syncWith(player, (ComponentProvider)tracked);
             }
          });
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ServerChunkEvents.CHUNK_LOAD.register((Load)(world, chunk) -> ((ComponentProvider)chunk).getComponentContainer().onServerLoad());
-         ServerChunkEvents.CHUNK_UNLOAD.register((Unload)(world, chunk) -> ((ComponentProvider)chunk).getComponentContainer().onServerUnload());
+         ServerChunkEvents.CHUNK_LOAD.register((Load)(world, chunk) -> ((ComponentProvider)chunk).gemini$getComponentContainer().onServerLoad());
+         ServerChunkEvents.CHUNK_UNLOAD.register((Unload)(world, chunk) -> ((ComponentProvider)chunk).gemini$getComponentContainer().onServerUnload());
       }
 
       StaticChunkComponentPlugin.INSTANCE.ensureInitialized();

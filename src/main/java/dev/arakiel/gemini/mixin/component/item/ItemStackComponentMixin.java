@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ItemStack.class)
 public abstract class ItemStackComponentMixin implements ComponentProvider {
     @Override
-    public ComponentContainer getComponentContainer() {
+    public ComponentContainer gemini$getComponentContainer() {
         return GeminiItemStackInternals.getComponentContainer((ItemStack) (Object) this);
     }
 

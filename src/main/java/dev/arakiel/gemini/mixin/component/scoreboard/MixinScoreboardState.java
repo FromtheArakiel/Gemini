@@ -28,7 +28,7 @@ public abstract class MixinScoreboardState {
       at = {@At("RETURN")}
    )
    private void saveComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<CompoundTag> cir) {
-      ((ComponentProvider)(Object)this.scoreboard).getComponentContainer().toTag(tag, registries);
+      ((ComponentProvider)(Object)this.scoreboard).gemini$getComponentContainer().toTag(tag, registries);
    }
 
    @Inject(
@@ -36,7 +36,7 @@ public abstract class MixinScoreboardState {
       at = {@At("RETURN")}
    )
    private void loadComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<ScoreboardSaveData> cir) {
-      ((ComponentProvider)(Object)this.scoreboard).getComponentContainer().fromTag(tag, registries);
+      ((ComponentProvider)(Object)this.scoreboard).gemini$getComponentContainer().fromTag(tag, registries);
    }
 
    @Inject(
@@ -48,7 +48,7 @@ public abstract class MixinScoreboardState {
       )}
    )
    private void loadTeamComponents(ListTag nbt, Provider registries, CallbackInfo ci, @Local CompoundTag teamData, @Local PlayerTeam team) {
-      ((ComponentProvider)team).getComponentContainer().fromTag(teamData, registries);
+      ((ComponentProvider)team).gemini$getComponentContainer().fromTag(teamData, registries);
    }
 
    @Inject(
@@ -59,6 +59,6 @@ public abstract class MixinScoreboardState {
       )}
    )
    private void saveTeamComponents(Provider registries, CallbackInfoReturnable<ListTag> cir, @Local PlayerTeam team, @Local CompoundTag teamData) {
-      ((ComponentProvider)team).getComponentContainer().toTag(teamData, registries);
+      ((ComponentProvider)team).gemini$getComponentContainer().toTag(teamData, registries);
    }
 }

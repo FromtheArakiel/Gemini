@@ -17,7 +17,7 @@ public abstract class MixinEmptyChunk extends LevelChunk implements ComponentPro
 
    @NotNull
    @Override
-   public ComponentContainer getComponentContainer() {
+   public ComponentContainer gemini$getComponentContainer() {
       return ComponentContainer.EMPTY;
    }
 }

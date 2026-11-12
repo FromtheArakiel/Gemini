@@ -27,8 +27,8 @@ public class GeminiChunkClient {
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ClientChunkEvents.CHUNK_LOAD.register((Load)(world, chunk) -> ((ComponentProvider)chunk).getComponentContainer().onClientLoad());
-         ClientChunkEvents.CHUNK_UNLOAD.register((Unload)(world, chunk) -> ((ComponentProvider)chunk).getComponentContainer().onClientUnload());
+         ClientChunkEvents.CHUNK_LOAD.register((Load)(world, chunk) -> ((ComponentProvider)chunk).gemini$getComponentContainer().onClientLoad());
+         ClientChunkEvents.CHUNK_UNLOAD.register((Unload)(world, chunk) -> ((ComponentProvider)chunk).gemini$getComponentContainer().onClientUnload());
       }
    }
 }

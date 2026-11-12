@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({ServerLevel.class})
 public abstract class MixinServerWorld extends MixinWorld {
    @Unique
-   private static final String PERSISTENT_STATE_KEY = "gemini_world_components";
+   private static final String gemini$PERSISTENT_STATE_KEY = "gemini_world_components";
 
    @Shadow
    public abstract DimensionDataStorage getDataStorage();
@@ -35,7 +35,7 @@ public abstract class MixinServerWorld extends MixinWorld {
       method = {"<init>*"}
    )
    private void constructor(CallbackInfo ci) {
-      this.getDataStorage().computeIfAbsent(ComponentPersistentState.getType(this.components), "gemini_world_components");
+      this.getDataStorage().computeIfAbsent(ComponentPersistentState.getType(this.gemini$components), "gemini_world_components");
    }
 
    @Inject(
@@ -43,15 +43,15 @@ public abstract class MixinServerWorld extends MixinWorld {
       at = {@At("RETURN")}
    )
    private void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
-      this.getComponentContainer().tickServerComponents();
+      this.gemini$getComponentContainer().tickServerComponents();
    }
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       return List.copyOf(this.players());
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiWorldComponents.PACKET_ID, Unit.INSTANCE, required, key.getId(), data);

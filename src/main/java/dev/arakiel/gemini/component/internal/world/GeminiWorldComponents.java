@@ -27,15 +27,15 @@ public final class GeminiWorldComponents {
          ComponentCallbacks.WorldSync.EVENT.register((ComponentCallbacks.WorldSync)(player, world) -> {
             ComponentProvider provider = (ComponentProvider)world;
 
-            for (ComponentKey<?> key : provider.getComponentContainer().keys()) {
+            for (ComponentKey<?> key : provider.gemini$getComponentContainer().keys()) {
                key.syncWith(player, provider);
             }
          });
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ServerWorldEvents.LOAD.register((Load)(server, world) -> ((ComponentProvider)world).getComponentContainer().onServerLoad());
-         ServerWorldEvents.UNLOAD.register((Unload)(server, world) -> ((ComponentProvider)world).getComponentContainer().onServerUnload());
+         ServerWorldEvents.LOAD.register((Load)(server, world) -> ((ComponentProvider)world).gemini$getComponentContainer().onServerLoad());
+         ServerWorldEvents.UNLOAD.register((Unload)(server, world) -> ((ComponentProvider)world).gemini$getComponentContainer().onServerUnload());
       }
 
       StaticWorldComponentPlugin.INSTANCE.ensureInitialized();

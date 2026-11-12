@@ -14,6 +14,6 @@ public abstract class MixinServerWorld {
       at = {@At("RETURN")}
    )
    private void tick(LevelChunk chunk, int randomTickSpeed, CallbackInfo ci) {
-      chunk.asComponentProvider().getComponentContainer().tickServerComponents();
+      chunk.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
    }
 }

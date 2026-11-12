@@ -25,8 +25,8 @@ public class GeminiBlockClient {
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ClientBlockEntityEvents.BLOCK_ENTITY_LOAD.register((Load)(be, world) -> ((ComponentProvider)be).getComponentContainer().onServerLoad());
-         ClientBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((Unload)(be, world) -> ((ComponentProvider)be).getComponentContainer().onServerUnload());
+         ClientBlockEntityEvents.BLOCK_ENTITY_LOAD.register((Load)(be, world) -> ((ComponentProvider)be).gemini$getComponentContainer().onServerLoad());
+         ClientBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((Unload)(be, world) -> ((ComponentProvider)be).gemini$getComponentContainer().onServerUnload());
       }
    }
 }

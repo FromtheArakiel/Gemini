@@ -21,10 +21,10 @@ public abstract class MixinMinecraftServer {
    )
    private void onEndTick(BooleanSupplier shouldKeepTicking, CallbackInfo info) {
       ServerScoreboard scoreboard = this.getScoreboard();
-      scoreboard.asComponentProvider().getComponentContainer().tickServerComponents();
+      scoreboard.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
 
       for (PlayerTeam team : scoreboard.getPlayerTeams()) {
-         team.asComponentProvider().getComponentContainer().tickServerComponents();
+         team.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
       }
    }
 }

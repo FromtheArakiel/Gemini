@@ -46,18 +46,18 @@ public final class StaticBlockComponentPlugin extends LazyDispatcher implements 
    public <T extends BlockEntity> BlockEntityTicker<T> getComponentTicker(Level world, T be, @Nullable BlockEntityTicker<T> base) {
       if (world.isClientSide && this.clientTicking.contains(be.getClass())) {
          return base == null
-            ? (w, pos, state, blockEntity) -> blockEntity.asComponentProvider().getComponentContainer().tickClientComponents()
+            ? (w, pos, state, blockEntity) -> blockEntity.asComponentProvider().gemini$getComponentContainer().tickClientComponents()
             : (w, pos, state, blockEntity) -> {
-               blockEntity.asComponentProvider().getComponentContainer().tickClientComponents();
+               blockEntity.asComponentProvider().gemini$getComponentContainer().tickClientComponents();
                base.tick(w, pos, state, blockEntity);
             };
       } else if (world.isClientSide || !this.serverTicking.contains(be.getClass())) {
          return base;
       } else {
          return base == null
-            ? (w, pos, state, blockEntity) -> blockEntity.asComponentProvider().getComponentContainer().tickServerComponents()
+            ? (w, pos, state, blockEntity) -> blockEntity.asComponentProvider().gemini$getComponentContainer().tickServerComponents()
             : (w, pos, state, blockEntity) -> {
-               blockEntity.asComponentProvider().getComponentContainer().tickServerComponents();
+               blockEntity.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
                base.tick(w, pos, state, blockEntity);
             };
       }

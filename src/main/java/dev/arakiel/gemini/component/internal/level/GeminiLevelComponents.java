@@ -19,7 +19,7 @@ public final class GeminiLevelComponents {
             ComponentCallbacks.WorldSync.EVENT.register((ComponentCallbacks.WorldSync)(player, world) -> {
                LevelData props = world.getLevelData();
 
-               for (ComponentKey<?> key : props.asComponentProvider().getComponentContainer().keys()) {
+               for (ComponentKey<?> key : props.asComponentProvider().gemini$getComponentContainer().keys()) {
                   key.syncWith(player, props.asComponentProvider());
                }
             });

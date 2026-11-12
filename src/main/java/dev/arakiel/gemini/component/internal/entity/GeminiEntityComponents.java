@@ -71,8 +71,8 @@ public final class GeminiEntityComponents {
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ServerEntityEvents.ENTITY_LOAD.register((Load)(entity, world) -> ((ComponentProvider)entity).getComponentContainer().onServerLoad());
-         ServerEntityEvents.ENTITY_UNLOAD.register((Unload)(entity, world) -> ((ComponentProvider)entity).getComponentContainer().onServerUnload());
+         ServerEntityEvents.ENTITY_LOAD.register((Load)(entity, world) -> ((ComponentProvider)entity).gemini$getComponentContainer().onServerLoad());
+         ServerEntityEvents.ENTITY_UNLOAD.register((Unload)(entity, world) -> ((ComponentProvider)entity).gemini$getComponentContainer().onServerUnload());
       }
 
       ServerLivingEntityEvents.MOB_CONVERSION.register(RespawnCopyStrategy.EVENT_PHASE, GeminiEntityComponents::copyData);
@@ -81,7 +81,7 @@ public final class GeminiEntityComponents {
    }
 
    private static void copyData(LivingEntity original, LivingEntity clone, boolean keepInventory) {
-      for (ComponentKey<?> key : ((ComponentProvider)original).getComponentContainer().keys()) {
+      for (ComponentKey<?> key : ((ComponentProvider)original).gemini$getComponentContainer().keys()) {
          if (key.isProvidedBy(clone)) {
             copyData(original, clone, original.registryAccess(), false, keepInventory, true, key);
          }
@@ -91,7 +91,7 @@ public final class GeminiEntityComponents {
    private static void copyData(ServerPlayer original, ServerPlayer clone, boolean lossless) {
       boolean keepInventory = original.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY) || clone.isSpectator();
 
-      for (ComponentKey<?> key : ((ComponentProvider)original).getComponentContainer().keys()) {
+      for (ComponentKey<?> key : ((ComponentProvider)original).gemini$getComponentContainer().keys()) {
          copyData(original, clone, original.registryAccess(), lossless, keepInventory, !((SwitchablePlayerEntity)original).gemini$isSwitchingCharacter(), key);
       }
    }
@@ -108,7 +108,7 @@ public final class GeminiEntityComponents {
    private static void syncEntityComponents(ServerPlayer player, Entity tracked) {
       ComponentProvider provider = (ComponentProvider)tracked;
 
-      for (ComponentKey<?> key : provider.getComponentContainer().keys()) {
+      for (ComponentKey<?> key : provider.gemini$getComponentContainer().keys()) {
          key.syncWith(player, provider);
       }
    }

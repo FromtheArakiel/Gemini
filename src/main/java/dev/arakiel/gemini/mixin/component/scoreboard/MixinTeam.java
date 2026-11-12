@@ -26,7 +26,7 @@ public abstract class MixinTeam implements ComponentProvider {
    @Final
    private Scoreboard scoreboard;
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
 
    @Shadow
    public abstract String getName();
@@ -36,23 +36,23 @@ public abstract class MixinTeam implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void initComponents(CallbackInfo ci) {
-      this.components = StaticScoreboardComponentPlugin.teamComponentsContainerFactory
+      this.gemini$components = StaticScoreboardComponentPlugin.teamComponentsContainerFactory
          .get()
          .create((PlayerTeam)(Object)this, this.scoreboard, this.scoreboard instanceof ServerScoreboardAccessor acc ? acc.getServer() : null);
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
-      return this.scoreboard.asComponentProvider().getRecipientsForComponentSync();
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
+      return this.scoreboard.asComponentProvider().gemini$getRecipientsForComponentSync();
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiScoreboardComponents.TEAM_PACKET_ID, this.getName(), required, key.getId(), data);

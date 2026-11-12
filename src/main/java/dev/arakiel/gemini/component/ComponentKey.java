@@ -37,11 +37,11 @@ public abstract class ComponentKey<C extends Component> {
    )
    @Nullable
    public C getNullable(Object provider) {
-      return this.getInternal(((ComponentProvider)provider).getComponentContainer());
+      return this.getInternal(((ComponentProvider)provider).gemini$getComponentContainer());
    }
 
    public final C get(Object provider) {
-      C component = this.getInternal(((ComponentProvider)provider).getComponentContainer());
+      C component = this.getInternal(((ComponentProvider)provider).gemini$getComponentContainer());
 
       assert component == null || this.getComponentClass().isInstance(component);
 
@@ -59,7 +59,7 @@ public abstract class ComponentKey<C extends Component> {
    }
 
    public final Optional<C> maybeGet(@Nullable Object provider) {
-      return provider instanceof ComponentProvider p ? Optional.ofNullable(this.getInternal(p.getComponentContainer())) : Optional.empty();
+      return provider instanceof ComponentProvider p ? Optional.ofNullable(this.getInternal(p.gemini$getComponentContainer())) : Optional.empty();
    }
 
    @Contract(
@@ -82,7 +82,7 @@ public abstract class ComponentKey<C extends Component> {
    }
 
    public void sync(Object provider, ComponentSync.PacketWriter packetWriter, ComponentSync.PlayerPredicate predicate) {
-      for (ServerPlayer player : ((ComponentProvider)provider).getRecipientsForComponentSync()) {
+      for (ServerPlayer player : ((ComponentProvider)provider).gemini$getRecipientsForComponentSync()) {
          this.syncWith(player, (ComponentProvider)provider, packetWriter, predicate);
       }
    }
@@ -101,7 +101,7 @@ public abstract class ComponentKey<C extends Component> {
          boolean handedOff = false;
          try {
             writer.writeSyncPacket(buf, player);
-            CustomPacketPayload payload = provider.toComponentPacket(this, predicate.isRequiredOnClient(), buf);
+            CustomPacketPayload payload = provider.gemini$toComponentPacket(this, predicate.isRequiredOnClient(), buf);
             if (payload != null) {
                if (ServerPlayNetworking.canSend(player, payload.type())) {
                   ServerPlayNetworking.getSender(player).sendPacket(payload, PacketSendListener.thenRun(buf::release));

@@ -26,7 +26,7 @@ public final class C2SMessagingClient {
     public static void send(Component component, ComponentSync.C2SPacketWriter writer) {
         LocalPlayer player = Objects.requireNonNull(Minecraft.getInstance().player);
         ComponentProvider provider = (ComponentProvider) (Object) player;
-        ComponentKey<?> key = Objects.requireNonNull(provider.getComponentContainer().getKey(component));
+        ComponentKey<?> key = Objects.requireNonNull(provider.gemini$getComponentContainer().getKey(component));
         send(key, writer);
     }
 

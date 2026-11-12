@@ -17,7 +17,7 @@ public abstract class MixinUnmodifiableLevelProperties implements ComponentProvi
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.wrapped.asComponentProvider().getComponentContainer();
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.wrapped.asComponentProvider().gemini$getComponentContainer();
    }
 }

@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin({Entity.class})
 public abstract class MixinEntity implements ComponentProvider {
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
    @Shadow
    private Level level;
 
@@ -45,7 +45,7 @@ public abstract class MixinEntity implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void initDataTracker(CallbackInfo ci) {
-      this.components = GeminiEntityInternals.createEntityComponentContainer((Entity)(Object)this);
+      this.gemini$components = GeminiEntityInternals.createEntityComponentContainer((Entity)(Object)this);
    }
 
    @Inject(
@@ -53,7 +53,7 @@ public abstract class MixinEntity implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void toTag(CompoundTag inputTag, CallbackInfoReturnable<CompoundTag> cir) {
-      this.components.toTag((CompoundTag)cir.getReturnValue(), this.registryAccess());
+      this.gemini$components.toTag((CompoundTag)cir.getReturnValue(), this.registryAccess());
    }
 
    @Inject(
@@ -65,17 +65,17 @@ public abstract class MixinEntity implements ComponentProvider {
       )}
    )
    private void fromTag(CompoundTag tag, CallbackInfo ci) {
-      this.components.fromTag(tag, this.registryAccess());
+      this.gemini$components.fromTag(tag, this.registryAccess());
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       Entity holder = (Entity)(Object)this;
       if (!this.level.isClientSide) {
          Deque<ServerPlayer> watchers = new ArrayDeque<>(PlayerLookup.tracking(holder));
@@ -89,7 +89,7 @@ public abstract class MixinEntity implements ComponentProvider {
       }
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiEntityComponents.PACKET_ID, this.getId(), required, key.getId(), data);

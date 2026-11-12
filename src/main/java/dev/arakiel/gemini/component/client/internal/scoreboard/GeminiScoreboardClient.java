@@ -18,10 +18,10 @@ public final class GeminiScoreboardClient {
          ClientPacketListener networkHandler = client.getConnection();
          if (networkHandler != null) {
             Scoreboard scoreboard = networkHandler.scoreboard();
-            scoreboard.asComponentProvider().getComponentContainer().tickClientComponents();
+            scoreboard.asComponentProvider().gemini$getComponentContainer().tickClientComponents();
 
             for (PlayerTeam team : scoreboard.getPlayerTeams()) {
-               team.asComponentProvider().getComponentContainer().tickClientComponents();
+               team.asComponentProvider().gemini$getComponentContainer().tickClientComponents();
             }
          }
       });

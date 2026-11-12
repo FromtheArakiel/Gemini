@@ -35,7 +35,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @SuppressWarnings({"unchecked", "deprecation"})
 public abstract class MixinLevelProperties implements ServerLevelData, ComponentProvider {
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
 
    @Inject(
       method = {"<init>(Lnet/minecraft/nbt/CompoundTag;ZLnet/minecraft/core/BlockPos;FJJIIIZIZZZLnet/minecraft/world/level/border/WorldBorder$Settings;IILjava/util/UUID;Ljava/util/Set;Ljava/util/Set;Lnet/minecraft/world/level/timers/TimerQueue;Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/world/level/dimension/end/EndDragonFight$Data;Lnet/minecraft/world/level/LevelSettings;Lnet/minecraft/world/level/levelgen/WorldOptions;Lnet/minecraft/world/level/storage/PrimaryLevelData$SpecialWorldProperty;Lcom/mojang/serialization/Lifecycle;)V"},
@@ -71,7 +71,7 @@ public abstract class MixinLevelProperties implements ServerLevelData, Component
       Lifecycle lifecycle,
       CallbackInfo ci
    ) {
-      this.components = StaticLevelComponentPlugin.createContainer(this);
+      this.gemini$components = StaticLevelComponentPlugin.createContainer(this);
    }
 
    @Inject(
@@ -79,21 +79,21 @@ public abstract class MixinLevelProperties implements ServerLevelData, Component
       at = {@At("RETURN")}
    )
    private void writeComponents(RegistryAccess registryManager, CompoundTag data, CompoundTag player, CallbackInfo ci) {
-      this.components.toTag(data, registryManager);
+      this.gemini$components.toTag(data, registryManager);
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       throw new UnsupportedOperationException("Please call LevelComponents#sync(MinecraftServer) instead of ComponentKey#sync");
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(GeminiLevelComponents.PACKET_ID, Unit.INSTANCE, required, key.getId(), data);

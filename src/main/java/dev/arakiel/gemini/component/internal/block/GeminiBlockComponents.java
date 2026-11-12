@@ -20,20 +20,20 @@ public class GeminiBlockComponents {
          ComponentCallbacks.BlockEntitySync.EVENT.register((ComponentCallbacks.BlockEntitySync)(player, tracked) -> {
             ComponentProvider provider = (ComponentProvider)tracked;
 
-            for (ComponentKey<?> key : provider.getComponentContainer().keys()) {
+            for (ComponentKey<?> key : provider.gemini$getComponentContainer().keys()) {
                key.syncWith(player, provider);
             }
          });
          ComponentCallbacks.BlockEntitySyncAround.EVENT.register((ComponentCallbacks.BlockEntitySyncAround)tracked -> {
-            for (ComponentKey<?> key : ((ComponentProvider)tracked).getComponentContainer().keys()) {
+            for (ComponentKey<?> key : ((ComponentProvider)tracked).gemini$getComponentContainer().keys()) {
                tracked.syncComponent(key);
             }
          });
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((Load)(be, world) -> ((ComponentProvider)be).getComponentContainer().onServerLoad());
-         ServerBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((Unload)(be, world) -> ((ComponentProvider)be).getComponentContainer().onServerUnload());
+         ServerBlockEntityEvents.BLOCK_ENTITY_LOAD.register((Load)(be, world) -> ((ComponentProvider)be).gemini$getComponentContainer().onServerLoad());
+         ServerBlockEntityEvents.BLOCK_ENTITY_UNLOAD.register((Unload)(be, world) -> ((ComponentProvider)be).gemini$getComponentContainer().onServerUnload());
       }
 
       StaticBlockComponentPlugin.INSTANCE.ensureInitialized();

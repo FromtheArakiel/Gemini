@@ -15,7 +15,7 @@ public abstract class MixinWrapperProtoChunk implements ComponentProvider {
    private LevelChunk wrapped;
 
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.wrapped.asComponentProvider().getComponentContainer();
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.wrapped.asComponentProvider().gemini$getComponentContainer();
    }
 }

@@ -15,7 +15,7 @@ public interface BucketableMixin {
       at = {@At("RETURN")}
    )
    private static void writeComponentsToStack(Mob mobEntity, CompoundTag nbtCompound, CallbackInfo ci) {
-      mobEntity.asComponentProvider().getComponentContainer().toTag(nbtCompound, mobEntity.registryAccess());
+      mobEntity.asComponentProvider().gemini$getComponentContainer().toTag(nbtCompound, mobEntity.registryAccess());
    }
 
    @Inject(
@@ -23,6 +23,6 @@ public interface BucketableMixin {
       at = {@At("RETURN")}
    )
    private static void readComponentsFromStack(Mob entity, CompoundTag nbt, CallbackInfo ci) {
-      entity.asComponentProvider().getComponentContainer().fromTag(nbt, entity.registryAccess());
+      entity.asComponentProvider().gemini$getComponentContainer().fromTag(nbt, entity.registryAccess());
    }
 }

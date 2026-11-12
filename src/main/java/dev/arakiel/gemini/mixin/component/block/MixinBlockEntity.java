@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @SuppressWarnings({"unchecked", "deprecation"})
 public abstract class MixinBlockEntity implements ComponentProvider {
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
 
    @Shadow
    @Nullable
@@ -50,7 +50,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void init(BlockEntityType<?> type, BlockPos pos, BlockState state, CallbackInfo ci) {
-      this.components = GeminiBlockInternals.createComponents((BlockEntity)(Object)this);
+      this.gemini$components = GeminiBlockInternals.createComponents((BlockEntity)(Object)this);
    }
 
    @Inject(
@@ -58,7 +58,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void writeNbt(Provider registryLookup, CallbackInfoReturnable<CompoundTag> cir) {
-      this.components.toTag((CompoundTag)cir.getReturnValue(), registryLookup);
+      this.gemini$components.toTag((CompoundTag)cir.getReturnValue(), registryLookup);
    }
 
    @Inject(
@@ -66,22 +66,22 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       at = {@At("RETURN")}
    )
    private void readNbt(CompoundTag nbt, Provider registryLookup, CallbackInfo ci) {
-      this.components.fromTag(nbt, registryLookup);
+      this.gemini$components.fromTag(nbt, registryLookup);
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 
    @Override
-   public Iterable<ServerPlayer> getRecipientsForComponentSync() {
+   public Iterable<ServerPlayer> gemini$getRecipientsForComponentSync() {
       Level world = this.getLevel();
       return (Iterable<ServerPlayer>)(world != null && !world.isClientSide ? PlayerLookup.tracking((BlockEntity)(Object)this) : List.of());
    }
 
-   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> toComponentPacket(
+   public <C extends ComponentSync.AutoSyncedComponent> ComponentUpdatePayload<?> gemini$toComponentPacket(
       ComponentKey<? super C> key, boolean required, RegistryFriendlyByteBuf data
    ) {
       return new ComponentUpdatePayload<>(

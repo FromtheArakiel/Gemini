@@ -25,7 +25,7 @@ public abstract class MixinChunkSerializer {
    ) {
       ProtoChunk ret = (ProtoChunk)cir.getReturnValue();
       ChunkAccess chunk = (ChunkAccess)(ret instanceof ImposterProtoChunk ? ((ImposterProtoChunk)ret).getWrapped() : ret);
-      chunk.asComponentProvider().getComponentContainer().fromTag(tag, world.registryAccess());
+      chunk.asComponentProvider().gemini$getComponentContainer().fromTag(tag, world.registryAccess());
       if (tag.contains("gemini_components", 10)) {
          int remainingComponentCount = tag.getCompound("gemini_components").size();
          chunk.setUnsaved(remainingComponentCount > 0);
@@ -38,6 +38,6 @@ public abstract class MixinChunkSerializer {
    )
    private static void serialize(ServerLevel world, ChunkAccess chunk, CallbackInfoReturnable<CompoundTag> cir) {
       CompoundTag ret = (CompoundTag)cir.getReturnValue();
-      chunk.asComponentProvider().getComponentContainer().toTag(ret, world.registryAccess());
+      chunk.asComponentProvider().gemini$getComponentContainer().toTag(ret, world.registryAccess());
    }
 }

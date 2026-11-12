@@ -20,7 +20,7 @@ public abstract class MixinServerWorld {
       )}
    )
    private void tick(Entity entity, CallbackInfo ci) {
-      ((ComponentProvider)entity).getComponentContainer().tickServerComponents();
+      ((ComponentProvider)entity).gemini$getComponentContainer().tickServerComponents();
    }
 
    @Inject(
@@ -32,6 +32,6 @@ public abstract class MixinServerWorld {
       )}
    )
    private void tickRiding(Entity vehicle, Entity passenger, CallbackInfo ci) {
-      ((ComponentProvider)passenger).getComponentContainer().tickServerComponents();
+      ((ComponentProvider)passenger).gemini$getComponentContainer().tickServerComponents();
    }
 }

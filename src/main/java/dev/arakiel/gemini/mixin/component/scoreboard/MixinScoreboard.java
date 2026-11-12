@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({Scoreboard.class})
 public abstract class MixinScoreboard implements ComponentProvider {
    @Unique
-   protected ComponentContainer components;
+   protected ComponentContainer gemini$components;
 
    @Inject(
       method = {"<init>"},
@@ -23,13 +23,13 @@ public abstract class MixinScoreboard implements ComponentProvider {
    )
    private void initComponents(CallbackInfo ci) {
       if (!((Object)this instanceof ServerScoreboard)) {
-         this.components = StaticScoreboardComponentPlugin.scoreboardComponentsContainerFactory.get().create((Scoreboard)(Object)this, null);
+         this.gemini$components = StaticScoreboardComponentPlugin.scoreboardComponentsContainerFactory.get().create((Scoreboard)(Object)this, null);
       }
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 }

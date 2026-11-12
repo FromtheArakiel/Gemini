@@ -14,19 +14,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({Level.class})
 public abstract class MixinWorld implements ComponentProvider {
    @Unique
-   protected ComponentContainer components;
+   protected ComponentContainer gemini$components;
 
    @Inject(
       method = {"<init>*"},
       at = {@At("RETURN")}
    )
    private void initComponents(CallbackInfo ci) {
-      this.components = GeminiWorldComponents.createComponents((Level)(Object)this);
+      this.gemini$components = GeminiWorldComponents.createComponents((Level)(Object)this);
    }
 
    @Nonnull
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 }

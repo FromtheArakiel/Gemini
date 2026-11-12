@@ -19,6 +19,6 @@ public abstract class MixinMinecraftServer {
       method = {"tickServer"}
    )
    private void onEndTick(BooleanSupplier shouldKeepTicking, CallbackInfo info) {
-      this.getWorldData().overworldData().asComponentProvider().getComponentContainer().tickServerComponents();
+      this.getWorldData().overworldData().asComponentProvider().gemini$getComponentContainer().tickServerComponents();
    }
 }

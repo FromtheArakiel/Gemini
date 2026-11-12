@@ -24,8 +24,8 @@ public final class GeminiEntityClient {
       }
 
       if (FabricLoader.getInstance().isModLoaded("fabric-lifecycle-events-v1")) {
-         ClientEntityEvents.ENTITY_LOAD.register((Load)(entity, world) -> ((ComponentProvider)entity).getComponentContainer().onClientLoad());
-         ClientEntityEvents.ENTITY_UNLOAD.register((Unload)(entity, world) -> ((ComponentProvider)entity).getComponentContainer().onClientUnload());
+         ClientEntityEvents.ENTITY_LOAD.register((Load)(entity, world) -> ((ComponentProvider)entity).gemini$getComponentContainer().onClientLoad());
+         ClientEntityEvents.ENTITY_UNLOAD.register((Unload)(entity, world) -> ((ComponentProvider)entity).gemini$getComponentContainer().onClientUnload());
       }
    }
 }

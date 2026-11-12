@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin({ChunkAccess.class})
 public abstract class MixinChunk implements ComponentProvider {
    @Unique
-   private ComponentContainer components;
+   private ComponentContainer gemini$components;
 
    @Inject(
       method = {"<init>"},
@@ -36,11 +36,11 @@ public abstract class MixinChunk implements ComponentProvider {
       BlendingData blendingData,
       CallbackInfo ci
    ) {
-      this.components = StaticChunkComponentPlugin.createContainer((ChunkAccess)(Object)this);
+      this.gemini$components = StaticChunkComponentPlugin.createContainer((ChunkAccess)(Object)this);
    }
 
    @Override
-   public ComponentContainer getComponentContainer() {
-      return this.components;
+   public ComponentContainer gemini$getComponentContainer() {
+      return this.gemini$components;
    }
 }
