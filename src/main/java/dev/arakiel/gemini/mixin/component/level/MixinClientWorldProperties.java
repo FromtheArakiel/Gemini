@@ -22,7 +22,7 @@ public abstract class MixinClientWorldProperties implements WritableLevelData, C
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void initComponents(Difficulty difficulty, boolean hardcore, boolean flatWorld, CallbackInfo ci) {
+   private void gemini$initComponents(Difficulty difficulty, boolean hardcore, boolean flatWorld, CallbackInfo ci) {
       this.gemini$components = StaticLevelComponentPlugin.createContainer(this);
    }
 

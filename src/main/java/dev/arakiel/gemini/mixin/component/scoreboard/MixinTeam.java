@@ -35,7 +35,7 @@ public abstract class MixinTeam implements ComponentProvider {
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void initComponents(CallbackInfo ci) {
+   private void gemini$initComponents(CallbackInfo ci) {
       this.gemini$components = StaticScoreboardComponentPlugin.teamComponentsContainerFactory
          .get()
          .create((PlayerTeam)(Object)this, this.scoreboard, this.scoreboard instanceof ServerScoreboardAccessor acc ? acc.getServer() : null);

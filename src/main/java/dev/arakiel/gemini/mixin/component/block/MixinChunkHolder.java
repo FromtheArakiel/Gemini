@@ -16,7 +16,7 @@ public abstract class MixinChunkHolder {
          target = "Lnet/minecraft/world/level/block/entity/BlockEntity;getUpdatePacket()Lnet/minecraft/network/protocol/Packet;"
       )}
    )
-   private BlockEntity sendBlockEntityUpdate(BlockEntity be) {
+   private BlockEntity gemini$sendBlockEntityUpdate(BlockEntity be) {
       ((ComponentCallbacks.BlockEntitySyncAround)ComponentCallbacks.BlockEntitySyncAround.EVENT.invoker()).onBlockEntitySync(be);
       return be;
    }

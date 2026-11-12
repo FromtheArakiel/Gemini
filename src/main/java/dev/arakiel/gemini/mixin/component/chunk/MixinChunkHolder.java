@@ -24,7 +24,7 @@ public abstract class MixinChunkHolder {
          shift = Shift.AFTER
       )}
    )
-   private void onPlayerLogIn(LevelChunk chunk, CallbackInfo ci) {
+   private void gemini$onPlayerLogIn(LevelChunk chunk, CallbackInfo ci) {
       for (ServerPlayer p : PlayerLookup.tracking((ServerLevel)chunk.getLevel(), chunk.getPos())) {
          ((ComponentCallbacks.ChunkSync)ComponentCallbacks.ChunkSync.EVENT.invoker()).onChunkSync(p, chunk);
       }

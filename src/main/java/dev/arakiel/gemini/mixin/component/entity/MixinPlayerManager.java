@@ -21,7 +21,7 @@ public abstract class MixinPlayerManager {
          target = "Lnet/minecraft/server/players/PlayerList;sendActivePlayerEffects(Lnet/minecraft/server/level/ServerPlayer;)V"
       )}
    )
-   private void onPlayerLogIn(Connection connection, ServerPlayer player, CommonListenerCookie clientData, CallbackInfo ci) {
+   private void gemini$onPlayerLogIn(Connection connection, ServerPlayer player, CommonListenerCookie clientData, CallbackInfo ci) {
       ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync(player);
    }
 
@@ -29,7 +29,7 @@ public abstract class MixinPlayerManager {
       method = {"sendAllPlayerInfo"},
       at = {@At("RETURN")}
    )
-   private void sendPlayerStatus(ServerPlayer player, CallbackInfo info) {
+   private void gemini$sendPlayerStatus(ServerPlayer player, CallbackInfo info) {
       ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync(player);
    }
 
@@ -37,7 +37,7 @@ public abstract class MixinPlayerManager {
       method = {"respawn"},
       at = {@At("RETURN")}
    )
-   private void respawnPlayer(ServerPlayer player, boolean alive, RemovalReason removalReason, CallbackInfoReturnable<ServerPlayer> cir) {
+   private void gemini$respawnPlayer(ServerPlayer player, boolean alive, RemovalReason removalReason, CallbackInfoReturnable<ServerPlayer> cir) {
       ((ComponentCallbacks.PlayerSync)ComponentCallbacks.PlayerSync.EVENT.invoker()).onPlayerSync((ServerPlayer)cir.getReturnValue());
    }
 }

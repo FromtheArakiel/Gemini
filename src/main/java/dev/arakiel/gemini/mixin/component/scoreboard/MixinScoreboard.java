@@ -21,7 +21,7 @@ public abstract class MixinScoreboard implements ComponentProvider {
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void initComponents(CallbackInfo ci) {
+   private void gemini$initComponents(CallbackInfo ci) {
       if (!((Object)this instanceof ServerScoreboard)) {
          this.gemini$components = StaticScoreboardComponentPlugin.scoreboardComponentsContainerFactory.get().create((Scoreboard)(Object)this, null);
       }

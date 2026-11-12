@@ -15,7 +15,7 @@ public abstract class MixinPlayerManager {
       method = {"sendLevelInfo"},
       at = {@At("RETURN")}
    )
-   private void sendWorldInfo(ServerPlayer player, ServerLevel world, CallbackInfo ci) {
+   private void gemini$sendWorldInfo(ServerPlayer player, ServerLevel world, CallbackInfo ci) {
       ((ComponentCallbacks.WorldSync)ComponentCallbacks.WorldSync.EVENT.invoker()).onPlayerStartTracking(player, world);
    }
 }

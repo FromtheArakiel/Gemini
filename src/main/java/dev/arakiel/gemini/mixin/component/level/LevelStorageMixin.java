@@ -25,7 +25,7 @@ public class LevelStorageMixin {
          target = "Lnet/minecraft/world/level/storage/PrimaryLevelData;parse(Lcom/mojang/serialization/Dynamic;Lnet/minecraft/world/level/LevelSettings;Lnet/minecraft/world/level/storage/PrimaryLevelData$SpecialWorldProperty;Lnet/minecraft/world/level/levelgen/WorldOptions;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/world/level/storage/PrimaryLevelData;"
       )}
    )
-   private static PrimaryLevelData readComponents(
+   private static PrimaryLevelData gemini$readComponents(
       Dynamic<?> dynamic,
       LevelSettings info,
       SpecialWorldProperty specialProperty,

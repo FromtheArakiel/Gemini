@@ -17,7 +17,7 @@ public abstract class MixinChunkDataSender {
       method = {"sendChunk"},
       at = {@At("RETURN")}
    )
-   private static void sendChunkDataPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
+   private static void gemini$sendChunkDataPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
       for (BlockEntity be : chunk.getBlockEntities().values()) {
          ((ComponentCallbacks.BlockEntitySync)ComponentCallbacks.BlockEntitySync.EVENT.invoker()).onBlockEntitySync(handler.player, be);
       }

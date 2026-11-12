@@ -63,7 +63,7 @@ public abstract class MixinWorldChunk extends ChunkAccess implements ComponentPr
       method = {"<init>(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ProtoChunk;Lnet/minecraft/world/level/chunk/LevelChunk$PostLoadProcessor;)V"},
       at = {@At("RETURN")}
    )
-   private void copyFromProto(ServerLevel world, ProtoChunk proto, PostLoadProcessor entityLoader, CallbackInfo ci) {
+   private void gemini$copyFromProto(ServerLevel world, ProtoChunk proto, PostLoadProcessor entityLoader, CallbackInfo ci) {
       this.gemini$getComponentContainer().copyFrom(proto.asComponentProvider().gemini$getComponentContainer(), world.registryAccess());
    }
 }

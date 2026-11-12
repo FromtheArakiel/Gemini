@@ -27,7 +27,7 @@ public abstract class MixinScoreboardState {
       method = {"save"},
       at = {@At("RETURN")}
    )
-   private void saveComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<CompoundTag> cir) {
+   private void gemini$saveComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<CompoundTag> cir) {
       ((ComponentProvider)(Object)this.scoreboard).gemini$getComponentContainer().toTag(tag, registries);
    }
 
@@ -35,7 +35,7 @@ public abstract class MixinScoreboardState {
       method = {"load"},
       at = {@At("RETURN")}
    )
-   private void loadComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<ScoreboardSaveData> cir) {
+   private void gemini$loadComponents(CompoundTag tag, Provider registries, CallbackInfoReturnable<ScoreboardSaveData> cir) {
       ((ComponentProvider)(Object)this.scoreboard).gemini$getComponentContainer().fromTag(tag, registries);
    }
 
@@ -47,7 +47,7 @@ public abstract class MixinScoreboardState {
          shift = Shift.AFTER
       )}
    )
-   private void loadTeamComponents(ListTag nbt, Provider registries, CallbackInfo ci, @Local CompoundTag teamData, @Local PlayerTeam team) {
+   private void gemini$loadTeamComponents(ListTag nbt, Provider registries, CallbackInfo ci, @Local CompoundTag teamData, @Local PlayerTeam team) {
       ((ComponentProvider)team).gemini$getComponentContainer().fromTag(teamData, registries);
    }
 
@@ -58,7 +58,7 @@ public abstract class MixinScoreboardState {
          target = "Lnet/minecraft/world/scores/PlayerTeam;getPlayers()Ljava/util/Collection;"
       )}
    )
-   private void saveTeamComponents(Provider registries, CallbackInfoReturnable<ListTag> cir, @Local PlayerTeam team, @Local CompoundTag teamData) {
+   private void gemini$saveTeamComponents(Provider registries, CallbackInfoReturnable<ListTag> cir, @Local PlayerTeam team, @Local CompoundTag teamData) {
       ((ComponentProvider)team).gemini$getComponentContainer().toTag(teamData, registries);
    }
 }

@@ -19,7 +19,7 @@ public abstract class MixinMinecraftServer {
       at = {@At("TAIL")},
       method = {"tickServer"}
    )
-   private void onEndTick(BooleanSupplier shouldKeepTicking, CallbackInfo info) {
+   private void gemini$onEndTick(BooleanSupplier shouldKeepTicking, CallbackInfo info) {
       ServerScoreboard scoreboard = this.getScoreboard();
       scoreboard.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
 

@@ -26,7 +26,7 @@ public abstract class MixinChunk implements ComponentProvider {
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void initComponents(
+   private void gemini$initComponents(
       ChunkPos pos,
       UpgradeData upgradeData,
       LevelHeightAccessor heightLimitView,

@@ -19,7 +19,7 @@ public abstract class MixinServerWorld {
          shift = Shift.AFTER
       )}
    )
-   private void tick(Entity entity, CallbackInfo ci) {
+   private void gemini$tick(Entity entity, CallbackInfo ci) {
       ((ComponentProvider)entity).gemini$getComponentContainer().tickServerComponents();
    }
 
@@ -31,7 +31,7 @@ public abstract class MixinServerWorld {
          shift = Shift.AFTER
       )}
    )
-   private void tickRiding(Entity vehicle, Entity passenger, CallbackInfo ci) {
+   private void gemini$tickRiding(Entity vehicle, Entity passenger, CallbackInfo ci) {
       ((ComponentProvider)passenger).gemini$getComponentContainer().tickServerComponents();
    }
 }

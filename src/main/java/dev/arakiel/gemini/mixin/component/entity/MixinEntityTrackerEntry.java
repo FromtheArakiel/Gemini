@@ -21,7 +21,7 @@ public abstract class MixinEntityTrackerEntry {
       method = {"addPairing"},
       at = {@At("RETURN")}
    )
-   private void onStartedTracking(ServerPlayer player, CallbackInfo ci) {
+   private void gemini$onStartedTracking(ServerPlayer player, CallbackInfo ci) {
       ((ComponentCallbacks.TrackingStart)ComponentCallbacks.TrackingStart.EVENT.invoker()).onPlayerStartTracking(player, this.entity);
    }
 }

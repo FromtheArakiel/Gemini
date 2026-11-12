@@ -20,7 +20,7 @@ public abstract class MixinChunkSerializer {
       method = {"read"},
       at = {@At("RETURN")}
    )
-   private static void deserialize(
+   private static void gemini$deserialize(
       ServerLevel world, PoiManager poiStorage, RegionStorageInfo key, ChunkPos chunkPos, CompoundTag tag, CallbackInfoReturnable<ProtoChunk> cir
    ) {
       ProtoChunk ret = (ProtoChunk)cir.getReturnValue();
@@ -36,7 +36,7 @@ public abstract class MixinChunkSerializer {
       method = {"write"},
       at = {@At("RETURN")}
    )
-   private static void serialize(ServerLevel world, ChunkAccess chunk, CallbackInfoReturnable<CompoundTag> cir) {
+   private static void gemini$serialize(ServerLevel world, ChunkAccess chunk, CallbackInfoReturnable<CompoundTag> cir) {
       CompoundTag ret = (CompoundTag)cir.getReturnValue();
       chunk.asComponentProvider().gemini$getComponentContainer().toTag(ret, world.registryAccess());
    }

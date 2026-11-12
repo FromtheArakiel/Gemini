@@ -49,7 +49,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void init(BlockEntityType<?> type, BlockPos pos, BlockState state, CallbackInfo ci) {
+   private void gemini$init(BlockEntityType<?> type, BlockPos pos, BlockState state, CallbackInfo ci) {
       this.gemini$components = GeminiBlockInternals.createComponents((BlockEntity)(Object)this);
    }
 
@@ -57,7 +57,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       method = {"saveWithoutMetadata"},
       at = {@At("RETURN")}
    )
-   private void writeNbt(Provider registryLookup, CallbackInfoReturnable<CompoundTag> cir) {
+   private void gemini$writeNbt(Provider registryLookup, CallbackInfoReturnable<CompoundTag> cir) {
       this.gemini$components.toTag((CompoundTag)cir.getReturnValue(), registryLookup);
    }
 
@@ -65,7 +65,7 @@ public abstract class MixinBlockEntity implements ComponentProvider {
       method = {"loadWithComponents"},
       at = {@At("RETURN")}
    )
-   private void readNbt(CompoundTag nbt, Provider registryLookup, CallbackInfo ci) {
+   private void gemini$readNbt(CompoundTag nbt, Provider registryLookup, CallbackInfo ci) {
       this.gemini$components.fromTag(nbt, registryLookup);
    }
 

@@ -54,7 +54,7 @@ public abstract class DolphinSwimToTreasureGoalMixin {
                 50,
                 false
         );
-        gemini$locateTask.handleOnServerThread((found, throwable) -> handleResult(level, found, throwable));
+        gemini$locateTask.handleOnServerThread((found, throwable) -> gemini$handleResult(level, found, throwable));
         return null;
     }
 
@@ -88,7 +88,7 @@ public abstract class DolphinSwimToTreasureGoalMixin {
     }
 
     @Unique
-    private void handleResult(ServerLevel level, BlockPos found, Throwable throwable) {
+    private void gemini$handleResult(ServerLevel level, BlockPos found, Throwable throwable) {
         if (throwable instanceof CancellationException) {
             return;
         }

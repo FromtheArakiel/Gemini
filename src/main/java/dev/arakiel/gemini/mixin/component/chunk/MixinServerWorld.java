@@ -13,7 +13,7 @@ public abstract class MixinServerWorld {
       method = {"tickChunk"},
       at = {@At("RETURN")}
    )
-   private void tick(LevelChunk chunk, int randomTickSpeed, CallbackInfo ci) {
+   private void gemini$tick(LevelChunk chunk, int randomTickSpeed, CallbackInfo ci) {
       chunk.asComponentProvider().gemini$getComponentContainer().tickServerComponents();
    }
 }

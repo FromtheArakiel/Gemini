@@ -48,7 +48,7 @@ public abstract class MixinServerScoreboard extends MixinScoreboard {
       method = {"<init>"},
       at = {@At("RETURN")}
    )
-   private void initComponents(CallbackInfo ci) {
+   private void gemini$initComponents(CallbackInfo ci) {
       this.gemini$components = gemini$componentsContainerFactory.get().create((Scoreboard)(Object)this, this.server);
    }
 
@@ -56,7 +56,7 @@ public abstract class MixinServerScoreboard extends MixinScoreboard {
       method = {"onTeamAdded"},
       at = {@At("RETURN")}
    )
-   private void syncTeamComponents(PlayerTeam team, CallbackInfo ci) {
+   private void gemini$syncTeamComponents(PlayerTeam team, CallbackInfo ci) {
       ((ComponentCallbacks.TeamAdd)ComponentCallbacks.TeamAdd.EVENT.invoker()).onTeamAdded(team);
    }
 }

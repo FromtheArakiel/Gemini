@@ -41,7 +41,7 @@ public abstract class MixinLevelProperties implements ServerLevelData, Component
       method = {"<init>(Lnet/minecraft/nbt/CompoundTag;ZLnet/minecraft/core/BlockPos;FJJIIIZIZZZLnet/minecraft/world/level/border/WorldBorder$Settings;IILjava/util/UUID;Ljava/util/Set;Ljava/util/Set;Lnet/minecraft/world/level/timers/TimerQueue;Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/world/level/dimension/end/EndDragonFight$Data;Lnet/minecraft/world/level/LevelSettings;Lnet/minecraft/world/level/levelgen/WorldOptions;Lnet/minecraft/world/level/storage/PrimaryLevelData$SpecialWorldProperty;Lcom/mojang/serialization/Lifecycle;)V"},
       at = {@At("RETURN")}
    )
-   private void initComponents(
+   private void gemini$initComponents(
       CompoundTag playerData,
       boolean modded,
       BlockPos spawnPos,
@@ -78,7 +78,7 @@ public abstract class MixinLevelProperties implements ServerLevelData, Component
       method = {"setTagData"},
       at = {@At("RETURN")}
    )
-   private void writeComponents(RegistryAccess registryManager, CompoundTag data, CompoundTag player, CallbackInfo ci) {
+   private void gemini$writeComponents(RegistryAccess registryManager, CompoundTag data, CompoundTag player, CallbackInfo ci) {
       this.gemini$components.toTag(data, registryManager);
    }
 

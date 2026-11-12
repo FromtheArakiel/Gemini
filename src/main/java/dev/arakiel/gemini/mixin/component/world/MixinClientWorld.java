@@ -14,7 +14,7 @@ public abstract class MixinClientWorld {
       method = {"tick"},
       at = {@At("RETURN")}
    )
-   private void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+   private void gemini$tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
       ((ComponentProvider)this).gemini$getComponentContainer().tickClientComponents();
    }
 }

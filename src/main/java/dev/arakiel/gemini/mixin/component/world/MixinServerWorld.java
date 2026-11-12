@@ -34,7 +34,7 @@ public abstract class MixinServerWorld extends MixinWorld {
       at = {@At("RETURN")},
       method = {"<init>*"}
    )
-   private void constructor(CallbackInfo ci) {
+   private void gemini$constructor(CallbackInfo ci) {
       this.getDataStorage().computeIfAbsent(ComponentPersistentState.getType(this.gemini$components), "gemini_world_components");
    }
 
@@ -42,7 +42,7 @@ public abstract class MixinServerWorld extends MixinWorld {
       method = {"tick"},
       at = {@At("RETURN")}
    )
-   private void tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+   private void gemini$tick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
       this.gemini$getComponentContainer().tickServerComponents();
    }
 

@@ -14,7 +14,7 @@ public abstract class MixinPersistentState {
       at = {@At("RETURN")},
       cancellable = true
    )
-   private void forceDirty(CallbackInfoReturnable<Boolean> cir) {
+   private void gemini$forceDirty(CallbackInfoReturnable<Boolean> cir) {
       if (!cir.getReturnValueZ() && (Object)this instanceof ScoreboardSaveData) {
          cir.setReturnValue(true);
       }

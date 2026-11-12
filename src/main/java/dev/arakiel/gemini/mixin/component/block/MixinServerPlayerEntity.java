@@ -17,7 +17,7 @@ public abstract class MixinServerPlayerEntity {
          target = "Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;create(Lnet/minecraft/world/level/block/entity/BlockEntity;Ljava/util/function/BiFunction;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;"
       )}
    )
-   private void syncBlockEntity(CommandBlockEntity commandBlock, CallbackInfo ci) {
+   private void gemini$syncBlockEntity(CommandBlockEntity commandBlock, CallbackInfo ci) {
       ((ComponentCallbacks.BlockEntitySync)ComponentCallbacks.BlockEntitySync.EVENT.invoker()).onBlockEntitySync((ServerPlayer)(Object)this, commandBlock);
    }
 }

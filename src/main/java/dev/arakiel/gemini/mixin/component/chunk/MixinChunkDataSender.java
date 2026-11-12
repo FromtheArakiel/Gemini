@@ -16,7 +16,7 @@ public abstract class MixinChunkDataSender {
       method = {"sendChunk"},
       at = {@At("RETURN")}
    )
-   private static void sendChunkComponentsPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
+   private static void gemini$sendChunkComponentsPackets(ServerGamePacketListenerImpl handler, ServerLevel world, LevelChunk chunk, CallbackInfo ci) {
       ((ComponentCallbacks.ChunkSync)ComponentCallbacks.ChunkSync.EVENT.invoker()).onChunkSync(handler.player, chunk);
    }
 }

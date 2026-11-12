@@ -15,7 +15,7 @@ public abstract class MixinPlayerManager {
       method = {"updateEntireScoreboard"},
       at = {@At("RETURN")}
    )
-   private void syncTeamComponents(ServerScoreboard scoreboard, ServerPlayer player, CallbackInfo ci) {
+   private void gemini$syncTeamComponents(ServerScoreboard scoreboard, ServerPlayer player, CallbackInfo ci) {
       ((ComponentCallbacks.ScoreboardSync)ComponentCallbacks.ScoreboardSync.EVENT.invoker()).onScoreboardSync(player, scoreboard);
    }
 }

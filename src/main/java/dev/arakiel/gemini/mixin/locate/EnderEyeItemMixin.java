@@ -75,7 +75,7 @@ public abstract class EnderEyeItemMixin {
                             false
                     )
                     .withTimeout(GeminiLocate.config().eyeTimeoutSeconds, TimeUnit.SECONDS);
-            task.handleOnServerThread((found, throwable) -> handleResult(
+            task.handleOnServerThread((found, throwable) -> gemini$handleResult(
                     serverLevel,
                     player,
                     eye,
@@ -129,7 +129,7 @@ public abstract class EnderEyeItemMixin {
         }
     }
 
-    private static void handleResult(
+    private static void gemini$handleResult(
             ServerLevel level,
             Player player,
             EyeOfEnder eye,
@@ -149,7 +149,7 @@ public abstract class EnderEyeItemMixin {
             if (throwable != null) {
                 task.cancel();
             }
-            refund(level, player, eye);
+            gemini$refund(level, player, eye);
             return;
         }
 
@@ -162,7 +162,7 @@ public abstract class EnderEyeItemMixin {
         }
     }
 
-    private static void refund(ServerLevel level, Player player, EyeOfEnder eye) {
+    private static void gemini$refund(ServerLevel level, Player player, EyeOfEnder eye) {
         if (!player.isCreative()) {
             level.addFreshEntity(new ItemEntity(
                     level,

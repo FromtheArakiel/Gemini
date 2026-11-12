@@ -14,7 +14,7 @@ public interface BucketableMixin {
       method = {"method_57302"},
       at = {@At("RETURN")}
    )
-   private static void writeComponentsToStack(Mob mobEntity, CompoundTag nbtCompound, CallbackInfo ci) {
+   private static void gemini$writeComponentsToStack(Mob mobEntity, CompoundTag nbtCompound, CallbackInfo ci) {
       mobEntity.asComponentProvider().gemini$getComponentContainer().toTag(nbtCompound, mobEntity.registryAccess());
    }
 
@@ -22,7 +22,7 @@ public interface BucketableMixin {
       method = {"loadDefaultDataFromBucketTag(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/nbt/CompoundTag;)V"},
       at = {@At("RETURN")}
    )
-   private static void readComponentsFromStack(Mob entity, CompoundTag nbt, CallbackInfo ci) {
+   private static void gemini$readComponentsFromStack(Mob entity, CompoundTag nbt, CallbackInfo ci) {
       entity.asComponentProvider().gemini$getComponentContainer().fromTag(nbt, entity.registryAccess());
    }
 }

@@ -75,7 +75,7 @@ public abstract class TreasureMapForEmeraldsMixin {
         );
         GeminiLocate.findStructure(level, destination, origin, 100, true)
                 .withTimeout(GeminiLocate.config().mapTimeoutSeconds, TimeUnit.SECONDS)
-                .handleOnServerThread((found, throwable) -> handleResult(
+                .handleOnServerThread((found, throwable) -> gemini$handleResult(
                         trader,
                         level,
                         pending,
@@ -87,7 +87,7 @@ public abstract class TreasureMapForEmeraldsMixin {
         callback.setReturnValue(offer);
     }
 
-    private void handleResult(
+    private void gemini$handleResult(
             Entity trader,
             ServerLevel level,
             ItemStack pending,

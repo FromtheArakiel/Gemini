@@ -20,7 +20,7 @@ public abstract class MixinWorld implements ComponentProvider {
       method = {"<init>*"},
       at = {@At("RETURN")}
    )
-   private void initComponents(CallbackInfo ci) {
+   private void gemini$initComponents(CallbackInfo ci) {
       this.gemini$components = GeminiWorldComponents.createComponents((Level)(Object)this);
    }
 

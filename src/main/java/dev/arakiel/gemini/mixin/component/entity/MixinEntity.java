@@ -44,7 +44,7 @@ public abstract class MixinEntity implements ComponentProvider {
       method = {"<init>*"},
       at = {@At("RETURN")}
    )
-   private void initDataTracker(CallbackInfo ci) {
+   private void gemini$initDataTracker(CallbackInfo ci) {
       this.gemini$components = GeminiEntityInternals.createEntityComponentContainer((Entity)(Object)this);
    }
 
@@ -52,7 +52,7 @@ public abstract class MixinEntity implements ComponentProvider {
       method = {"saveWithoutId"},
       at = {@At("RETURN")}
    )
-   private void toTag(CompoundTag inputTag, CallbackInfoReturnable<CompoundTag> cir) {
+   private void gemini$toTag(CompoundTag inputTag, CallbackInfoReturnable<CompoundTag> cir) {
       this.gemini$components.toTag((CompoundTag)cir.getReturnValue(), this.registryAccess());
    }
 
@@ -64,7 +64,7 @@ public abstract class MixinEntity implements ComponentProvider {
          shift = Shift.AFTER
       )}
    )
-   private void fromTag(CompoundTag tag, CallbackInfo ci) {
+   private void gemini$fromTag(CompoundTag tag, CallbackInfo ci) {
       this.gemini$components.fromTag(tag, this.registryAccess());
    }
 
