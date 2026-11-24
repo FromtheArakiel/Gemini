@@ -17,5 +17,6 @@
 	"death.attack.freeze": "%s冻死了",
 	"death.attack.life_sync": "%s被榨干了",
 	"death.attack.void_eye": "%s死于虚空之眼的诅咒",
-	"death.attack.emerald": "%s被绿宝石水花杀死了"
+	"death.attack.emerald": "%s被绿宝石水花杀死了",
+	"menu.tabs.inventory": "物品栏"
 }

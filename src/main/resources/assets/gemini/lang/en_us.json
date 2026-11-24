@@ -17,5 +17,6 @@
 	"death.attack.freeze": "%s froze to death",
 	"death.attack.life_sync": "%s was drained",
 	"death.attack.void_eye": "%s was cursed by the Void Eye",
-	"death.attack.emerald": "%s was killed by Emerald Splash"
+	"death.attack.emerald": "%s was killed by Emerald Splash",
+	"menu.tabs.inventory": "Inventory"
 }

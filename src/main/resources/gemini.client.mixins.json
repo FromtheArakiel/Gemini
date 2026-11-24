@@ -13,7 +13,10 @@
 		"creative.CreativeModeTabMixin",
 		"creative.ContainerScreenAccessor",
 		"creative.CustomCreativeSlotMixin",
-		"creative.ItemPickerMenuMixin"
+		"creative.ItemPickerMenuMixin",
+		"tab.AbstractContainerScreenAccessor",
+		"tab.AbstractContainerScreenMixin",
+		"tab.ScreenAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

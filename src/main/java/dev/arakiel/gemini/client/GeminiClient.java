@@ -4,6 +4,7 @@ import dev.arakiel.gemini.config.client.GeminiConfigCommand;
 import dev.arakiel.gemini.config.client.GeminiConfigClient;
 import dev.arakiel.gemini.integration.GeminiIntegrations;
 import dev.arakiel.gemini.network.client.GeminiNetworkClient;
+import dev.arakiel.gemini.tab.client.GeminiTabsClient;
 import net.fabricmc.api.ClientModInitializer;
 
 public class GeminiClient implements ClientModInitializer {
@@ -13,5 +14,6 @@ public class GeminiClient implements ClientModInitializer {
 		GeminiConfigCommand.init();
 		GeminiNetworkClient.init();
 		GeminiIntegrations.initClient();
+		GeminiTabsClient.init();
 	}
 }

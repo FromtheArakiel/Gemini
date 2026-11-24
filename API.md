@@ -20,6 +20,7 @@ details and are not intended for downstream use. Client-only code lives under
 | `combat` | `GeminiCombat` | Attack-triggered mob effects |
 | `creative` | `GeminiCreativeTabs` | Creative tab registration |
 | `explosion` | `GeminiExplosion` | Structured explosion configuration |
+| `tab` | `GeminiTabs`, `TabRegistry` | Stateful inventory-screen tab registration and layout |
 | `tweak` | `GeminiTweaks`, `FastUseItem` | Small gameplay extensions |
 | `text` | `GeminiText` | Client text wrapping and drawing |
 
@@ -117,6 +118,49 @@ GeminiComponents.sync(Stamina.KEY, entity);
 
 `ConditionalToken` and `TokenKey` provide short-lived player state. See
 `GeminiComponents.token`, `getToken`, and `getOrCreateToken`.
+
+## Tabs
+
+`GeminiTabs.registry()` returns the client tab state machine. Registration is
+accepted while the registry is collecting definitions and is sealed on the
+first layout request.
+
+```java
+TabDefinition definition = TabDefinition.builder(ResourceLocation.parse("example_mod:guide"))
+        .owner("example_mod")
+        .title(Component.translatable("screen.example_mod.guide"))
+        .icon(TabIcon.item(Items.BOOK))
+        .action(context -> Minecraft.getInstance().setScreen(new GuideScreen()))
+        .selectedWhen(context -> context.screen() instanceof GuideScreen)
+        .build();
+
+TabRegistration result = GeminiTabs.registry().register(definition);
+```
+
+Anchored tabs request a position relative to other external tabs. Equal
+anchors are sorted by resource identifier, then moved forward when a slot is
+occupied. Unanchored tabs are sorted by queue lane and identifier, and fill
+the remaining gaps before appending at the end.
+
+```java
+TabOrder.anchored(20);
+TabOrder.queued();
+TabOrder.queued(100);
+```
+
+The built-in Inventory tab is not a normal registration. It is hidden while no
+visible external tabs exist and is always the first rendered tab once one
+exists, including when another tab anchors at zero.
+
+Container screens can implement `TabScreen` to receive the shared bar. The
+screen should expose the external tab's selected state through
+`TabDefinition.selectedWhen`. At most one tab is selected: the first visible
+external tab whose predicate matches; otherwise Inventory is selected on
+`InventoryScreen`.
+
+L2-style selected backgrounds use `sel_*` and unselected backgrounds use
+`des_*`. Hovering adds a short 120 ms brightness transition without changing
+the selected identity.
 
 Component factories are available through `ComponentFactoryRegistries`.
 Automatic client synchronization uses `ComponentSync`, including
