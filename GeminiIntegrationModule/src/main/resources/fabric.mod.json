@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_integration",
+	"version": "${version}",
+	"name": "Gemini Integration",
+	"description": "Gemini optional mod integration discovery.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.integration.GeminiIntegrationInitializer"
+		],
+		"client": [
+			"dev.arakiel.gemini.integration.GeminiIntegrationClientInitializer"
+		]
+	},
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

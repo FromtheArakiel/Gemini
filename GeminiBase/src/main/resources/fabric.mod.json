@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini",
+	"version": "${version}",
+	"name": "Gemini",
+	"description": "Shared foundation for the modular Gemini library.",
+	"authors": [
+		"FromtheArakiel"
+	],
+	"license": "GPL-3.0-only",
+	"icon": "assets/gemini/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.Gemini"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

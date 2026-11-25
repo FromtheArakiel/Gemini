@@ -1,0 +1,65 @@
+apply plugin: 'net.fabricmc.fabric-loom-remap'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
+
+group = rootProject.property('group')
+version = rootProject.property('version')
+
+base {
+	archivesName = project.name.toLowerCase(Locale.ROOT)
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${rootProject.property('minecraft_version')}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${rootProject.property('loader_version')}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.property('fabric_api_version')}"
+
+	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+	compileOnly 'org.jetbrains:annotations:24.0.1'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+
+loom {
+	mods {
+		"${project.name.toLowerCase(Locale.ROOT)}" {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+def moduleVersion = project.version
+
+processResources {
+	inputs.property 'version', moduleVersion
+	filesMatching('fabric.mod.json') {
+		expand 'version': moduleVersion
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.release = 21
+	options.encoding = 'UTF-8'
+	options.compilerArgs.addAll(['-Xlint:deprecation', '-Xlint:unchecked'])
+}
+
+test {
+	useJUnitPlatform()
+	if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
+		jvmArgs('--sun-misc-unsafe-memory-access=allow', '--enable-native-access=ALL-UNNAMED')
+	}
+}
+
+if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
+	tasks.withType(JavaExec).configureEach {
+		jvmArgs('--sun-misc-unsafe-memory-access=allow', '--enable-native-access=ALL-UNNAMED')
+	}
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}

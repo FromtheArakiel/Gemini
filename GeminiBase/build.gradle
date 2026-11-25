@@ -1,0 +1,23 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini'
+}
+
+dependencies {
+	include project(':GeminiRegistrationModule')
+	include project(':GeminiEventModule')
+	include project(':GeminiNetworkModule')
+	include project(':GeminiComponentModule')
+	include project(':GeminiCapabilityModule')
+	include project(':GeminiConfigModule')
+	include project(':GeminiLocateModule')
+	include project(':GeminiGameplayModule')
+	include project(':GeminiIntegrationModule')
+	include project(':GeminiClientModule')
+	include project(':GeminiTabModule')
+	include project(':GeminiCreativeModule')
+
+	include ':core:3.8.0'
+	include ':toml:3.8.0'
+}

@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"client.event.ItemTooltipMixin",
+		"client.event.MinecraftScreenEventMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

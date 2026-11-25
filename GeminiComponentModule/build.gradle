@@ -1,0 +1,14 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_component'
+}
+
+loom {
+	accessWidenerPath = file('src/main/resources/gemini_component.accesswidener')
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+}

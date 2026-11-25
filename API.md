@@ -7,10 +7,49 @@ details and are not intended for downstream use. Client-only code lives under
 
 ## Modules
 
+The repository is a Gradle multi-project build. `GeminiBase` is the core module
+and produces the final `gemini` distribution JAR. The remaining modules are
+independent nested Fabric mods with their own mod IDs, metadata and tests.
+
+| Project | Mod ID | Java package |
+| --- | --- | --- |
+| `GeminiBase` | `gemini` | `dev.arakiel.gemini` |
+| `GeminiRegistrationModule` | `gemini_registration` | `dev.arakiel.gemini.registration` |
+| `GeminiEventModule` | `gemini_event` | `dev.arakiel.gemini.event` |
+| `GeminiNetworkModule` | `gemini_network` | `dev.arakiel.gemini.network` |
+| `GeminiComponentModule` | `gemini_component` | `dev.arakiel.gemini.component` |
+| `GeminiCapabilityModule` | `gemini_capability` | `dev.arakiel.gemini.capability` |
+| `GeminiConfigModule` | `gemini_config` | `dev.arakiel.gemini.config` |
+| `GeminiLocateModule` | `gemini_locate` | `dev.arakiel.gemini.locate` |
+| `GeminiGameplayModule` | `gemini_gameplay` | `dev.arakiel.gemini.attribute`, `.combat`, `.explosion`, `.tweak` |
+| `GeminiIntegrationModule` | `gemini_integration` | `dev.arakiel.gemini.integration` |
+| `GeminiClientModule` | `gemini_client` | `dev.arakiel.gemini.client` |
+| `GeminiTabModule` | `gemini_tab` | `dev.arakiel.gemini.tab` |
+| `GeminiCreativeModule` | `gemini_creative` | `dev.arakiel.gemini.creative` |
+
+Module dependencies:
+
+```text
+GeminiBase
+<- GeminiRegistrationModule
+<- GeminiEventModule
+<- GeminiNetworkModule
+<- GeminiComponentModule
+<- GeminiCapabilityModule -> GeminiComponentModule
+<- GeminiConfigModule
+<- GeminiLocateModule -> GeminiConfigModule, GeminiIntegrationModule
+<- GeminiGameplayModule -> GeminiEventModule
+<- GeminiIntegrationModule
+<- GeminiClientModule -> GeminiEventModule
+<- GeminiTabModule
+<- GeminiCreativeModule
+```
+
 | Domain | Main entry point | Purpose |
 | --- | --- | --- |
 | `registration` | `GeminiRegistration` | Field-scanning registry containers |
 | `event` | `GeminiEvents` | Shared event bus and Fabric bridges |
+| `capability` | `GeminiCapabilities` | Cross-mod capability discovery, storage views, and explicit Fabric Transfer export |
 | `component` | `GeminiComponents` | Entity/block/chunk/level/world/scoreboard and ItemStack components |
 | `network` | `GeminiNetwork` | Typed channels, clientbound/serverbound messages, bundles |
 | `config` | `GeminiConfig` | TOML configs, annotations, reload listeners, generated GUI |
@@ -70,8 +109,10 @@ Subscription subscription = GeminiEvents.listen(
 subscription.close();
 ```
 
-Event classes are grouped under `event/block`, `event/entity`, `event/item`,
-`event/level`, `event/server`, and related packages.
+Event classes are grouped under `event/block`, `event/command`,
+`event/client`, `event/entity`, `event/explosion`, `event/item`,
+`event/level`, `event/resource`, `event/server`, `event/spawn`, and related
+packages.
 
 ```java
 @SubscribeEvent
@@ -81,6 +122,78 @@ public void onHurt(LivingHurtEvent event) {
 
 `GeminiEvents.register(instance)` scans annotated listener methods.
 `GeminiEvents.post(event)` dispatches an event immediately.
+
+P0 runtime sets include:
+
+- command registration, parse and execute observation
+- datapack reload/sync, tag reload and loot-table replacement
+- player clone, respawn, dimension change, container and tick lifecycle
+- player/entity block placement, block drops, farmland, crop and explosion
+- mob spawn finalization, spawn position checks and living drops/experience
+- client tick, player network, screen/container render, tooltip and registration
+  callbacks
+
+Use `GeminiServerHooks` for reload listeners and built-in packs, and
+`GeminiGameplayHooks.registerSpawnPlacements()` when applying
+`RegisterSpawnPlacementsEvent`.
+
+## Capability
+
+Capability discovery is separate from Components and from Fabric Transfer.
+Components may back a capability provider, but a provider can also return a
+dynamic view with no persistent component.
+
+```java
+CapabilityKey<MyView> MY_VIEW =
+        CapabilityKey.create(ResourceLocation.parse("example_mod:my_view"));
+
+GeminiCapabilities.registry().registerBlockEntity(
+        MY_VIEW,
+        MOD_BLOCK_ENTITY,
+        context -> Optional.of(new MyView(context.direction())),
+        CapabilityPriority.NORMAL
+);
+
+Optional<MyView> view = GeminiCapabilities.registry().find(
+        MY_VIEW,
+        new BlockCapabilityContext(level, pos, state, blockEntity, direction)
+);
+```
+
+Registration is ordered by source specificity, then provider priority
+descending, then registration order. The first query seals the registry.
+Providers returning empty are skipped; provider exceptions are logged and
+isolated from later providers.
+
+Standard keys:
+
+- `GeminiCapabilities.ITEM_STORAGE`
+- `GeminiCapabilities.FLUID_STORAGE`
+- `GeminiCapabilities.ENERGY`
+
+`ItemStorageView` and `FluidStorageView` use simulation-safe operations.
+ItemStack and `GeminiFluidStack` data components remain attached to stored
+resources. `GeminiFluidStack` uses Gemini-owned `long` amounts.
+
+Component-backed providers:
+
+```java
+CapabilityProvider<MyView, BlockCapabilityContext> provider =
+        CapabilityComponents.blockEntity(MY_COMPONENT, MyView::new);
+```
+
+Capability registration never exposes a Fabric Transfer lookup automatically.
+Export explicitly:
+
+```java
+GeminiFabricTransfer.exportItemStorage(MOD_BLOCK_ENTITY);
+GeminiFabricTransfer.exportFluidStorage(MOD_BLOCK);
+GeminiFabricTransfer.exportContainedItemStorage(MOD_ITEM);
+```
+
+The Fabric adapter preserves item/fluid variants and applies transaction
+rollback through `TransactionContext`. Gemini energy remains its own protocol;
+it is never reported as FE/RF.
 
 ## Components
 
@@ -454,7 +567,21 @@ Small tweaks:
 ## Build
 
 ```text
-gradlew.bat assemble
+gradlew.bat test
+gradlew.bat build
+gradlew.bat testModule -Pmodule=GeminiCapabilityModule
+gradlew.bat buildModule -Pmodule=GeminiCapabilityModule
 ```
 
-The remapped artifact is produced at `build/libs/gemini-1.0.0.jar`.
+The root `test` task runs tests for every module. The root `build` task builds
+all modules and produces the final core distribution at:
+
+```text
+GeminiBase/build/libs/gemini-<version>.jar
+```
+
+That JAR contains the independent feature mods under `META-INF/jars/`.
+
+`testModule` and `buildModule` use Gradle project dependencies, so compiling or
+testing `GeminiCapabilityModule`, for example, automatically builds
+`GeminiComponentModule` and `GeminiBase` first.

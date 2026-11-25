@@ -1,0 +1,37 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"event.AbstractFurnaceBlockEntityMixin",
+		"event.BlockDropsMixin",
+		"event.BlockItemMixin",
+		"event.BoneMealItemMixin",
+		"event.CommandsMixin",
+		"event.CropBlockMixin",
+		"event.ExperienceOrbMixin",
+		"event.ExplosionEventMixin",
+		"event.FarmBlockMixin",
+		"event.FlowingFluidMixin",
+		"event.FurnaceResultSlotMixin",
+		"event.ItemCooldownsMixin",
+		"event.ItemEntityMixin",
+		"event.ItemStackMixin",
+		"event.LivingEntityMixin",
+		"event.MobConversionMixin",
+		"event.MobSpawnMixin",
+		"event.PistonStructureResolverMixin",
+		"event.PlayerAdvancementsMixin",
+		"event.PlayerMixin",
+		"event.ProjectileMixin",
+		"event.ResultSlotMixin",
+		"event.ServerPlayerEventMixin",
+		"event.ServerPlayerGameModeMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

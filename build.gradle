@@ -1,103 +1,120 @@
 plugins {
-	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
-	id 'maven-publish'
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}" apply false
 }
 
-repositories {
-	// Add repositories to retrieve artifacts from in here.
-	flatDir {
-		dirs "libs"
-	}
-}
+allprojects {
+	group = rootProject.property('group')
+	version = rootProject.property('version')
 
-loom {
-	accessWidenerPath = file("src/main/resources/gemini.accesswidener")
-
-	mods {
-		"gemini" {
-			sourceSet sourceSets.main
-		}
-	}
-}
-
-dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-	implementation ":core:3.8.0"
-	implementation ":toml:3.8.0"
-	include ":core:3.8.0"
-	include ":toml:3.8.0"
-	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
-	compileOnly "org.jetbrains:annotations:24.0.1"
-	modCompileOnly files("libs/modmenu-11.0.5.jar")
-
-	testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
-	testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
-}
-
-processResources {
-	def version = project.version
-	inputs.property "version", version
-
-	filesMatching("fabric.mod.json") {
-		expand "version": version
-	}
-}
-
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-	it.options.encoding = "UTF-8"
-	it.options.compilerArgs.addAll(["-Xlint:deprecation", "-Xlint:unchecked"])
-}
-
-sourceSets {
-	test {
-		java.srcDir "test/java"
-	}
-}
-
-test {
-	useJUnitPlatform()
-	if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
-		jvmArgs("--sun-misc-unsafe-memory-access=allow", "--enable-native-access=ALL-UNNAMED")
-	}
-}
-
-if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_24)) {
-	tasks.withType(JavaExec).configureEach {
-		jvmArgs("--sun-misc-unsafe-memory-access=allow", "--enable-native-access=ALL-UNNAMED")
-	}
-}
-
-java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
-
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
-}
-
-jar {
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			from components.java
-		}
-	}
-
-	// See https://docs.gradle.org/current/docs/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to in here. Notice, this block does NOT have the same function as the top level.
-		// The repositories here will be used for publishing your artifact, not for retrieving dependencies.
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		mavenCentral()
+		flatDir {
+			dirs rootProject.file('libs')
+		}
+	}
+}
+
+gradle.projectsEvaluated {
+	def moduleProjects = subprojects.findAll { it.name.startsWith('Gemini') }
+	tasks.register('moduleTests') {
+		group = 'verification'
+		description = 'Runs tests for every Gemini module.'
+		dependsOn moduleProjects.collect { it.tasks.named('test') }
+	}
+	tasks.register('moduleBuilds') {
+		group = 'build'
+		description = 'Builds every Gemini module.'
+		dependsOn moduleProjects.collect { it.tasks.named('build') }
+	}
+	tasks.register('build') {
+		group = 'build'
+		description = 'Builds every Gemini module and the final GeminiBase artifact.'
+		dependsOn tasks.named('moduleBuilds')
+	}
+	tasks.register('test') {
+		group = 'verification'
+		description = 'Runs tests for every Gemini module.'
+		dependsOn tasks.named('moduleTests')
+	}
+	tasks.register('check') {
+		group = 'verification'
+		description = 'Runs every module verification task.'
+		dependsOn tasks.named('moduleTests'), tasks.named('verifyModuleLayout')
+	}
+	tasks.register('clean') {
+		group = 'build'
+		description = 'Cleans every Gemini module and the root build directory.'
+		dependsOn moduleProjects.collect { it.tasks.named('clean') }
+	}
+}
+
+tasks.register('verifyModuleLayout') {
+	group = 'verification'
+	description = 'Checks that all expected Gemini modules are present.'
+	doLast {
+		def expected = [
+				'GeminiBase',
+				'GeminiRegistrationModule',
+				'GeminiEventModule',
+				'GeminiNetworkModule',
+				'GeminiComponentModule',
+				'GeminiCapabilityModule',
+				'GeminiConfigModule',
+				'GeminiLocateModule',
+				'GeminiGameplayModule',
+				'GeminiIntegrationModule',
+				'GeminiClientModule',
+				'GeminiTabModule',
+				'GeminiCreativeModule'
+		]
+		expected.each { name ->
+			if (!file("${name}/build.gradle").isFile()) {
+				throw new GradleException("Missing module build script: ${name}/build.gradle")
+			}
+		}
+	}
+}
+
+def requestedModuleName = providers.gradleProperty('module').orNull
+def normalizedModuleName = requestedModuleName == null
+		? null
+		: requestedModuleName.startsWith(':')
+		? requestedModuleName.substring(1)
+		: requestedModuleName
+def requestedModuleProject = normalizedModuleName == null
+		? null
+		: findProject(":${normalizedModuleName}")
+
+if (normalizedModuleName != null && requestedModuleProject == null) {
+	throw new GradleException("Unknown Gemini module: ${normalizedModuleName}")
+}
+
+tasks.register('testModule') {
+	group = 'verification'
+	description = 'Runs tests for -Pmodule=<GeminiModule>. Project dependencies are built automatically.'
+	if (requestedModuleProject != null) {
+		dependsOn requestedModuleProject.tasks.named('test')
+	}
+	doFirst {
+		if (normalizedModuleName == null) {
+			throw new GradleException('Specify a module with -Pmodule=<GeminiModule>')
+		}
+	}
+}
+
+tasks.register('buildModule') {
+	group = 'build'
+	description = 'Builds -Pmodule=<GeminiModule>. Project dependencies are built automatically.'
+	if (requestedModuleProject != null) {
+		dependsOn requestedModuleProject.tasks.named('build')
+	}
+	doFirst {
+		if (normalizedModuleName == null) {
+			throw new GradleException('Specify a module with -Pmodule=<GeminiModule>')
+		}
 	}
 }

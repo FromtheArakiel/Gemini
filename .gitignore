@@ -1,48 +1,54 @@
-# gradle
-
+# Gradle
 .gradle/
+**/.gradle/
 build/
+**/build/
 out/
+**/out/
 classes/
+**/classes/
+.kotlin/
+**/.kotlin/
 
-# eclipse
+# Fabric
+run/
+**/run/
+logs/
+**/logs/
+crash/
+**/crash/
+crash-reports/
+**/crash-reports/
+debug/
+**/debug/
+testmod/
+example/
 
-*.launch
+# Documentation and local reference material
+reference/
+analysis/
+guide.md
 
-# idea
-
+# IDE
 .idea/
 *.iml
 *.ipr
 *.iws
-
-# vscode
-
+*.launch
 .settings/
 .vscode/
 bin/
+**/bin/
 .classpath
 .project
 
-# macos
-
+# OS
 *.DS_Store
+Thumbs.db
 
-# fabric
-
-run/
-logs/
-testmod/
-example/
-
-# java
-
+# Runtime diagnostics
+*.log
 hs_err_*.log
 replay_*.log
 *.hprof
 *.jfr
-
-reference/
-analysis/
-guide.md
-crash/

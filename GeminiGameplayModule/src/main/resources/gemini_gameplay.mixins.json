@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"attribute.LivingEntityAttributeMixin",
+		"attribute.PlayerAttributeMixin",
+		"tweak.AbstractArrowMixin",
+		"tweak.EntityMixin",
+		"tweak.LightningBoltMixin"
+	],
+	"client": [
+		"tweak.LocalPlayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

@@ -1,0 +1,28 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_config",
+	"version": "${version}",
+	"name": "Gemini Config",
+	"description": "Gemini TOML configuration and client configuration UI.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.config.GeminiConfigInitializer"
+		],
+		"client": [
+			"dev.arakiel.gemini.config.client.GeminiConfigClientInitializer"
+		],
+		"modmenu": [
+			"dev.arakiel.gemini.client.GeminiModMenu"
+		]
+	},
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"modmenu": "*"
+	}
+}

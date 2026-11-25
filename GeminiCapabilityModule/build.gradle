@@ -1,0 +1,12 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_capability'
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	compileOnly project(':GeminiComponentModule')
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+	testImplementation project(path: ':GeminiComponentModule', configuration: 'namedElements')
+}

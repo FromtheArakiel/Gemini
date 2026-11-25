@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_locate",
+	"version": "${version}",
+	"name": "Gemini Locate",
+	"description": "Gemini asynchronous structure and biome location.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.locate.GeminiLocateInitializer"
+		]
+	},
+	"mixins": [
+		"gemini_locate.mixins.json"
+	],
+	"depends": {
+		"gemini": ">=1.0.6",
+		"gemini_config": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

@@ -1,0 +1,76 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_component",
+	"version": "${version}",
+	"name": "Gemini Component",
+	"description": "Gemini data components and lifecycle synchronization.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.component.internal.base.ComponentsInternals::init",
+			"dev.arakiel.gemini.component.internal.block.GeminiBlockComponents::init",
+			"dev.arakiel.gemini.component.internal.chunk.GeminiChunkComponents::init",
+			"dev.arakiel.gemini.component.internal.entity.GeminiEntityComponents::init",
+			"dev.arakiel.gemini.component.internal.itemstack.GeminiItemStackComponents::init",
+			"dev.arakiel.gemini.component.internal.level.GeminiLevelComponents::init",
+			"dev.arakiel.gemini.component.internal.scoreboard.GeminiScoreboardComponents::init",
+			"dev.arakiel.gemini.component.internal.world.GeminiWorldComponents::init"
+		],
+		"gemini:static-components": [
+			"dev.arakiel.gemini.component.internal.token.ConditionalTokenRegistration"
+		],
+		"gemini:components": [
+			"dev.arakiel.gemini.component.internal.token.ConditionalTokenRegistration"
+		],
+		"client": [
+			"dev.arakiel.gemini.component.client.internal.block.GeminiBlockClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.chunk.GeminiChunkClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.entity.GeminiEntityClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.level.GeminiLevelClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.scoreboard.GeminiScoreboardClient::initClient",
+			"dev.arakiel.gemini.component.client.internal.world.GeminiWorldClient::initClient"
+		]
+	},
+	"mixins": [
+		"gemini_component.mixins.json",
+		{
+			"config": "gemini_component.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"accessWidener": "gemini_component.accesswidener",
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1297": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_1799": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_2586": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_2791": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_5217": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_269": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_268": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			],
+			"net/minecraft/class_1937": [
+				"dev/arakiel/gemini/component/ComponentAccess"
+			]
+		}
+	},
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

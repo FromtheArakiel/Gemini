@@ -1,0 +1,22 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_network",
+	"version": "${version}",
+	"name": "Gemini Network",
+	"description": "Gemini typed networking and synchronization transport.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.arakiel.gemini.network.GeminiNetworkInitializer"
+		],
+		"client": [
+			"dev.arakiel.gemini.network.client.GeminiNetworkClientInitializer"
+		]
+	},
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

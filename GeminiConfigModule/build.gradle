@@ -1,0 +1,16 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_config'
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	compileOnly ':core:3.8.0'
+	compileOnly ':toml:3.8.0'
+	modCompileOnly files(rootProject.file('libs/modmenu-11.0.5.jar'))
+
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+	testImplementation ':core:3.8.0'
+	testImplementation ':toml:3.8.0'
+}

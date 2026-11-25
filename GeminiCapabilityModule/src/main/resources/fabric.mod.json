@@ -1,0 +1,15 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_capability",
+	"version": "${version}",
+	"name": "Gemini Capability",
+	"description": "Gemini cross-mod capability discovery and storage views.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"depends": {
+		"gemini": ">=1.0.6",
+		"gemini_component": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

@@ -9,5 +9,20 @@ pluginManagement {
 	}
 }
 
-// Should match your modid
-rootProject.name = 'gemini'
+rootProject.name = 'gemini-multimodule'
+
+include(
+        'GeminiBase',
+        'GeminiRegistrationModule',
+        'GeminiEventModule',
+        'GeminiNetworkModule',
+        'GeminiComponentModule',
+        'GeminiCapabilityModule',
+        'GeminiConfigModule',
+        'GeminiLocateModule',
+        'GeminiGameplayModule',
+        'GeminiIntegrationModule',
+        'GeminiClientModule',
+        'GeminiTabModule',
+        'GeminiCreativeModule'
+)

@@ -1,0 +1,10 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_registration'
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+}

@@ -1,0 +1,14 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_locate'
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	compileOnly project(':GeminiConfigModule')
+	compileOnly project(':GeminiIntegrationModule')
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+	testImplementation project(path: ':GeminiConfigModule', configuration: 'namedElements')
+	testImplementation project(path: ':GeminiIntegrationModule', configuration: 'namedElements')
+}

@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_tab",
+	"version": "${version}",
+	"name": "Gemini Tab",
+	"description": "Gemini inventory tab system.",
+	"license": "GPL-3.0-only",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"dev.arakiel.gemini.tab.client.GeminiTabClientInitializer"
+		]
+	},
+	"mixins": [
+		{
+			"config": "gemini_tab.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

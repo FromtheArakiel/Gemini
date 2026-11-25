@@ -1,0 +1,20 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"creative.ContainerScreenAccessor",
+		"creative.CreativeModeInventoryScreenInvoker",
+		"creative.CreativeModeInventoryScreenMixin",
+		"creative.CreativeModeTabAccessor",
+		"creative.CreativeModeTabMixin",
+		"creative.CustomCreativeSlotMixin",
+		"creative.ItemPickerMenuMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

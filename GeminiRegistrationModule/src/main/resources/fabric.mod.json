@@ -1,0 +1,14 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_registration",
+	"version": "${version}",
+	"name": "Gemini Registration",
+	"description": "Gemini field-scanning registry containers.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"depends": {
+		"gemini": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	}
+}

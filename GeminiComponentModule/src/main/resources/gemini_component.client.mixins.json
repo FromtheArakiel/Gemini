@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "dev.arakiel.gemini.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"component.entity.MixinClientWorld",
+		"component.level.MixinClientWorldProperties",
+		"component.world.MixinClientWorld"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
