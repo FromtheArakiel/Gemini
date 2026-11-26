@@ -59,6 +59,7 @@ tasks.register('verifyModuleLayout') {
 		def expected = [
 				'GeminiBase',
 				'GeminiRegistrationModule',
+				'GeminiEnergyModule',
 				'GeminiEventModule',
 				'GeminiNetworkModule',
 				'GeminiComponentModule',

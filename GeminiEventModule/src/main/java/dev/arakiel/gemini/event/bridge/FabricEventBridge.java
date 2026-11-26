@@ -2,6 +2,7 @@ package dev.arakiel.gemini.event.bridge;
 
 import dev.arakiel.gemini.event.GeminiEvents;
 import dev.arakiel.gemini.event.command.RegisterCommandsEvent;
+import dev.arakiel.gemini.event.chunk.ChunkEvent;
 import dev.arakiel.gemini.event.entity.living.LivingEquipmentChangeEvent;
 import dev.arakiel.gemini.event.entity.player.PlayerCloneEvent;
 import dev.arakiel.gemini.event.entity.player.PlayerInteractEntityEvent;
@@ -23,6 +24,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -80,6 +82,10 @@ public final class FabricEventBridge {
                 GeminiEvents.post(new EntityJoinLevelEvent(entity, level)));
         ServerEntityEvents.ENTITY_UNLOAD.register((entity, level) ->
                 GeminiEvents.post(new EntityLeaveLevelEvent(entity, level)));
+        ServerChunkEvents.CHUNK_LOAD.register((level, chunk) ->
+                GeminiEvents.post(new ChunkEvent(level, chunk.getPos(), ChunkEvent.Phase.LOAD)));
+        ServerChunkEvents.CHUNK_UNLOAD.register((level, chunk) ->
+                GeminiEvents.post(new ChunkEvent(level, chunk.getPos(), ChunkEvent.Phase.UNLOAD)));
         ServerEntityEvents.EQUIPMENT_CHANGE.register((entity, slot, previous, current) ->
                 GeminiEvents.post(new LivingEquipmentChangeEvent(entity, slot, previous, current)));
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) ->

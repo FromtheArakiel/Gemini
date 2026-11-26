@@ -6,6 +6,7 @@ base {
 
 dependencies {
 	include project(':GeminiRegistrationModule')
+	include project(':GeminiEnergyModule')
 	include project(':GeminiEventModule')
 	include project(':GeminiNetworkModule')
 	include project(':GeminiComponentModule')

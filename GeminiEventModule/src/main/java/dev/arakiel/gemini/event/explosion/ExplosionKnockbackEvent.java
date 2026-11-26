@@ -1,6 +1,5 @@
 package dev.arakiel.gemini.event.explosion;
 
-import dev.arakiel.gemini.event.Cancelable;
 import dev.arakiel.gemini.event.GeminiEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
@@ -8,7 +7,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Objects;
 
-@Cancelable
 public class ExplosionKnockbackEvent extends GeminiEvent {
     private final Explosion explosion;
     private final Entity entity;

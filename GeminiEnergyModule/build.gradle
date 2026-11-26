@@ -1,0 +1,14 @@
+apply from: rootProject.file('gradle/gemini-module.gradle')
+
+base {
+	archivesName = 'gemini_energy'
+}
+
+dependencies {
+	compileOnly project(':GeminiBase')
+	compileOnly project(':GeminiCapabilityModule')
+	modImplementation files(rootProject.file('libs/energy-4.1.0.jar'))
+
+	testImplementation project(path: ':GeminiBase', configuration: 'namedElements')
+	testImplementation project(path: ':GeminiCapabilityModule', configuration: 'namedElements')
+}

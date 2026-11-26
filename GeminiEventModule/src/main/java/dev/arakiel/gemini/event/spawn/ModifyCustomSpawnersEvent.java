@@ -2,36 +2,29 @@ package dev.arakiel.gemini.event.spawn;
 
 import dev.arakiel.gemini.event.GeminiEvent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.CustomSpawner;
 
 import java.util.List;
 import java.util.Objects;
 
 public class ModifyCustomSpawnersEvent extends GeminiEvent {
     private final ServerLevel level;
-    private final MobCategory category;
-    private final List<MobSpawnSettings.SpawnerData> spawners;
+    private final List<CustomSpawner> customSpawners;
 
-    public ModifyCustomSpawnersEvent(
-            ServerLevel level,
-            MobCategory category,
-            List<MobSpawnSettings.SpawnerData> spawners
-    ) {
+    public ModifyCustomSpawnersEvent(ServerLevel level, List<CustomSpawner> customSpawners) {
         this.level = Objects.requireNonNull(level, "level");
-        this.category = Objects.requireNonNull(category, "category");
-        this.spawners = Objects.requireNonNull(spawners, "spawners");
+        this.customSpawners = Objects.requireNonNull(customSpawners, "customSpawners");
     }
 
     public ServerLevel getLevel() {
         return this.level;
     }
 
-    public MobCategory getCategory() {
-        return this.category;
+    public List<CustomSpawner> getCustomSpawners() {
+        return this.customSpawners;
     }
 
-    public List<MobSpawnSettings.SpawnerData> getSpawners() {
-        return this.spawners;
+    public void addCustomSpawner(CustomSpawner customSpawner) {
+        this.customSpawners.add(Objects.requireNonNull(customSpawner, "customSpawner"));
     }
 }

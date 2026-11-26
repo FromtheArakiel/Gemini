@@ -1,7 +1,7 @@
 package dev.arakiel.gemini.mixin.event;
 
 import dev.arakiel.gemini.event.GeminiEvents;
-import dev.arakiel.gemini.event.block.FurnaceBurnTimeEvent;
+import dev.arakiel.gemini.event.block.FurnaceFuelBurnTimeEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class AbstractFurnaceBlockEntityMixin {
     @Inject(method = "getBurnDuration", at = @At("RETURN"), cancellable = true)
     private void gemini$burnTime(ItemStack fuel, CallbackInfoReturnable<Integer> callback) {
-        FurnaceBurnTimeEvent event = new FurnaceBurnTimeEvent(
+        FurnaceFuelBurnTimeEvent event = new FurnaceFuelBurnTimeEvent(
                 (AbstractFurnaceBlockEntity) (Object) this,
                 fuel,
                 callback.getReturnValue()

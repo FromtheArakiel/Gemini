@@ -45,6 +45,7 @@ bin/
 # OS
 *.DS_Store
 Thumbs.db
+.codex-client-p1/
 
 # Runtime diagnostics
 *.log

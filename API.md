@@ -15,6 +15,7 @@ independent nested Fabric mods with their own mod IDs, metadata and tests.
 | --- | --- | --- |
 | `GeminiBase` | `gemini` | `dev.arakiel.gemini` |
 | `GeminiRegistrationModule` | `gemini_registration` | `dev.arakiel.gemini.registration` |
+| `GeminiEnergyModule` | `gemini_energy` | `dev.arakiel.gemini.energy` |
 | `GeminiEventModule` | `gemini_event` | `dev.arakiel.gemini.event` |
 | `GeminiNetworkModule` | `gemini_network` | `dev.arakiel.gemini.network` |
 | `GeminiComponentModule` | `gemini_component` | `dev.arakiel.gemini.component` |
@@ -32,6 +33,7 @@ Module dependencies:
 ```text
 GeminiBase
 <- GeminiRegistrationModule
+<- GeminiEnergyModule -> GeminiCapabilityModule
 <- GeminiEventModule
 <- GeminiNetworkModule
 <- GeminiComponentModule
@@ -123,6 +125,25 @@ public void onHurt(LivingHurtEvent event) {
 `GeminiEvents.register(instance)` scans annotated listener methods.
 `GeminiEvents.post(event)` dispatches an event immediately.
 
+Every public event in `GeminiEventModule` has a runtime entry. Events are
+triggered from either a source-level Mixin named after the event or an explicit
+Fabric lifecycle bridge. Client-only runtime entries are listed in
+`gemini_event.client.mixins.json`.
+
+Damage-related events follow the NeoForge model:
+
+- `LivingIncomingDamageEvent` is fired once before vanilla damage handling and
+  exposes both original and mutable damage.
+- `LivingDamageEvent.Phase.PRE` is mutable; `Phase.POST` is informational and
+  rejects mutation.
+- `LivingFallEvent`, `LivingBreatheEvent`, `ArmorHurtEvent`, item use,
+  explosion knockback and drop/experience events write modified values back to
+  the vanilla flow.
+- Registration events are applied by their runtime adapters rather than being
+  only contract objects: brewing recipes, trades, spawn placements, entity
+  attributes, default item components, client shaders and model loading have
+  explicit application paths.
+
 P0 runtime sets include:
 
 - command registration, parse and execute observation
@@ -133,9 +154,8 @@ P0 runtime sets include:
 - client tick, player network, screen/container render, tooltip and registration
   callbacks
 
-Use `GeminiServerHooks` for reload listeners and built-in packs, and
-`GeminiGameplayHooks.registerSpawnPlacements()` when applying
-`RegisterSpawnPlacementsEvent`.
+Use `GeminiServerHooks` for reload listeners and built-in packs.
+`RegisterSpawnPlacementsEvent` is applied by the spawn-placement runtime bridge.
 
 ## Capability
 
@@ -194,6 +214,49 @@ GeminiFabricTransfer.exportContainedItemStorage(MOD_ITEM);
 The Fabric adapter preserves item/fluid variants and applies transaction
 rollback through `TransactionContext`. Gemini energy remains its own protocol;
 it is never reported as FE/RF.
+
+## Energy
+
+Gemini Energy uses the common `GeminiCapabilities.ENERGY` capability and the
+`EnergyStorageView` contract. Energy units are `GE`; Team Reborn conversion is
+explicitly 1:1 (`1 GE = 1 TE`).
+
+Gemini-native energy is source-pushed. Consumers expose `receive` and
+`canReceive`, but do not request or pull energy from providers.
+
+```java
+SimpleEnergyStorage source = new SimpleEnergyStorage(100_000, 0, 1_000, 100_000);
+SimpleEnergyStorage consumer = new SimpleEnergyStorage(50_000, 1_000, 0);
+
+EnergyPushResult result = GeminiEnergy.push(
+        source,
+        List.of(consumer),
+        1_000,
+        false
+);
+```
+
+World-based source push:
+
+```java
+GeminiEnergy.pushFrom(level, sourcePos, direction, 1_000, false);
+```
+
+`SimpleEnergyStorage` limits receive/extract by configured rates and supports
+transaction snapshots. `EnergyConduitView` marks traversable energy conduits.
+The push engine uses deterministic source-to-endpoint traversal, cycle
+protection and Team Reborn-style sequential extract/insert allocation.
+
+Team Reborn compatibility is explicit:
+
+```java
+GeminiTeamRebornEnergy.exportBlockEntity(MY_ENERGY_BLOCK_ENTITY);
+GeminiTeamRebornEnergy.exportBlock(MY_ENERGY_BLOCK);
+GeminiTeamRebornEnergy.exportContainedItem(MY_ENERGY_ITEM);
+```
+
+No Team Reborn lookup is registered until an export method is called.
+Team Reborn is an optional compatibility dependency and is not embedded.
 
 ## Components
 

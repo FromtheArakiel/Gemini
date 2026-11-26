@@ -5,6 +5,9 @@ import dev.arakiel.gemini.event.GeminiEvent;
 import dev.arakiel.gemini.event.GeminiEventBus;
 import dev.arakiel.gemini.event.Subscription;
 import dev.arakiel.gemini.event.bridge.FabricEventBridge;
+import dev.arakiel.gemini.event.resource.GeminiServerReloadBridge;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.server.packs.PackType;
 
 import java.util.function.Consumer;
 
@@ -21,6 +24,7 @@ public final class GeminiEvents {
         }
         initialized = true;
         FabricEventBridge.register();
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new GeminiServerReloadBridge());
     }
 
     public static <T extends GeminiEvent> T post(T event) {

@@ -1,0 +1,18 @@
+{
+	"schemaVersion": 1,
+	"id": "gemini_energy",
+	"version": "${version}",
+	"name": "Gemini Energy",
+	"description": "Gemini GE energy storage, source push distribution and Team Reborn compatibility.",
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"depends": {
+		"gemini": ">=1.0.6",
+		"gemini_capability": ">=1.0.6",
+		"minecraft": "~1.21.1",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"team_reborn_energy": ">=4.1.0"
+	}
+}

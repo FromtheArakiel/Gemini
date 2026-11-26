@@ -10,7 +10,7 @@
 		"tweak.LightningBoltMixin"
 	],
 	"client": [
-		"tweak.LocalPlayerMixin"
+		"client.mixin.tweak.LocalPlayerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

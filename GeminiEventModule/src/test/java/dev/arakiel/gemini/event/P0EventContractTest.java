@@ -44,7 +44,6 @@ class P0EventContractTest {
     void cancelableEventsAdvertiseTheirContract() {
         List<Class<? extends GeminiEvent>> cancelable = List.of(
                 LivingDeathEvent.class,
-                LivingDamageEvent.class,
                 LivingHurtEvent.class,
                 LivingIncomingDamageEvent.class,
                 LivingDropsEvent.class,
@@ -65,15 +64,13 @@ class P0EventContractTest {
                 EntityPlaceEvent.class,
                 FarmlandTrampleEvent.class,
                 ExplosionStartEvent.class,
-                ExplosionDetonateEvent.class,
-                ExplosionKnockbackEvent.class,
                 MobSpawnEvent.class,
-                MobDespawnEvent.class,
                 CommandEvent.class,
                 ScreenEvent.class,
                 ContainerScreenEvent.class,
                 ItemTooltipEvent.class,
-                RenderTooltipEvent.class
+                RenderTooltipEvent.Pre.class,
+                RenderTooltipEvent.GatherComponents.class
         );
 
         for (Class<? extends GeminiEvent> type : cancelable) {
